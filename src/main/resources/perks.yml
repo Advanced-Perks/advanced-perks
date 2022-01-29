@@ -1,0 +1,107 @@
+#The structure of this configuration file can best be explained by this
+#example entry.
+#
+#Example-Perk:
+#  Display-Name: '&6&lExample Perk'
+#  Description:
+#    - '&7&oThis perk will perform cool things'
+#    - '&7&oThe best part you can split the description into'
+#    - '&7&omultiple lines.'
+#  Permission: 'example.permission'
+#  Disabled-Worlds:
+#    - 'example_world'
+#    - 'world_the_end'
+#    - 'spawn'
+#  Enabled: false
+#  Icon: 'BAT_SPAWN_EGG'
+
+Bat:
+  Display-Name: '&8&lBat Perk'
+  Description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oNight Vision to the player.'
+  Permission: 'advancedperks.use.bat'
+FireResistance:
+  Display-Name: '&c&lFire Resistance Perk'
+  Description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oFire Resistance to the player.'
+  Permission: 'advancedperks.use.fireresistance'
+Frog:
+  Display-Name: '&a&lFrog Perk'
+  Description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oJump Boost II to the player.'
+  Permission: 'advancedperks.use.frog'
+Glowing:
+  Display-Name: '&e&lGlowing Perk'
+  Description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oGlowing to the player.'
+  Permission: 'advancedperks.use.glowing'
+Hulk:
+  Display-Name: '&a&lHulk Perk'
+  Description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oStrength to the player.'
+  Permission: 'advancedperks.use.hulk'
+NoHunger:
+  Display-Name: '&f&lNo Hunger Perk'
+  Description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oSaturation to the player.'
+  Permission: 'advancedperks.use.nohunger'
+Poseidon:
+  Display-Name: '&9&lPoseidon Perk'
+  Description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oWater Breathing to the player.'
+  Permission: 'advancedperks.use.poseidon'
+Speed:
+  Display-Name: '&e&lSpeed Perk'
+  Description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oSpeed to the player.'
+  Permission: 'advancedperks.use.speed'
+Turtle:
+  Display-Name: '&2&lTurtle Perk'
+  Description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oResistance to the player.'
+  Permission: 'advancedperks.use.turtle'
+Chicken:
+  Display-Name: '&d&lChicken Perk'
+  Description:
+    - '&7&oActivating this perk will stop the player from'
+    - '&7&otaking falldamage at all.'
+  Permission: 'advancedperks.use.chicken'
+Dolphin:
+  Display-Name: '&b&lDolphin Perk'
+  Description:
+    - '&7&oActivating this perk will grant the player the ability'
+    - '&7&oto get a small boost everytime the sneak in the water.'
+  Permission: 'advancedperks.use.dolphin'
+KeepInventory:
+  Display-Name: '&e&lKeep Inventory Perk'
+  Description:
+    - '&7&oActivating this perk will as the name suggests'
+    - '&7&oenable the player to keep all items after death.'
+  Permission: 'advancedperks.use.keepinventory'
+Wiser:
+  Display-Name: '&e&lWiser Perk'
+  Description:
+    - '&7&oActivating this perk will grant the player the ability'
+    - '&7&oto keep its experience when dying.'
+  Permission: 'advancedperks.use.wiser'
+Bird:
+  Display-Name: '&e&lBird Perk'
+  Description:
+    - '&7&oActivating this perk will grant the player the ability'
+    - '&7&oto fly even in gamemode survival.'
+  Permission: 'advancedperks.use.bird'
+Insomnia:
+  Display-Name: '&9&lInsomnia Perk'
+  Description:
+    - '&7&oActivating this perk will grant the player the ability'
+    - '&7&oto not trigger phantom spawning when not sleeping.'
+  Permission: 'advancedperks.use.insomnia'

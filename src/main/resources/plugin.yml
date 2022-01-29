@@ -1,0 +1,11 @@
+name: AdvancedPerks
+version: ${project.version}
+main: de.fabilucius.advancedperks.AdvancedPerks
+api-version: 1.13
+softdepend:
+  - ProtocolLib
+  - PlaceholderAPI
+commands:
+  perks:
+    aliases:
+      - perk

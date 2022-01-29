@@ -1,0 +1,39 @@
+#This configuration can be used to change the various messages of the plugin
+#Name and description of the default perks can be changed inside the perks.yml
+#It can of course also be used to translate the plugin
+#Beware a full language system is in the works but there is no eta for that feature
+
+Prefix: '&8[&6Perks&8]'
+Perks:
+  Too-Many-Perks-Enabled: '<prefix> &cUnable to activate perk, the maximum allowed of allowed perks at once is <amount>.'
+  No-Permission: '<prefix> &cUnable to activated perk, you dont have the permission to use this perk.'
+  Disabled-By-World: '<prefix> &cUnable to activate perk <perk_name> in the world <world_name> because the perk isnt allowed in that world.'
+Command:
+  No-Permission: '<prefix> &cYou dont have permission to execute that command.'
+  Player-Offline: '<prefix> &cThe player <name> was either misspelled or currently not online.'
+  Open:
+    Syntax: '<prefix> &7The command syntax is: /perks open [player]'
+  Toggle:
+    Perk-Not-Found: '<prefix> &cThe perk <perk> was either misspelled or does not exist.'
+    Syntax: '<prefix> &7The command syntax is: /perks toggle <player> <perk>'
+Gui:
+  Title: '&m               &f&8[&5Perks&8]&m               '
+  Close-Gui:
+    Name: '&cClose the Gui'
+    Description:
+      - '&7&oClick here to close the gui.'
+  Disable-All-Perks:
+    Name: '&cDisable all Perks'
+    Description:
+      - '&7&oClick here to disable all perks that are activated at once.'
+  Previous-Page:
+    Name: '&ePrevious Page'
+    Description:
+      - '&7&oClick here to get to the previous page.'
+  Next-Page:
+    Name: '&eNext Page'
+    Description:
+      - '&7&oClick here to get to the next page.'
+  Perk-Toggle:
+    Activated: '&aActivated'
+    Deactivated: '&cDeactivated'

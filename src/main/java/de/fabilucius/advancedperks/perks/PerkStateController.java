@@ -150,15 +150,15 @@ public class PerkStateController {
     public void savePerkData(PerkData perkData) {
         String uuid = perkData.getPlayer().getUniqueId().toString();
         String activatedPerks = perkData.getActivatedPerks().stream().map(Perk::getIdentifier).collect(Collectors.joining(","));
-        this.getSqlConnection().insertOrUpdateQuery("activated_perks", Arrays.asList("UUID", "PERKS"),
-                Arrays.asList(uuid, activatedPerks), "UUID = '" + uuid + "'",
-                Collections.singletonList("PERKS = '" + activatedPerks + "'"));
+        this.getExecutorService().submit(() -> {
+            this.getSqlConnection().insertOrUpdateQuery("activated_perks", Arrays.asList("UUID", "PERKS"),
+                    Arrays.asList(uuid, activatedPerks), "UUID = '" + uuid + "'",
+                    Collections.singletonList("PERKS = '" + activatedPerks + "'"));
+        });
     }
 
     public void savePerkDataAsync(PerkData perkData) {
-        this.getExecutorService().submit(() -> {
-            this.savePerkData(perkData);
-        });
+        this.savePerkData(perkData);
     }
 
     public void handleShutdown() {

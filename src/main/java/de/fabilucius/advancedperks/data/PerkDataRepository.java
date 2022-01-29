@@ -2,7 +2,6 @@ package de.fabilucius.advancedperks.data;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.MapCache;
-import de.fabilucius.advancedperks.gui.PerkGuiWindow;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,7 +24,6 @@ public class PerkDataRepository extends MapCache<Player, PerkData> implements Li
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         this.addPerkData(event.getPlayer());
-        AdvancedPerks.getInstance().getGuiManager().openGui(event.getPlayer(), new PerkGuiWindow(event.getPlayer()));
     }
 
     @EventHandler

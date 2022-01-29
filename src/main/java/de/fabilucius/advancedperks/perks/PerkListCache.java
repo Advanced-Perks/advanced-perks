@@ -40,7 +40,7 @@ public class PerkListCache extends ListCache<Perk> {
         Arrays.stream(perkClasses).forEach(perkClass -> {
             try {
                 Perk perk = perkClass.getDeclaredConstructor().newInstance();
-                if (perk.isEnabled() && ServerVersion.is(perk.getMinimumServerVersion(), ServerVersion.ComparisonType.HIGHER_OR_EQUAL) &&
+                if (perk.isEnabled() && ServerVersion.is(perk.getMinimumServerVersion(), ServerVersion.ComparisonType.LOWER_OR_EQUAL) &&
                         this.isIdentifierUnique(perk.getIdentifier())) {
                     this.getPerks().add(perk);
                 }

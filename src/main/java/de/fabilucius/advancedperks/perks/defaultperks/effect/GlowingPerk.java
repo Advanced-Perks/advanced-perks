@@ -1,7 +1,7 @@
 package de.fabilucius.advancedperks.perks.defaultperks.effect;
 
 import de.fabilucius.advancedperks.perks.types.AbstractEffectPerk;
-import de.fabilucius.advancedperks.utilities.ItemStackBuilder;
+import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import de.fabilucius.sympel.multiversion.ServerVersion;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +16,7 @@ public class GlowingPerk extends AbstractEffectPerk {
 
     @Override
     public ItemStack getDefaultIcon() {
-        return new ItemStackBuilder(Material.GLOWSTONE_DUST)
+        return ItemStackBuilder.fromMaterial(Material.GLOWSTONE_DUST)
                 .setDisplayName(this.getDisplayName())
                 .setDescription(this.getDescription())
                 .build();

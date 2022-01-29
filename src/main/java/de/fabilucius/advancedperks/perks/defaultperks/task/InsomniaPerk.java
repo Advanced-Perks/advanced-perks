@@ -4,7 +4,7 @@ import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.Perk;
 import de.fabilucius.advancedperks.perks.types.AbstractTaskPerk;
-import de.fabilucius.advancedperks.utilities.ItemStackBuilder;
+import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
@@ -29,7 +29,7 @@ public class InsomniaPerk extends AbstractTaskPerk {
 
     @Override
     public ItemStack getDefaultIcon() {
-        return new ItemStackBuilder(Material.CLOCK)
+        return ItemStackBuilder.fromMaterial(Material.CLOCK)
                 .setDisplayName(this.getDisplayName())
                 .setDescription(this.getDescription())
                 .build();

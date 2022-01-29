@@ -3,7 +3,7 @@ package de.fabilucius.advancedperks.perks.defaultperks.listener;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.types.AbstractListenerPerk;
-import de.fabilucius.advancedperks.utilities.ItemStackBuilder;
+import de.fabilucius.sympel.item.builder.types.SkullStackBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,8 +18,8 @@ public class DolphinPerk extends AbstractListenerPerk {
 
     @Override
     public ItemStack getDefaultIcon() {
-        return new ItemStackBuilder(Material.AIR)
-                .setHeadBase64Value("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGU5Njg4Yjk1MGQ4ODBiNTViN2FhMmNmY2Q3NmU1YTBmYTk0YWFjNmQxNmY3OGU4MzNmNzQ0M2VhMjlmZWQzIn19fQ==")
+        return SkullStackBuilder.fromApproximateMaterial("PLAYER_HEAD")
+                .setBase64Value("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGU5Njg4Yjk1MGQ4ODBiNTViN2FhMmNmY2Q3NmU1YTBmYTk0YWFjNmQxNmY3OGU4MzNmNzQ0M2VhMjlmZWQzIn19fQ==")
                 .setDisplayName(this.getDisplayName())
                 .setDescription(this.getDescription())
                 .build();

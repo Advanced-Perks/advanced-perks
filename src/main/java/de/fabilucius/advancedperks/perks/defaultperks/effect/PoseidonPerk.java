@@ -1,7 +1,7 @@
 package de.fabilucius.advancedperks.perks.defaultperks.effect;
 
 import de.fabilucius.advancedperks.perks.types.AbstractEffectPerk;
-import de.fabilucius.advancedperks.utilities.ItemStackBuilder;
+import de.fabilucius.sympel.item.builder.types.SkullStackBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -14,8 +14,8 @@ public class PoseidonPerk extends AbstractEffectPerk {
 
     @Override
     public ItemStack getDefaultIcon() {
-        return new ItemStackBuilder(Material.AIR)
-                .setHeadBase64Value("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTI3MmM5OWE0YzJiZDk1Nzk2MDM4Yzk4YTg4YTFiYzdmNDM5YmI5MDEyYTA3ZDdjZDlhZGRhYTE5NDA3In19fQ==")
+        return SkullStackBuilder.fromApproximateMaterial("PLAYER_HEAD")
+                .setBase64Value("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTI3MmM5OWE0YzJiZDk1Nzk2MDM4Yzk4YTg4YTFiYzdmNDM5YmI5MDEyYTA3ZDdjZDlhZGRhYTE5NDA3In19fQ==")
                 .setDisplayName(this.getDisplayName())
                 .setDescription(this.getDescription())
                 .build();

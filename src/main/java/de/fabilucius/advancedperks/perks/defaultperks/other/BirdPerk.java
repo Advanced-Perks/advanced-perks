@@ -1,7 +1,7 @@
 package de.fabilucius.advancedperks.perks.defaultperks.other;
 
 import de.fabilucius.advancedperks.perks.AbstractPerk;
-import de.fabilucius.advancedperks.utilities.ItemStackBuilder;
+import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -14,7 +14,7 @@ public class BirdPerk extends AbstractPerk {
 
     @Override
     public ItemStack getDefaultIcon() {
-        return new ItemStackBuilder(Material.FEATHER)
+        return ItemStackBuilder.fromMaterial(Material.FEATHER)
                 .setDisplayName(this.getDisplayName())
                 .setDescription(this.getDescription())
                 .build();

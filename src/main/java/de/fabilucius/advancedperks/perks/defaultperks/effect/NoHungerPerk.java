@@ -1,7 +1,7 @@
 package de.fabilucius.advancedperks.perks.defaultperks.effect;
 
 import de.fabilucius.advancedperks.perks.types.AbstractEffectPerk;
-import de.fabilucius.advancedperks.utilities.ItemStackBuilder;
+import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -14,7 +14,7 @@ public class NoHungerPerk extends AbstractEffectPerk {
 
     @Override
     public ItemStack getDefaultIcon() {
-        return new ItemStackBuilder(Material.COOKED_BEEF)
+        return ItemStackBuilder.fromMaterial(Material.COOKED_BEEF)
                 .setDisplayName(this.getDisplayName())
                 .setDescription(this.getDescription())
                 .build();

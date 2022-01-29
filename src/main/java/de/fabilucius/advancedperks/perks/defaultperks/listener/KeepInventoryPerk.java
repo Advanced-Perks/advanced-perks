@@ -3,7 +3,7 @@ package de.fabilucius.advancedperks.perks.defaultperks.listener;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.types.AbstractListenerPerk;
-import de.fabilucius.advancedperks.utilities.ItemStackBuilder;
+import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -16,7 +16,7 @@ public class KeepInventoryPerk extends AbstractListenerPerk {
 
     @Override
     public ItemStack getDefaultIcon() {
-        return new ItemStackBuilder(Material.CHEST)
+        return ItemStackBuilder.fromMaterial(Material.CHEST)
                 .setDisplayName(this.getDisplayName())
                 .setDescription(this.getDescription())
                 .build();

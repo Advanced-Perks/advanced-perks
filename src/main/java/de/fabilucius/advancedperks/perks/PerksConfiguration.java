@@ -1,9 +1,9 @@
 package de.fabilucius.advancedperks.perks;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.utilities.ItemStackBuilder;
-import de.fabilucius.advancedperks.utilities.XMaterial;
 import de.fabilucius.sympel.configuration.types.PluginConfiguration;
+import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
+import de.fabilucius.sympel.item.external.XMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
@@ -52,7 +52,7 @@ public class PerksConfiguration extends PluginConfiguration {
         }
         ItemStack parsedItemStack = XMaterial.valueOf(icon).parseItem();
         if (parsedItemStack != null) {
-            return new ItemStackBuilder(parsedItemStack)
+            return ItemStackBuilder.fromItemStack(parsedItemStack)
                     .setDisplayName(perk.getDisplayName())
                     .setDescription(perk.getDescription())
                     .build();

@@ -65,6 +65,12 @@
         </dependency>
         <dependency>
             <groupId>de.fabilucius</groupId>
+            <artifactId>sympel-item</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.fabilucius</groupId>
             <artifactId>sympel-multiversion</artifactId>
             <version>1.0.0</version>
         </dependency>

@@ -15,12 +15,12 @@ public class MessageConfigReceiver {
 
     public static String getPrefix() {
         return ChatColor.translateAlternateColorCodes('&',
-                MESSAGE_CONFIGURATION.getValueWithDefault("Prefix", "§8[§6APerks§8]", String.class));
+                MESSAGE_CONFIGURATION.returnFrom("Prefix").getAsWithDefault("§8[§6APerks§8]", String.class));
     }
 
     public static String getMessage(String configKey) {
-        return ChatColor.translateAlternateColorCodes('&', MESSAGE_CONFIGURATION.getValueWithDefault(configKey,
-                "unable to load message", String.class).replaceAll("<prefix>", getPrefix()));
+        return ChatColor.translateAlternateColorCodes('&', MESSAGE_CONFIGURATION.returnFrom(configKey)
+                .getAsWithDefault("unable to load message", String.class).replaceAll("<prefix>", getPrefix()));
     }
 
     public static String getMessageWithReplace(String configKey, ReplaceLogic... replaceLogics) {
@@ -32,8 +32,8 @@ public class MessageConfigReceiver {
     }
 
     public static List<String> getMessageList(String configKey) {
-        List<String> rawMessages = MESSAGE_CONFIGURATION.getValueWithDefault(configKey,
-                Collections.singletonList("unable to load messages"), List.class);
+        List<String> rawMessages = MESSAGE_CONFIGURATION.returnFrom(configKey)
+                .getAsWithDefault(Collections.singletonList("unable to load messages"), List.class);
         return rawMessages.stream().map(line -> ChatColor.translateAlternateColorCodes('&',
                 line).replaceAll("<prefix>", getPrefix())).collect(Collectors.toList());
     }

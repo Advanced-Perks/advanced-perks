@@ -60,7 +60,7 @@
         <dependency>
             <groupId>de.fabilucius</groupId>
             <artifactId>sympel-configuration</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -109,6 +109,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
                             <artifactSet>
                                 <includes>
                                     <include>de.fabilucius:sympel-*</include>

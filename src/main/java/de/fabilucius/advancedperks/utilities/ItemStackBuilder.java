@@ -2,7 +2,7 @@ package de.fabilucius.advancedperks.utilities;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import de.fabilucius.advancedperks.commons.ServerVersion;
+import de.fabilucius.sympel.multiversion.ServerVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -51,7 +51,7 @@ public class ItemStackBuilder {
     }
 
     public ItemStackBuilder setHeadBase64Value(String base64Value) {
-        this.itemStack = ServerVersion.isServerVersionHigherOrEqual(ServerVersion.v1_13) ? new ItemStack(Material.getMaterial("PLAYER_HEAD")) :
+        this.itemStack = ServerVersion.is(ServerVersion.v1_13, ServerVersion.ComparisonType.HIGHER_OR_EQUAL) ? new ItemStack(Material.getMaterial("PLAYER_HEAD")) :
                 new ItemStack(Material.getMaterial("SKULL_ITEM"), 1, (short) SkullType.PLAYER.ordinal());
         this.itemMeta = this.getItemStack().getItemMeta();
         if (this.getItemMeta() instanceof SkullMeta) {

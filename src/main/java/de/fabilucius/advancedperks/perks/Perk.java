@@ -1,6 +1,6 @@
 package de.fabilucius.advancedperks.perks;
 
-import de.fabilucius.advancedperks.commons.ServerVersion;
+import de.fabilucius.sympel.multiversion.ServerVersion;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

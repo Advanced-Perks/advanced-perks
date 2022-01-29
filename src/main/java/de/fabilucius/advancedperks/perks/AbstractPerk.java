@@ -3,7 +3,7 @@ package de.fabilucius.advancedperks.perks;
 import com.google.common.collect.Lists;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.NullSafety;
-import de.fabilucius.advancedperks.commons.ServerVersion;
+import de.fabilucius.sympel.multiversion.ServerVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

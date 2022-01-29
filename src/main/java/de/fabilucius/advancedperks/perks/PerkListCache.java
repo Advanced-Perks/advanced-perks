@@ -3,8 +3,8 @@ package de.fabilucius.advancedperks.perks;
 import com.google.common.reflect.ClassPath;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.ListCache;
-import de.fabilucius.advancedperks.commons.ServerVersion;
 import de.fabilucius.advancedperks.event.types.PerkRegistryEvent;
+import de.fabilucius.sympel.multiversion.ServerVersion;
 import org.bukkit.Bukkit;
 
 import java.util.Arrays;
@@ -40,7 +40,7 @@ public class PerkListCache extends ListCache<Perk> {
         Arrays.stream(perkClasses).forEach(perkClass -> {
             try {
                 Perk perk = perkClass.getDeclaredConstructor().newInstance();
-                if (perk.isEnabled() && ServerVersion.isServerVersionHigherOrEqual(perk.getMinimumServerVersion()) &&
+                if (perk.isEnabled() && ServerVersion.is(perk.getMinimumServerVersion(), ServerVersion.ComparisonType.HIGHER_OR_EQUAL) &&
                         this.isIdentifierUnique(perk.getIdentifier())) {
                     this.getPerks().add(perk);
                 }

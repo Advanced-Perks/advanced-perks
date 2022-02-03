@@ -55,7 +55,7 @@ public class PerkDataRepository extends MapCache<Player, PerkData> implements Li
 
     private void removePerkData(Player player) {
         PerkData perkData = this.getPerkData(player);
-        AdvancedPerks.getInstance().getPerkStateController().savePerkDataAsync(perkData);
+        AdvancedPerks.getInstance().getPerkStateController().savePerkData(perkData);
         AdvancedPerks.getInstance().getPerkStateController().disableAllPerks(player);
         this.getPerkDataCache().remove(player);
     }

@@ -3,11 +3,15 @@ package de.fabilucius.advancedperks.perks;
 import com.google.common.collect.Lists;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.ReplaceLogic;
-import de.fabilucius.advancedperks.commons.sql.SqlConnection;
 import de.fabilucius.advancedperks.commons.sql.SqlType;
 import de.fabilucius.advancedperks.data.PerkData;
+import de.fabilucius.advancedperks.perks.tasks.SavePerkDataTask;
 import de.fabilucius.advancedperks.settings.SettingsConfiguration;
 import de.fabilucius.advancedperks.utilities.MessageConfigReceiver;
+import de.fabilucius.sympel.database.AbstractDatabase;
+import de.fabilucius.sympel.database.details.Credentials;
+import de.fabilucius.sympel.database.types.FileDatabase;
+import de.fabilucius.sympel.database.types.RemoteDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -15,6 +19,7 @@ import java.io.File;
 import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -24,15 +29,16 @@ import java.util.stream.Collectors;
 public class PerkStateController {
 
     private static final Logger LOGGER = Bukkit.getLogger();
+
     private final ExecutorService executorService = Executors.newCachedThreadPool();
-    private final SqlConnection sqlConnection;
+    private final AbstractDatabase abstractDatabase;
     private final int globalMaxPerks;
 
     public PerkStateController() {
         SettingsConfiguration configuration = AdvancedPerks.getInstance().getSettingsConfiguration();
         if (configuration.getSqlType().equals(SqlType.DATABASE)) {
-            this.sqlConnection = new SqlConnection(configuration.getSqlUrl(),
-                    configuration.getSqlUserName(), configuration.getSqlPassword());
+            Credentials credentials = Credentials.withAuth(configuration.getSqlUserName(), configuration.getSqlPassword());
+            this.abstractDatabase = RemoteDatabase.withCredentials(configuration.getSqlUrl(), credentials);
             LOGGER.log(Level.INFO, "Successfully connected to the database.");
         } else {
             File databaseFile = new File(AdvancedPerks.getInstance().getDataFolder(), "data.db");
@@ -45,10 +51,10 @@ public class PerkStateController {
                             "creating a local database file for perk data storage:", exception);
                 }
             }
-            this.sqlConnection = new SqlConnection(String.format("jdbc:sqlite:%s", databaseFile.getPath()));
+            this.abstractDatabase = FileDatabase.fromFile(databaseFile);
             LOGGER.log(Level.INFO, "Successfully connected to the local file based database.");
         }
-        this.getSqlConnection().customQuery("CREATE TABLE IF NOT EXISTS activated_perks(UUID varchar(36) PRIMARY KEY,PERKS varchar(999))");
+        this.getAbstractDatabase().customUpdate("CREATE TABLE IF NOT EXISTS activated_perks(UUID varchar(36) PRIMARY KEY,PERKS varchar(999))");
         this.globalMaxPerks = AdvancedPerks.getInstance().getSettingsConfiguration().getGlobalMaxPerks();
     }
 
@@ -128,7 +134,7 @@ public class PerkStateController {
     public void loadPerkData(PerkData perkData) {
         this.getExecutorService().submit(() -> {
             String uuid = perkData.getPlayer().getUniqueId().toString();
-            ResultSet resultSet = this.getSqlConnection().selectQuery(Collections.singletonList("PERKS"), "activated_perks", "UUID = '" + uuid + "'");
+            ResultSet resultSet = this.getAbstractDatabase().selectQuery("activated_perks", Collections.singletonList("PERKS"), "UUID = '" + uuid + "'");
             Bukkit.getScheduler().runTask(AdvancedPerks.getInstance(), () -> {
                 try {
                     while (resultSet.next()) {
@@ -141,29 +147,26 @@ public class PerkStateController {
                         });
                     }
                 } catch (Exception ignored) {
-                    ignored.printStackTrace();
                 }
             });
         });
     }
 
     public void savePerkData(PerkData perkData) {
-        String uuid = perkData.getPlayer().getUniqueId().toString();
-        String activatedPerks = perkData.getActivatedPerks().stream().map(Perk::getIdentifier).collect(Collectors.joining(","));
-        this.getExecutorService().submit(() -> {
-            this.getSqlConnection().insertOrUpdateQuery("activated_perks", Arrays.asList("UUID", "PERKS"),
-                    Arrays.asList(uuid, activatedPerks), "UUID = '" + uuid + "'",
-                    Collections.singletonList("PERKS = '" + activatedPerks + "'"));
-        });
-    }
-
-    public void savePerkDataAsync(PerkData perkData) {
-        this.savePerkData(perkData);
+        this.getExecutorService().submit(new SavePerkDataTask(perkData, this.getAbstractDatabase()));
     }
 
     public void handleShutdown() {
-        AdvancedPerks.getInstance().getPerkDataRepository().getPerkDataCache().values().forEach(this::savePerkData);
-        this.getSqlConnection().closeConnection();
+        List<SavePerkDataTask> savePerkDataTasks = AdvancedPerks.getInstance().getPerkDataRepository().getPerkDataCache().values().stream()
+                .map(perkData -> new SavePerkDataTask(perkData, this.getAbstractDatabase()))
+                .collect(Collectors.toList());
+        try {
+            this.getExecutorService().invokeAll(savePerkDataTasks);
+        } catch (InterruptedException interruptedException) {
+            LOGGER.log(Level.SEVERE, "There was an error while shutting down the PerkStateController:", interruptedException);
+        }finally {
+            this.getAbstractDatabase().closeConnection();
+        }
     }
 
     /* the getter and setter of this class */
@@ -172,8 +175,8 @@ public class PerkStateController {
         return globalMaxPerks;
     }
 
-    public SqlConnection getSqlConnection() {
-        return sqlConnection;
+    public AbstractDatabase getAbstractDatabase() {
+        return abstractDatabase;
     }
 
     public ExecutorService getExecutorService() {

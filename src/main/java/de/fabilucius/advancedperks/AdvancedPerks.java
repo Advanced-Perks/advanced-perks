@@ -1,5 +1,6 @@
 package de.fabilucius.advancedperks;
 
+import de.fabilucius.advancedperks.api.AdvancedPerksExpansion;
 import de.fabilucius.advancedperks.commands.impl.PerksCommand;
 import de.fabilucius.advancedperks.commons.Metrics;
 import de.fabilucius.advancedperks.commons.guisystem.management.GuiManager;
@@ -38,6 +39,9 @@ public class AdvancedPerks extends JavaPlugin {
         this.perkStateController = new PerkStateController();
         this.compatabilityController = new CompatabilityController();
         new PerksCommand();
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new AdvancedPerksExpansion().register();
+        }
         if (this.getSettingsConfiguration().isMetricsEnabled()) {
             new Metrics(this, 12771);
         }

@@ -7,6 +7,7 @@ import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -23,12 +24,16 @@ public class ChickenPerk extends AbstractListenerPerk {
                 .build();
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
-            Player player = ((Player) event.getEntity()).getPlayer();
+            Player player = (Player) event.getEntity();
             PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
-            event.setCancelled(event.getCause().equals(EntityDamageEvent.DamageCause.FALL) && perkData.isPerkActivated(this));
+            boolean shouldCancel = event.getCause().equals(EntityDamageEvent.DamageCause.FALL) && perkData.isPerkActivated(this);
+            /* To prevent overwriting existing conditions from other plugins */
+            if (shouldCancel) {
+                event.setCancelled(true);
+            }
         }
     }
 

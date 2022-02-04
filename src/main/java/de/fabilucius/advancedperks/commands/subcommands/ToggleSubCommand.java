@@ -1,10 +1,10 @@
-package de.fabilucius.advancedperks.commands.impl.subcommands;
+package de.fabilucius.advancedperks.commands.subcommands;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.commands.SubCommand;
 import de.fabilucius.advancedperks.commons.ReplaceLogic;
 import de.fabilucius.advancedperks.perks.Perk;
 import de.fabilucius.advancedperks.utilities.MessageConfigReceiver;
+import de.fabilucius.sympel.command.types.AbstractSubCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -13,10 +13,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SubCommand.Details(identifier = "toggle", aliases = {"toggle", "t"}, permission = "advancedperks.command.toggle")
-public class ToggleSubCommand extends SubCommand {
+@AbstractSubCommand.Details(identifier = "toggle", aliases = {"toggle", "t"}, permission = "advancedperks.command.toggle")
+public class ToggleSubCommand extends AbstractSubCommand {
     @Override
-    public void handleCommand(CommandSender commandSender, String... arguments) {
+    public void handleCommandExecute(CommandSender commandSender, String... arguments) {
         if (arguments.length == 2) {
             Player player = Bukkit.getPlayer(arguments[0]);
             if (player == null) {

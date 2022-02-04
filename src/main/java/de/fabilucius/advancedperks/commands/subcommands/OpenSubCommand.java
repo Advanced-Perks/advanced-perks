@@ -1,20 +1,20 @@
-package de.fabilucius.advancedperks.commands.impl.subcommands;
+package de.fabilucius.advancedperks.commands.subcommands;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.commands.SubCommand;
 import de.fabilucius.advancedperks.commons.ReplaceLogic;
 import de.fabilucius.advancedperks.gui.PerkGuiWindow;
 import de.fabilucius.advancedperks.utilities.MessageConfigReceiver;
+import de.fabilucius.sympel.command.types.AbstractSubCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
-@SubCommand.Details(identifier = "open", permission = "advancedperks.command.open", aliases = {"o"})
-public class OpenSubCommand extends SubCommand {
+@AbstractSubCommand.Details(identifier = "open", permission = "advancedperks.command.open", aliases = {"o"})
+public class OpenSubCommand extends AbstractSubCommand {
     @Override
-    public void handleCommand(CommandSender commandSender, String... arguments) {
+    public void handleCommandExecute(CommandSender commandSender, String... arguments) {
         if (arguments.length == 0) {
             if (commandSender instanceof Player) {
                 Player player = (Player) commandSender;

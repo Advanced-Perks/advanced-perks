@@ -1,7 +1,7 @@
 package de.fabilucius.advancedperks;
 
 import de.fabilucius.advancedperks.api.AdvancedPerksExpansion;
-import de.fabilucius.advancedperks.commands.impl.PerksCommand;
+import de.fabilucius.advancedperks.commands.PerksCommand;
 import de.fabilucius.advancedperks.commons.Metrics;
 import de.fabilucius.advancedperks.commons.guisystem.management.GuiManager;
 import de.fabilucius.advancedperks.compatability.CompatabilityController;

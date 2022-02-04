@@ -1,11 +1,12 @@
-package de.fabilucius.advancedperks.commands.impl;
+package de.fabilucius.advancedperks.commands;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.commands.AbstractCommand;
-import de.fabilucius.advancedperks.commands.SubCommand;
-import de.fabilucius.advancedperks.commands.impl.subcommands.OpenSubCommand;
-import de.fabilucius.advancedperks.commands.impl.subcommands.ToggleSubCommand;
+import de.fabilucius.advancedperks.commands.subcommands.OpenSubCommand;
+import de.fabilucius.advancedperks.commands.subcommands.ToggleSubCommand;
 import de.fabilucius.advancedperks.gui.PerkGuiWindow;
+import de.fabilucius.advancedperks.utilities.MessageConfigReceiver;
+import de.fabilucius.sympel.command.types.AbstractCommand;
+import de.fabilucius.sympel.command.types.AbstractSubCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -14,8 +15,13 @@ import java.util.stream.Collectors;
 
 @AbstractCommand.Details(identifier = "perks", subCommands = {OpenSubCommand.class, ToggleSubCommand.class})
 public class PerksCommand extends AbstractCommand {
+
+    public PerksCommand() {
+        this.setNoPermissionMessage(MessageConfigReceiver.getMessage("Command.No-Permission"));
+    }
+
     @Override
-    public void handleCommand(CommandSender commandSender, String... arguments) {
+    public void handleCommandExecute(CommandSender commandSender, String... arguments) {
         if (commandSender instanceof Player) {
             if (arguments.length == 0) {
                 Player player = (Player) commandSender;
@@ -28,11 +34,11 @@ public class PerksCommand extends AbstractCommand {
     public List<String> handleTabComplete(CommandSender commandSender, String... arguments) {
         if (arguments.length == 0 || arguments[0].length() == 1) {
             return this.getSubCommands().stream()
-                    .map(SubCommand::getIdentifier)
+                    .map(AbstractSubCommand::getIdentifier)
                     .collect(Collectors.toList());
         } else {
             return this.getSubCommands().stream()
-                    .map(SubCommand::getIdentifier)
+                    .map(AbstractSubCommand::getIdentifier)
                     .filter(subCommands -> subCommands.toLowerCase().startsWith(arguments[0].toLowerCase()))
                     .collect(Collectors.toList());
         }

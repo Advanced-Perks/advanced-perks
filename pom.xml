@@ -17,11 +17,20 @@
         </profile>
     </profiles>
 
+    <distributionManagement>
+        <repository>
+            <id>${deploy.type}</id>
+            <url>${deploy.url}</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
         <release.type>Test</release.type>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <deploy.type>artifactory</deploy.type>
+        <deploy.url>https://fabianbullik.jfrog.io/artifactory/release-artifact-repo</deploy.url>
     </properties>
 
     <repositories>

@@ -6,7 +6,7 @@
 
     <groupId>de.fabilucius</groupId>
     <artifactId>advanced-perks</artifactId>
-    <version>2.4.2</version>
+    <version>2.4.3</version>
 
     <profiles>
         <profile>
@@ -81,7 +81,7 @@
         <dependency>
             <groupId>de.fabilucius</groupId>
             <artifactId>sympel-database</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

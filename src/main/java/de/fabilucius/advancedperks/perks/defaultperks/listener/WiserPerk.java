@@ -27,6 +27,7 @@ public class WiserPerk extends AbstractListenerPerk {
         PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(event.getEntity());
         if (perkData.isPerkActivated(this)) {
             event.setKeepLevel(true);
+            event.setDroppedExp(0);
         }
     }
 

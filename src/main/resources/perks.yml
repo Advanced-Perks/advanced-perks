@@ -14,6 +14,13 @@
 #    - 'spawn'
 #  Enabled: false
 #  Icon: 'BAT_SPAWN_EGG'
+
+Telekinesis:
+  Display-Name: '&5&lTelekinesis Perk'
+  Description:
+    - '&7&oActivating this perk will grant the player the ability'
+    - '&7&oto teleport mined items directly into the players inventory.'
+  Permission: 'advancedperks.use.telekinesis'
 Smelter:
   Display-Name: '&c&lSmelter Perk'
   Description:

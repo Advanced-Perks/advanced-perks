@@ -5,12 +5,9 @@ import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.EventPriority; 
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Iterator;
 
 public class SmelterPerk extends AbstractListenerPerk {
     public SmelterPerk() {
@@ -18,7 +15,7 @@ public class SmelterPerk extends AbstractListenerPerk {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onBlockBreak(BlockDropItemEvent event) {
+    public void onBlockDropItem(BlockDropItemEvent event) {
         for (Item item : event.getItems()) {
             Material material = item.getItemStack().getType();
             switch (material) {

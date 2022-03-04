@@ -111,6 +111,7 @@ Bird:
     - '&7&oActivating this perk will grant the player the ability'
     - '&7&oto fly even in gamemode survival.'
   Permission: 'advancedperks.use.bird'
+  Disable-In-Lava: false
 Insomnia:
   Display-Name: '&9&lInsomnia Perk'
   Description:

@@ -6,7 +6,7 @@
 
     <groupId>de.fabilucius</groupId>
     <artifactId>advanced-perks</artifactId>
-    <version>2.4.6</version>
+    <version>2.5.0</version>
 
     <profiles>
         <profile>

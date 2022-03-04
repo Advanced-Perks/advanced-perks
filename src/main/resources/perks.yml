@@ -14,7 +14,12 @@
 #    - 'spawn'
 #  Enabled: false
 #  Icon: 'BAT_SPAWN_EGG'
-
+Smelter:
+  Display-Name: '&c&lSmelter Perk'
+  Description:
+    - '&7&oActivating this perk will grant the player the ability'
+    - '&7&oto convert ores directly into their smelted equivalent.'
+  Permission: 'advancedperks.use.smelter'
 Bat:
   Display-Name: '&8&lBat Perk'
   Description:

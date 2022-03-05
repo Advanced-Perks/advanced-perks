@@ -5,7 +5,6 @@ import de.fabilucius.advancedperks.commons.guisystem.GuiWindow;
 import de.fabilucius.advancedperks.gui.elements.*;
 import de.fabilucius.advancedperks.perks.Perk;
 import de.fabilucius.advancedperks.utilities.IterableUtilities;
-import de.fabilucius.advancedperks.utilities.MessageConfigReceiver;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -17,7 +16,7 @@ public class PerkGuiWindow extends GuiWindow {
     public static final int PERKS_PER_PAGE = 8;
 
     public PerkGuiWindow(Player player) {
-        super(Bukkit.createInventory(null, 54, MessageConfigReceiver.getMessage("Gui.Title")), player);
+        super(Bukkit.createInventory(null, 54, AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Title")), player);
     }
 
     @Override

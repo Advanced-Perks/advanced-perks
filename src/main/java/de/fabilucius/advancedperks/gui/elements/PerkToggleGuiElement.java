@@ -6,7 +6,6 @@ import de.fabilucius.advancedperks.commons.guisystem.GuiWindow;
 import de.fabilucius.advancedperks.commons.guisystem.annotation.CancelInventoryInteraction;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.Perk;
-import de.fabilucius.advancedperks.utilities.MessageConfigReceiver;
 import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -15,10 +14,10 @@ import org.bukkit.inventory.ItemStack;
 public class PerkToggleGuiElement extends GuiElement {
 
     private static final ItemStack ACTIVATED_ICON = ItemStackBuilder.fromApproximateMaterial("LIME_DYE")
-            .setDisplayName(MessageConfigReceiver.getMessage("Gui.Perk-Toggle.Activated"))
+            .setDisplayName(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Perk-Toggle.Activated"))
             .build();
     private static final ItemStack DEACTIVATED_ICON = ItemStackBuilder.fromApproximateMaterial("GRAY_DYE")
-            .setDisplayName(MessageConfigReceiver.getMessage("Gui.Perk-Toggle.Deactivated"))
+            .setDisplayName(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Perk-Toggle.Deactivated"))
             .build();
 
     private final Perk perk;

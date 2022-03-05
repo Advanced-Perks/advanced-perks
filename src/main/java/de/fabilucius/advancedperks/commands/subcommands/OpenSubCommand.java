@@ -1,10 +1,9 @@
 package de.fabilucius.advancedperks.commands.subcommands;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.commons.ReplaceLogic;
 import de.fabilucius.advancedperks.gui.PerkGuiWindow;
-import de.fabilucius.advancedperks.utilities.MessageConfigReceiver;
 import de.fabilucius.sympel.command.types.AbstractSubCommand;
+import de.fabilucius.sympel.configuration.utilities.ReplaceLogic;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -24,13 +23,13 @@ public class OpenSubCommand extends AbstractSubCommand {
         } else if (arguments.length == 1) {
             Player target = Bukkit.getPlayer(arguments[0]);
             if (target == null) {
-                commandSender.sendMessage(MessageConfigReceiver.getMessageWithReplace("Command.Player-Offline", new ReplaceLogic("<name>", arguments[0])));
+                commandSender.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.Player-Offline", new ReplaceLogic("<name>", arguments[0])));
                 return;
             }
             AdvancedPerks.getInstance().getGuiManager().openGui(target, new PerkGuiWindow(target));
             return;
         }
-        commandSender.sendMessage(MessageConfigReceiver.getMessage("Command.Open.Syntax"));
+        commandSender.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.Open.Syntax"));
     }
 
     @Override

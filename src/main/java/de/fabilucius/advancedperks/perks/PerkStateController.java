@@ -2,12 +2,11 @@ package de.fabilucius.advancedperks.perks;
 
 import com.google.common.collect.Lists;
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.commons.ReplaceLogic;
 import de.fabilucius.advancedperks.commons.sql.SqlType;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.tasks.SavePerkDataTask;
 import de.fabilucius.advancedperks.settings.SettingsConfiguration;
-import de.fabilucius.advancedperks.utilities.MessageConfigReceiver;
+import de.fabilucius.sympel.configuration.utilities.ReplaceLogic;
 import de.fabilucius.sympel.database.AbstractDatabase;
 import de.fabilucius.sympel.database.details.Credentials;
 import de.fabilucius.sympel.database.types.FileDatabase;
@@ -36,9 +35,9 @@ public class PerkStateController {
 
     public PerkStateController() {
         SettingsConfiguration configuration = AdvancedPerks.getInstance().getSettingsConfiguration();
-        if (configuration.getSqlType().equals(SqlType.DATABASE)) {
-            Credentials credentials = Credentials.withAuth(configuration.getSqlUserName(), configuration.getSqlPassword());
-            this.abstractDatabase = RemoteDatabase.withCredentials(configuration.getSqlUrl(), credentials);
+        if (configuration.SQL_TYPE.equals(SqlType.DATABASE)) {
+            Credentials credentials = Credentials.withAuth(configuration.SQL_USERNAME.get(), configuration.SQL_PASSWORD.get());
+            this.abstractDatabase = RemoteDatabase.withCredentials(configuration.SQL_URL.get(), credentials);
             LOGGER.log(Level.INFO, "Successfully connected to the database.");
         } else {
             File databaseFile = new File(AdvancedPerks.getInstance().getDataFolder(), "data.db");
@@ -55,7 +54,7 @@ public class PerkStateController {
             LOGGER.log(Level.INFO, "Successfully connected to the local file based database.");
         }
         this.getAbstractDatabase().customUpdate("CREATE TABLE IF NOT EXISTS activated_perks(UUID varchar(36) PRIMARY KEY,PERKS varchar(999))");
-        this.globalMaxPerks = AdvancedPerks.getInstance().getSettingsConfiguration().getGlobalMaxPerks();
+        this.globalMaxPerks = AdvancedPerks.getInstance().getSettingsConfiguration().GLOBAL_MAX_PERKS.get();
     }
 
     public void disableAllPerks(Player player) {
@@ -89,7 +88,7 @@ public class PerkStateController {
         if (this.getGlobalMaxPerks() != -1 && perkData.getAmountOfActivatedPerks() >= maxAmountOfPerks) {
             perkData.refreshMaxPerks();
             if (perkData.getAmountOfActivatedPerks() >= perkData.getMaxPerks()) {
-                player.sendMessage(MessageConfigReceiver.getMessageWithReplace("Perks.Too-Many-Perks-Enabled",
+                player.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Perks.Too-Many-Perks-Enabled",
                         new ReplaceLogic("<amount>", String.valueOf(maxAmountOfPerks))));
                 return;
             }
@@ -97,13 +96,13 @@ public class PerkStateController {
 
         /* perk permission checking */
         if (!perk.getPermission().isEmpty() && !player.hasPermission(perk.getPermission())) {
-            player.sendMessage(MessageConfigReceiver.getMessage("Perks.No-Permission"));
+            player.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Perks.No-Permission"));
             return;
         }
 
         /* perk world checking */
         if (perk.getDisabledWorlds().contains(player.getWorld().getName())) {
-            player.sendMessage(MessageConfigReceiver.getMessageWithReplace("Perks.Disabled-By-World",
+            player.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Perks.Disabled-By-World",
                     new ReplaceLogic("<perk_name>", perk.getIdentifier()),
                     new ReplaceLogic("<world_name>", player.getWorld().getName())));
             return;
@@ -164,7 +163,7 @@ public class PerkStateController {
             this.getExecutorService().invokeAll(savePerkDataTasks);
         } catch (InterruptedException interruptedException) {
             LOGGER.log(Level.SEVERE, "There was an error while shutting down the PerkStateController:", interruptedException);
-        }finally {
+        } finally {
             this.getAbstractDatabase().closeConnection();
         }
     }

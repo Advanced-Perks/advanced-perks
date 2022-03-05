@@ -4,7 +4,6 @@ import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commands.subcommands.OpenSubCommand;
 import de.fabilucius.advancedperks.commands.subcommands.ToggleSubCommand;
 import de.fabilucius.advancedperks.gui.PerkGuiWindow;
-import de.fabilucius.advancedperks.utilities.MessageConfigReceiver;
 import de.fabilucius.sympel.command.types.AbstractCommand;
 import de.fabilucius.sympel.command.types.AbstractSubCommand;
 import org.bukkit.command.CommandSender;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 public class PerksCommand extends AbstractCommand {
 
     public PerksCommand() {
-        this.setNoPermissionMessage(MessageConfigReceiver.getMessage("Command.No-Permission"));
+        this.setNoPermissionMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.No-Permission"));
     }
 
     @Override

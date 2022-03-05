@@ -4,7 +4,6 @@ import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.guisystem.GuiElement;
 import de.fabilucius.advancedperks.commons.guisystem.GuiWindow;
 import de.fabilucius.advancedperks.commons.guisystem.annotation.CancelInventoryInteraction;
-import de.fabilucius.advancedperks.utilities.MessageConfigReceiver;
 import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,8 +17,8 @@ public class DisableAllPerksElement extends GuiElement {
                 AdvancedPerks.getInstance().getPerkStateController().disableAllPerks(player);
             }
         }, ItemStackBuilder.fromMaterial(Material.REDSTONE_BLOCK)
-                .setDisplayName(MessageConfigReceiver.getMessage("Gui.Disable-All-Perks.Name"))
-                .setDescription(MessageConfigReceiver.getMessageList("Gui.Disable-All-Perks.Description"))
+                .setDisplayName(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Disable-All-Perks.Name"))
+                .setDescription(AdvancedPerks.getInstance().getMessageConfiguration().getMessageList("Gui.Disable-All-Perks.Description"))
                 .build());
     }
 }

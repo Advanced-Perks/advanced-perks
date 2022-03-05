@@ -42,7 +42,7 @@ public class AdvancedPerks extends JavaPlugin {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new AdvancedPerksExpansion().register();
         }
-        if (this.getSettingsConfiguration().isMetricsEnabled()) {
+        if (this.getSettingsConfiguration().METRICS_ENABLED.get()) {
             new Metrics(this, 12771);
         }
     }

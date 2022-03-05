@@ -1,7 +1,9 @@
 package de.fabilucius.advancedperks.perks;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.sympel.configuration.types.PluginConfiguration;
+import de.fabilucius.sympel.configuration.AbstractConfig;
+import de.fabilucius.sympel.configuration.value.types.ListValue;
+import de.fabilucius.sympel.configuration.value.types.SingleValue;
 import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import de.fabilucius.sympel.item.external.XMaterial;
 import org.bukkit.ChatColor;
@@ -11,42 +13,40 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PerksConfiguration extends PluginConfiguration {
+public class PerksConfiguration extends AbstractConfig {
     public PerksConfiguration() {
         super(AdvancedPerks.getInstance(), "perks.yml");
     }
 
     public String getDisplayName(Perk perk) {
-        String displayName = this.returnFrom(perk.getIdentifier() + ".Display-Name")
-                .getAsWithDefault("unable to load displayname of " + perk.getIdentifier(), String.class);
-        return ChatColor.translateAlternateColorCodes('&', displayName);
+        SingleValue<String> displayName = new SingleValue<>(this, perk.getIdentifier() + ".Display-Name", "couldn't load displayname", String.class, "Set description");
+        return ChatColor.translateAlternateColorCodes('&', displayName.get());
     }
 
     public String getPermission(Perk perk) {
-        return this.returnFrom(perk.getIdentifier() + ".Permission")
-                .getAsWithDefault("", String.class);
+        SingleValue<String> permission = new SingleValue<>(this, perk.getIdentifier() + ".Permission", "", String.class, "Set description");
+        return permission.get();
     }
 
     public List<String> getDescription(Perk perk) {
-        List<String> description = this.returnFrom(perk.getIdentifier() + ".Description")
-                .getAsWithDefault(Collections.singletonList("unable to load description of " + perk.getIdentifier()), List.class);
-        return description.stream()
+        ListValue<String> description = new ListValue<>(this, perk.getIdentifier() + ".Description", "Set descriptioin", String.class, Collections.emptyList());
+        return description.get().stream()
                 .map(line -> ChatColor.translateAlternateColorCodes('&', line))
                 .collect(Collectors.toList());
     }
 
     public List<String> getDisabledWorlds(Perk perk) {
-        return this.returnFrom(perk.getIdentifier() + ".Disabled-Worlds")
-                .getAsWithDefault(Collections.emptyList(), List.class);
+        ListValue<String> disabledWorlds = new ListValue<>(this, perk.getIdentifier() + ".Disabled-Worlds", "Set descriptioin", String.class, Collections.emptyList());
+        return disabledWorlds.get();
     }
 
     public boolean isEnabled(Perk perk) {
-        return this.returnFrom(perk.getIdentifier() + ".Enabled")
-                .getAsWithDefault(true, Boolean.class);
+        SingleValue<Boolean> enabled = new SingleValue<>(this, perk.getIdentifier() + ".Enabled", "Set descriotun", Boolean.class, true);
+        return enabled.get();
     }
 
     public ItemStack getIcon(Perk perk) {
-        String icon = this.returnFrom(perk.getIdentifier() + ".Icon").getAs(String.class);
+        String icon = new SingleValue<>(this, perk.getIdentifier() + ".Icon", "Desciripotion", String.class, null).get();
         if (icon == null || icon.isEmpty()) {
             return null;
         }

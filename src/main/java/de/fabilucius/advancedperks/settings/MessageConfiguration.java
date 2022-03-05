@@ -1,11 +1,17 @@
 package de.fabilucius.advancedperks.settings;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.sympel.configuration.types.PluginConfiguration;
+import de.fabilucius.sympel.configuration.types.MessageConfig;
+import de.fabilucius.sympel.configuration.value.types.SingleValue;
 
-public class MessageConfiguration extends PluginConfiguration {
+public class MessageConfiguration extends MessageConfig {
     public MessageConfiguration() {
-        super(AdvancedPerks.getInstance(), "message.yml");
+        super(AdvancedPerks.getInstance(), "message.yml", "<prefix>", '&');
     }
 
+    @Override
+    public String getPrefix() {
+        SingleValue<String> prefix = new SingleValue<>(this, "Prefix", "The prefix for all messages of the plugin.", String.class, "§8[§6Advanced Perks§8]");
+        return prefix.get();
+    }
 }

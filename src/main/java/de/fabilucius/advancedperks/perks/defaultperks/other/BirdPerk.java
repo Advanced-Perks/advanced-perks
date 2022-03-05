@@ -3,6 +3,7 @@ package de.fabilucius.advancedperks.perks.defaultperks.other;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.AbstractPerk;
+import de.fabilucius.sympel.configuration.value.types.SingleValue;
 import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -17,7 +18,8 @@ public class BirdPerk extends AbstractPerk implements Listener {
 
     public BirdPerk() {
         super("Bird");
-        if (AdvancedPerks.getInstance().getPerksConfiguration().returnFrom("Bird.Disable-In-Lava").getAsWithDefault(false, Boolean.class)) {
+        SingleValue<Boolean> disableInLava = new SingleValue<>(AdvancedPerks.getInstance().getPerksConfiguration(), "Bird.Disable-In-Lava", "Option to disable the Bird perk in the lava.", Boolean.class, false);
+        if (disableInLava.get()) {
             Bukkit.getPluginManager().registerEvents(this, AdvancedPerks.getInstance());
         }
     }

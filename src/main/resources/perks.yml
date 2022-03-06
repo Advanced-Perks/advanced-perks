@@ -118,3 +118,9 @@ Insomnia:
     - '&7&oActivating this perk will grant the player the ability'
     - '&7&oto not trigger phantom spawning when not sleeping.'
   Permission: 'advancedperks.use.insomnia'
+Farmer:
+  Display-Name: '&a&lFarmer Perk'
+  Description:
+    - '&7&oActivating this perk will ensure that farmed crops will'
+    - '&7&obe automatically replanted.'
+  Permission: 'advancedperks.use.farmer'

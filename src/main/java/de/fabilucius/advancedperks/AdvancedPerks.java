@@ -19,38 +19,38 @@ import java.util.logging.Logger;
 public class AdvancedPerks extends JavaPlugin {
 
     public static final Logger LOGGER = Bukkit.getLogger();
-    private PerkDataRepository perkDataRepository;
-    private SettingsConfiguration settingsConfiguration;
-    private PerksConfiguration perksConfiguration;
-    private MessageConfiguration messageConfiguration;
-    private PerkStateController perkStateController;
-    private PerkListCache perkRegistry;
-    private GuiManager guiManager;
-    private CompatabilityController compatabilityController;
+    private static PerkDataRepository perkDataRepository;
+    private static SettingsConfiguration settingsConfiguration;
+    private static PerksConfiguration perksConfiguration;
+    private static MessageConfiguration messageConfiguration;
+    private static PerkStateController perkStateController;
+    private static PerkListCache perkRegistry;
+    private static GuiManager guiManager;
+    private static CompatabilityController compatabilityController;
 
     @Override
     public void onEnable() {
-        this.settingsConfiguration = new SettingsConfiguration();
-        this.perksConfiguration = new PerksConfiguration();
-        this.perkDataRepository = new PerkDataRepository();
-        this.messageConfiguration = new MessageConfiguration();
-        this.perkRegistry = new PerkListCache();
-        this.guiManager = new GuiManager();
-        this.perkStateController = new PerkStateController();
-        this.compatabilityController = new CompatabilityController();
+        settingsConfiguration = new SettingsConfiguration();
+        perksConfiguration = new PerksConfiguration();
+        perkDataRepository = new PerkDataRepository();
+        messageConfiguration = new MessageConfiguration();
+        perkRegistry = new PerkListCache();
+        guiManager = new GuiManager();
+        perkStateController = new PerkStateController();
+        compatabilityController = new CompatabilityController();
         new PerksCommand();
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new AdvancedPerksExpansion().register();
         }
-        if (this.getSettingsConfiguration().METRICS_ENABLED.get()) {
+        if (getSettingsConfiguration().METRICS_ENABLED.get()) {
             new Metrics(this, 12771);
         }
     }
 
     @Override
     public void onDisable() {
-        this.getPerkStateController().handleShutdown();
-        this.getGuiManager().handleShutdown();
+        getPerkStateController().handleShutdown();
+        getGuiManager().handleShutdown();
     }
 
     /* the getter and setter of this class */
@@ -59,35 +59,35 @@ public class AdvancedPerks extends JavaPlugin {
         return getPlugin(AdvancedPerks.class);
     }
 
-    public SettingsConfiguration getSettingsConfiguration() {
+    public static SettingsConfiguration getSettingsConfiguration() {
         return settingsConfiguration;
     }
 
-    public PerksConfiguration getPerksConfiguration() {
+    public static PerksConfiguration getPerksConfiguration() {
         return perksConfiguration;
     }
 
-    public PerkDataRepository getPerkDataRepository() {
+    public static PerkDataRepository getPerkDataRepository() {
         return perkDataRepository;
     }
 
-    public GuiManager getGuiManager() {
+    public static GuiManager getGuiManager() {
         return guiManager;
     }
 
-    public MessageConfiguration getMessageConfiguration() {
+    public static MessageConfiguration getMessageConfiguration() {
         return messageConfiguration;
     }
 
-    public PerkListCache getPerkRegistry() {
+    public static PerkListCache getPerkRegistry() {
         return perkRegistry;
     }
 
-    public PerkStateController getPerkStateController() {
+    public static PerkStateController getPerkStateController() {
         return perkStateController;
     }
 
-    public CompatabilityController getCompatabilityController() {
+    public static CompatabilityController getCompatabilityController() {
         return compatabilityController;
     }
 }

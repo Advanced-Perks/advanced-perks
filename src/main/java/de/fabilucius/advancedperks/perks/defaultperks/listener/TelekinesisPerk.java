@@ -23,7 +23,7 @@ public class TelekinesisPerk extends AbstractListenerPerk {
         if (event.isCancelled()) {
             return;
         }
-        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(event.getPlayer());
+        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(event.getPlayer());
         if (perkData.isPerkActivated(this)) {
             Iterator<Item> iterator = event.getItems().iterator();
             while (iterator.hasNext()) {

@@ -19,29 +19,29 @@ public class ToggleSubCommand extends AbstractSubCommand {
         if (arguments.length == 2) {
             Player player = Bukkit.getPlayer(arguments[0]);
             if (player == null) {
-                commandSender.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.Player-Offline", new ReplaceLogic("<name>", arguments[0])));
+                commandSender.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Command.Player-Offline", new ReplaceLogic("<name>", arguments[0])));
                 return;
             }
-            Perk perk = AdvancedPerks.getInstance().getPerkRegistry().getPerkByIdentifier(arguments[1]);
+            Perk perk = AdvancedPerks.getPerkRegistry().getPerkByIdentifier(arguments[1]);
             if (perk == null) {
-                commandSender.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.Toggle.Perk-Not-Found", new ReplaceLogic("<perk>", arguments[1])));
+                commandSender.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Command.Toggle.Perk-Not-Found", new ReplaceLogic("<perk>", arguments[1])));
                 return;
             }
-            AdvancedPerks.getInstance().getPerkStateController().forceTogglePerk(player, perk);
+            AdvancedPerks.getPerkStateController().forceTogglePerk(player, perk);
             return;
         }
-        commandSender.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.Toggle.Syntax"));
+        commandSender.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Command.Toggle.Syntax"));
     }
 
     @Override
     public List<String> handleTabComplete(CommandSender commandSender, String... arguments) {
         if (arguments.length == 2) {
             if (arguments[1].isEmpty()) {
-                return AdvancedPerks.getInstance().getPerkRegistry().getPerks().stream()
+                return AdvancedPerks.getPerkRegistry().getPerks().stream()
                         .map(Perk::getIdentifier)
                         .collect(Collectors.toList());
             } else {
-                return AdvancedPerks.getInstance().getPerkRegistry().getPerks().stream()
+                return AdvancedPerks.getPerkRegistry().getPerks().stream()
                         .map(Perk::getIdentifier)
                         .filter(identifier -> identifier.toLowerCase().startsWith(arguments[1].toLowerCase()))
                         .collect(Collectors.toList());

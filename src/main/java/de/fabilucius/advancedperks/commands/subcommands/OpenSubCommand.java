@@ -17,19 +17,19 @@ public class OpenSubCommand extends AbstractSubCommand {
         if (arguments.length == 0) {
             if (commandSender instanceof Player) {
                 Player player = (Player) commandSender;
-                AdvancedPerks.getInstance().getGuiManager().openGui(player, new PerkGuiWindow(player));
+                AdvancedPerks.getGuiManager().openGui(player, new PerkGuiWindow(player));
             }
             return;
         } else if (arguments.length == 1) {
             Player target = Bukkit.getPlayer(arguments[0]);
             if (target == null) {
-                commandSender.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.Player-Offline", new ReplaceLogic("<name>", arguments[0])));
+                commandSender.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Command.Player-Offline", new ReplaceLogic("<name>", arguments[0])));
                 return;
             }
-            AdvancedPerks.getInstance().getGuiManager().openGui(target, new PerkGuiWindow(target));
+            AdvancedPerks.getGuiManager().openGui(target, new PerkGuiWindow(target));
             return;
         }
-        commandSender.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.Open.Syntax"));
+        commandSender.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Command.Open.Syntax"));
     }
 
     @Override

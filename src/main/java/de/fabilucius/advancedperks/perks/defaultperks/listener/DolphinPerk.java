@@ -28,7 +28,7 @@ public class DolphinPerk extends AbstractListenerPerk {
     @EventHandler
     public void onPlayerToggleSneak(PlayerToggleSneakEvent playerToggleSneakEvent) {
         Player player = playerToggleSneakEvent.getPlayer();
-        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
+        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
         if (perkData.isPerkActivated(this) && playerToggleSneakEvent.isSneaking()) {
             Material playersBlock = player.getLocation().getBlock().getType();
             if (playersBlock == Material.WATER) {

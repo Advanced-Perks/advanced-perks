@@ -28,7 +28,7 @@ public class ChickenPerk extends AbstractListenerPerk {
     public void onEntityDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
-            PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
+            PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
             boolean shouldCancel = event.getCause().equals(EntityDamageEvent.DamageCause.FALL) && perkData.isPerkActivated(this);
             /* To prevent overwriting existing conditions from other plugins */
             if (shouldCancel) {

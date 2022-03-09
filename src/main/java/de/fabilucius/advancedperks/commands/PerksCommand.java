@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class PerksCommand extends AbstractCommand {
 
     public PerksCommand() {
-        this.setNoPermissionMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.No-Permission"));
+        this.setNoPermissionMessage(AdvancedPerks.getMessageConfiguration().getMessage("Command.No-Permission"));
     }
 
     @Override
@@ -24,7 +24,7 @@ public class PerksCommand extends AbstractCommand {
         if (commandSender instanceof Player) {
             if (arguments.length == 0) {
                 Player player = (Player) commandSender;
-                AdvancedPerks.getInstance().getGuiManager().openGui(player, new PerkGuiWindow(player));
+                AdvancedPerks.getGuiManager().openGui(player, new PerkGuiWindow(player));
             }
         }
     }

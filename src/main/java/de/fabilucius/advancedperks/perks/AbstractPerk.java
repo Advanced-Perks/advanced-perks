@@ -8,12 +8,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public abstract class AbstractPerk implements Perk {
 
@@ -53,20 +50,12 @@ public abstract class AbstractPerk implements Perk {
     public abstract ItemStack getDefaultIcon();
 
     private void validatePerkIntegrity() {
-        if (NullSafety.isAnyNull(this.getDisplayName(), this.getPermission(), this.getDescription(), this.getIcon())) {
+        try {
+            NullSafety.validateNotNull(this.getDisplayName(), this.getPermission(), this.getDescription(), this.getIcon());
             this.enabled = false;
-            LOGGER.log(Level.SEVERE, String.format("Cannot create instance of perk %s, the following " +
-                    "fields are null:" + Arrays.stream(this.getClass().getDeclaredFields()).filter(field -> {
-                        try {
-                            return field.get(this) == null;
-                        } catch (Exception exception) {
-                            LOGGER.log(Level.SEVERE, String.format("Error while " +
-                                    "validating the integrity of perk %s:", this.getIdentifier()), exception);
-                            return false;
-                        }
-                    })
-                    .map(Field::getName)
-                    .collect(Collectors.joining(",")), this.getIdentifier()));
+        } catch (NullPointerException exception) {
+            LOGGER.log(Level.SEVERE, String.format("Cannot create instance of perk %s: %s",
+                    this.getClass().getName(), exception.getMessage()));
         }
     }
 

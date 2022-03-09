@@ -29,7 +29,7 @@ public abstract class AbstractPerk implements Perk {
 
     public AbstractPerk(String identifier) {
         this.identifier = identifier;
-        PerksConfiguration perksConfiguration = AdvancedPerks.getInstance().getPerksConfiguration();
+        PerksConfiguration perksConfiguration = AdvancedPerks.getPerksConfiguration();
         this.displayName = perksConfiguration.getDisplayName(this);
         this.permission = perksConfiguration.getPermission(this);
         this.description = perksConfiguration.getDescription(this);

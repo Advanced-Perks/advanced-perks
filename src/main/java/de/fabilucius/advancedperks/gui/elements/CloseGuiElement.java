@@ -13,8 +13,8 @@ public class CloseGuiElement extends GuiElement {
         super(guiWindow, (guiElement, event) -> {
             event.getWhoClicked().closeInventory();
         }, ItemStackBuilder.fromMaterial(Material.BARRIER)
-                .setDisplayName(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Close-Gui.Name"))
-                .setDescription(AdvancedPerks.getInstance().getMessageConfiguration().getMessageList("Gui.Close-Gui.Description"))
+                .setDisplayName(AdvancedPerks.getMessageConfiguration().getMessage("Gui.Close-Gui.Name"))
+                .setDescription(AdvancedPerks.getMessageConfiguration().getMessageList("Gui.Close-Gui.Description"))
                 .build());
     }
 }

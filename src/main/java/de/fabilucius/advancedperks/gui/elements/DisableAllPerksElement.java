@@ -14,11 +14,11 @@ public class DisableAllPerksElement extends GuiElement {
         super(guiWindow, (guiElement, event) -> {
             if (event.getWhoClicked() instanceof Player) {
                 Player player = (Player) event.getWhoClicked();
-                AdvancedPerks.getInstance().getPerkStateController().disableAllPerks(player);
+                AdvancedPerks.getPerkStateController().disableAllPerks(player);
             }
         }, ItemStackBuilder.fromMaterial(Material.REDSTONE_BLOCK)
-                .setDisplayName(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Disable-All-Perks.Name"))
-                .setDescription(AdvancedPerks.getInstance().getMessageConfiguration().getMessageList("Gui.Disable-All-Perks.Description"))
+                .setDisplayName(AdvancedPerks.getMessageConfiguration().getMessage("Gui.Disable-All-Perks.Name"))
+                .setDescription(AdvancedPerks.getMessageConfiguration().getMessageList("Gui.Disable-All-Perks.Description"))
                 .build());
     }
 }

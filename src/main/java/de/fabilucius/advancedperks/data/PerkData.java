@@ -19,7 +19,7 @@ public class PerkData {
     public PerkData(Player player) {
         this.player = player;
         this.maxPerks = this.queryMaxPerks();
-        AdvancedPerks.getInstance().getPerkStateController().loadPerkData(this);
+        AdvancedPerks.getPerkStateController().loadPerkData(this);
     }
 
     private int queryMaxPerks() {

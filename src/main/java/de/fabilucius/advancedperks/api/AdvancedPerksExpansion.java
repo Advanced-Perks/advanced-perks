@@ -12,9 +12,9 @@ public class AdvancedPerksExpansion extends PlaceholderExpansion {
     @Override
     public String onPlaceholderRequest(Player player, @NotNull String params) {
         if (player != null) {
-            Perk perk = AdvancedPerks.getInstance().getPerkRegistry().getPerkByIdentifier(params);
+            Perk perk = AdvancedPerks.getPerkRegistry().getPerkByIdentifier(params);
             if (perk != null) {
-                PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
+                PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
                 return String.valueOf(perkData.isPerkActivated(perk));
             }
         }

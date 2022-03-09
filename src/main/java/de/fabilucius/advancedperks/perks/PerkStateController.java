@@ -34,7 +34,7 @@ public class PerkStateController {
     private final int globalMaxPerks;
 
     public PerkStateController() {
-        SettingsConfiguration configuration = AdvancedPerks.getInstance().getSettingsConfiguration();
+        SettingsConfiguration configuration = AdvancedPerks.getSettingsConfiguration();
         if (configuration.SQL_TYPE.equals(SqlType.DATABASE)) {
             Credentials credentials = Credentials.withAuth(configuration.SQL_USERNAME.get(), configuration.SQL_PASSWORD.get());
             this.abstractDatabase = RemoteDatabase.withCredentials(configuration.SQL_URL.get(), credentials);
@@ -54,16 +54,16 @@ public class PerkStateController {
             LOGGER.log(Level.INFO, "Successfully connected to the local file based database.");
         }
         this.getAbstractDatabase().customUpdate("CREATE TABLE IF NOT EXISTS activated_perks(UUID varchar(36) PRIMARY KEY,PERKS varchar(999))");
-        this.globalMaxPerks = AdvancedPerks.getInstance().getSettingsConfiguration().GLOBAL_MAX_PERKS.get();
+        this.globalMaxPerks = AdvancedPerks.getSettingsConfiguration().GLOBAL_MAX_PERKS.get();
     }
 
     public void disableAllPerks(Player player) {
-        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
+        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
         Lists.newArrayList(perkData.getActivatedPerks()).forEach(perk -> this.disablePerk(player, perk));
     }
 
     public void forceTogglePerk(Player player, Perk perk) {
-        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
+        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
         if (perkData.isPerkActivated(perk)) {
             this.disablePerk(player, perk);
         } else {
@@ -72,7 +72,7 @@ public class PerkStateController {
     }
 
     public void togglePerk(Player player, Perk perk) {
-        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
+        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
         if (perkData.isPerkActivated(perk)) {
             this.disablePerk(player, perk);
         } else {
@@ -81,14 +81,14 @@ public class PerkStateController {
     }
 
     public void enablePerk(Player player, Perk perk) {
-        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
+        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
 
         /* max perk at once checking */
         int maxAmountOfPerks = Math.max(this.getGlobalMaxPerks(), perkData.getMaxPerks());
         if (this.getGlobalMaxPerks() != -1 && perkData.getAmountOfActivatedPerks() >= maxAmountOfPerks) {
             perkData.refreshMaxPerks();
             if (perkData.getAmountOfActivatedPerks() >= perkData.getMaxPerks()) {
-                player.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Perks.Too-Many-Perks-Enabled",
+                player.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Perks.Too-Many-Perks-Enabled",
                         new ReplaceLogic("<amount>", String.valueOf(maxAmountOfPerks))));
                 return;
             }
@@ -96,13 +96,13 @@ public class PerkStateController {
 
         /* perk permission checking */
         if (!perk.getPermission().isEmpty() && !player.hasPermission(perk.getPermission())) {
-            player.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Perks.No-Permission"));
+            player.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Perks.No-Permission"));
             return;
         }
 
         /* perk world checking */
         if (perk.getDisabledWorlds().contains(player.getWorld().getName())) {
-            player.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Perks.Disabled-By-World",
+            player.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Perks.Disabled-By-World",
                     new ReplaceLogic("<perk_name>", perk.getIdentifier()),
                     new ReplaceLogic("<world_name>", player.getWorld().getName())));
             return;
@@ -115,7 +115,7 @@ public class PerkStateController {
     }
 
     public void disablePerk(Player player, Perk perk) {
-        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
+        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
         if (perkData.isPerkActivated(perk)) {
             perkData.getActivatedPerks().remove(perk);
             perk.prePerkDisable(player);
@@ -123,7 +123,7 @@ public class PerkStateController {
     }
 
     public void forceEnablePerk(Player player, Perk perk) {
-        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
+        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
         if (!perkData.isPerkActivated(perk)) {
             perkData.getActivatedPerks().add(perk);
             perk.prePerkEnable(player);
@@ -139,7 +139,7 @@ public class PerkStateController {
                     while (resultSet.next()) {
                         String perkString = resultSet.getString("PERKS");
                         Arrays.stream(perkString.split(",")).forEach(line -> {
-                            Perk perk = AdvancedPerks.getInstance().getPerkRegistry().getPerkByIdentifier(line);
+                            Perk perk = AdvancedPerks.getPerkRegistry().getPerkByIdentifier(line);
                             if (perk != null) {
                                 this.enablePerk(perkData.getPlayer(), perk);
                             }
@@ -156,7 +156,7 @@ public class PerkStateController {
     }
 
     public void handleShutdown() {
-        List<SavePerkDataTask> savePerkDataTasks = AdvancedPerks.getInstance().getPerkDataRepository().getPerkDataCache().values().stream()
+        List<SavePerkDataTask> savePerkDataTasks = AdvancedPerks.getPerkDataRepository().getPerkDataCache().values().stream()
                 .map(perkData -> new SavePerkDataTask(perkData, this.getAbstractDatabase()))
                 .collect(Collectors.toList());
         try {

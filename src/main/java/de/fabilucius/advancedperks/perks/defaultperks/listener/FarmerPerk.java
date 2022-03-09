@@ -32,7 +32,7 @@ public class FarmerPerk extends AbstractListenerPerk {
                 return;
             }
         }
-        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(event.getPlayer());
+        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(event.getPlayer());
         if (perkData.isPerkActivated(this)) {
             Material crop = event.getBlock().getType();
             Bukkit.getScheduler().runTaskLater(AdvancedPerks.getInstance(), () -> {

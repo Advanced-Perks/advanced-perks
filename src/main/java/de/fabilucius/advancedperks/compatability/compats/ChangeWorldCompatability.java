@@ -11,10 +11,10 @@ public class ChangeWorldCompatability extends BukkitListener {
     @EventHandler
     public void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
-        AdvancedPerks.getInstance().getPerkDataRepository().consumePerkData(player, perkData -> {
+        AdvancedPerks.getPerkDataRepository().consumePerkData(player, perkData -> {
             perkData.getActivatedPerks().forEach(perk -> {
                 if (perk.getDisabledWorlds().contains(player.getWorld().getName())) {
-                    AdvancedPerks.getInstance().getPerkStateController().disablePerk(player, perk);
+                    AdvancedPerks.getPerkStateController().disablePerk(player, perk);
                 }
             });
         });

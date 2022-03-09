@@ -148,8 +148,8 @@ public class PerkStateController {
                             });
                         }
                     } catch (SQLException sqlException) {
-                        LOGGER.log(Level.WARNING,"There was an error while loading the perk data for "
-                                +perkData.getPlayer().getName()+":"+sqlException.getMessage());
+                        LOGGER.log(Level.WARNING, "There was an error while loading the perk data for "
+                                + perkData.getPlayer().getName() + ":" + sqlException.getMessage());
                     }
                 });
             }
@@ -164,13 +164,8 @@ public class PerkStateController {
         List<SavePerkDataTask> savePerkDataTasks = AdvancedPerks.getPerkDataRepository().getPerkDataCache().values().stream()
                 .map(perkData -> new SavePerkDataTask(perkData, this.getAbstractDatabase()))
                 .collect(Collectors.toList());
-        try {
-                this.getExecutorService().invokeAll(savePerkDataTasks);
-        } catch (InterruptedException interruptedException) {
-            LOGGER.log(Level.SEVERE, "There was an error while shutting down the PerkStateController:", interruptedException);
-        } finally {
-            this.getAbstractDatabase().closeConnection();
-        }
+        savePerkDataTasks.forEach(SavePerkDataTask::call);
+        this.getAbstractDatabase().closeConnection();
     }
 
     /* the getter and setter of this class */

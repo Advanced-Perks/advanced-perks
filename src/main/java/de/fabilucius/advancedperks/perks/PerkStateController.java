@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -134,20 +135,24 @@ public class PerkStateController {
         this.getExecutorService().submit(() -> {
             String uuid = perkData.getPlayer().getUniqueId().toString();
             ResultSet resultSet = this.getAbstractDatabase().selectQuery("activated_perks", Collections.singletonList("PERKS"), "UUID = '" + uuid + "'");
-            Bukkit.getScheduler().runTask(AdvancedPerks.getInstance(), () -> {
-                try {
-                    while (resultSet.next()) {
-                        String perkString = resultSet.getString("PERKS");
-                        Arrays.stream(perkString.split(",")).forEach(line -> {
-                            Perk perk = AdvancedPerks.getPerkRegistry().getPerkByIdentifier(line);
-                            if (perk != null) {
-                                this.enablePerk(perkData.getPlayer(), perk);
-                            }
-                        });
+            if (resultSet != null) {
+                Bukkit.getScheduler().runTask(AdvancedPerks.getInstance(), () -> {
+                    try {
+                        while (resultSet.next()) {
+                            String perkString = resultSet.getString("PERKS");
+                            Arrays.stream(perkString.split(",")).forEach(line -> {
+                                Perk perk = AdvancedPerks.getPerkRegistry().getPerkByIdentifier(line);
+                                if (perk != null) {
+                                    this.enablePerk(perkData.getPlayer(), perk);
+                                }
+                            });
+                        }
+                    } catch (SQLException sqlException) {
+                        LOGGER.log(Level.WARNING,"There was an error while loading the perk data for "
+                                +perkData.getPlayer().getName()+":"+sqlException.getMessage());
                     }
-                } catch (Exception ignored) {
-                }
-            });
+                });
+            }
         });
     }
 
@@ -160,7 +165,7 @@ public class PerkStateController {
                 .map(perkData -> new SavePerkDataTask(perkData, this.getAbstractDatabase()))
                 .collect(Collectors.toList());
         try {
-            this.getExecutorService().invokeAll(savePerkDataTasks);
+                this.getExecutorService().invokeAll(savePerkDataTasks);
         } catch (InterruptedException interruptedException) {
             LOGGER.log(Level.SEVERE, "There was an error while shutting down the PerkStateController:", interruptedException);
         } finally {

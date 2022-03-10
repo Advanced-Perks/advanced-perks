@@ -50,6 +50,9 @@ public abstract class AbstractPerk implements Perk {
     public abstract ItemStack getDefaultIcon();
 
     private void validatePerkIntegrity() {
+        if(this.getIdentifier().contains(",")){
+            throw new IllegalStateException("The identifier of a perk isn't allowed to contain a comma in order to make easy database serializing possible.");
+        }
         try {
             NullSafety.validateNotNull(this.getDisplayName(), this.getPermission(), this.getDescription(), this.getIcon());
             this.enabled = false;

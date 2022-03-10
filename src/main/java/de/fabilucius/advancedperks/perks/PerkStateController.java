@@ -54,7 +54,14 @@ public class PerkStateController {
             this.abstractDatabase = FileDatabase.fromFile(databaseFile);
             LOGGER.log(Level.INFO, "Successfully connected to the local file based database.");
         }
-        this.getAbstractDatabase().customUpdate("CREATE TABLE IF NOT EXISTS activated_perks(UUID varchar(36) PRIMARY KEY,PERKS varchar(999))");
+
+        this.getAbstractDatabase().customUpdate(
+                "CREATE TABLE IF NOT EXISTS `enabled_perks` " +
+                "(" +
+                "`uuid` varchar(36) PRIMARY KEY," +
+                "`perks` varchar(1024)" +
+                ")"
+        );
         this.globalMaxPerks = AdvancedPerks.getSettingsConfiguration().GLOBAL_MAX_PERKS.get();
     }
 

@@ -22,11 +22,11 @@ public class SavePerkDataTask implements Callable<String> {
 
     @Override
     public String call() {
-        this.getAbstractDatabase().insertOrUpdateQuery("activated_perks",
-                Arrays.asList("UUID", "PERKS"),
+        this.getAbstractDatabase().insertOrUpdateQuery("enabled_perks",
+                Arrays.asList("uuid", "perks"),
                 Arrays.asList(this.getUuid(), this.getPerks()),
-                "UUID = '" + this.getUuid() + "'",
-                "PERKS = '" + this.getPerks() + "'");
+                "uuid = '" + this.getUuid() + "'",
+                "perks = '" + this.getPerks() + "'");
         return "perk data saved";
     }
 

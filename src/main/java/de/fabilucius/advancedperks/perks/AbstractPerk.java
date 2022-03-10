@@ -32,7 +32,7 @@ public abstract class AbstractPerk implements Perk {
         this.description = perksConfiguration.getDescription(this);
         this.disabledWorlds = perksConfiguration.getDisabledWorlds(this);
         this.enabled = perksConfiguration.isEnabled(this);
-        icon = perksConfiguration.getIcon(this);
+        this.icon = perksConfiguration.getIcon(this);
         this.validatePerkIntegrity();
     }
 

@@ -2,7 +2,8 @@ package de.fabilucius.advancedperks.commands.subcommands;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.perks.Perk;
-import de.fabilucius.sympel.command.types.AbstractSubCommand;
+import de.fabilucius.sympel.command.command.AbstractSubCommand;
+import de.fabilucius.sympel.command.metadata.Permission;
 import de.fabilucius.sympel.configuration.utilities.ReplaceLogic;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -12,8 +13,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@AbstractSubCommand.Details(identifier = "toggle", aliases = {"toggle", "t"}, permission = "advancedperks.command.toggle")
+@Permission("advancedperks.command.toggle")
 public class ToggleSubCommand extends AbstractSubCommand {
+
+    public ToggleSubCommand() {
+        super("toggle");
+    }
+
     @Override
     public void handleCommandExecute(CommandSender commandSender, String... arguments) {
         if (arguments.length == 2) {

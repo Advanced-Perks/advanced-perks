@@ -4,10 +4,16 @@ import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.Perk;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class AdvancedPerksExpansion extends PlaceholderExpansion {
+
+    private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
 
     @Override
     public String onPlaceholderRequest(Player player, @NotNull String params) {

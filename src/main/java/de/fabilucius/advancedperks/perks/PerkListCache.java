@@ -6,6 +6,7 @@ import de.fabilucius.advancedperks.commons.ListCache;
 import de.fabilucius.advancedperks.event.types.PerkRegistryEvent;
 import de.fabilucius.sympel.multiversion.ServerVersion;
 import org.bukkit.Bukkit;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +15,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PerkListCache extends ListCache<Perk> {
+
+    private static PerkListCache instance;
+
+    public static PerkListCache getSingleton() {
+        if (instance == null) {
+            instance = new PerkListCache();
+        }
+        return instance;
+    }
+
+    private PerkListCache() {
+    }
 
     private static final Logger LOGGER = Bukkit.getLogger();
 
@@ -55,6 +68,7 @@ public class PerkListCache extends ListCache<Perk> {
         return this.getPerks().stream().noneMatch(perk -> perk.getIdentifier().equalsIgnoreCase(identifier));
     }
 
+    @Nullable
     public Perk getPerkByIdentifier(String identifier) {
         Predicate<Perk> byIdentifier = perk -> perk.getIdentifier().equalsIgnoreCase(identifier);
         return this.getEntry(byIdentifier);

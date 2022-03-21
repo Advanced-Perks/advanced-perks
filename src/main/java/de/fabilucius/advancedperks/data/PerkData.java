@@ -15,6 +15,7 @@ public class PerkData {
     private final Player player;
     private int maxPerks;
     private final Set<Perk> activatedPerks = Sets.newHashSet();
+    private final Set<String> unlockedPerks = Sets.newHashSet();
 
     public PerkData(Player player) {
         this.player = player;
@@ -34,6 +35,10 @@ public class PerkData {
         return possibleMaxPerks.isPresent() ? possibleMaxPerks.getAsInt() : -1;
     }
 
+    public boolean isPerkUnlocked(Perk perk) {
+        return this.getUnlockedPerks().contains(perk.getIdentifier());
+    }
+
     public boolean isPerkActivated(Perk perk) {
         return this.getActivatedPerks().contains(perk);
     }
@@ -50,6 +55,10 @@ public class PerkData {
 
     public int getMaxPerks() {
         return maxPerks;
+    }
+
+    public Set<String> getUnlockedPerks() {
+        return unlockedPerks;
     }
 
     public void setMaxPerks(int maxPerks) {

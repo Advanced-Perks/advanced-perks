@@ -1,5 +1,6 @@
 package de.fabilucius.advancedperks.perks;
 
+import de.fabilucius.sympel.configuration.value.types.SingleValue;
 import de.fabilucius.sympel.multiversion.ServerVersion;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -33,4 +34,6 @@ public interface Perk {
     void perkDisable(Player player);
 
     void prePerkDisable(Player player);
+
+    SingleValue<Number> getPrice();
 }

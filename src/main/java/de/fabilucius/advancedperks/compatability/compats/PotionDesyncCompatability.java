@@ -3,6 +3,7 @@ package de.fabilucius.advancedperks.compatability.compats;
 import com.google.common.collect.Queues;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.BukkitListener;
+import de.fabilucius.advancedperks.compatability.CompatabilityEntity;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.types.AbstractEffectPerk;
 import org.bukkit.Bukkit;
@@ -13,7 +14,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import java.util.ArrayDeque;
 
-public class PotionDesyncCompatability extends BukkitListener {
+public class PotionDesyncCompatability extends BukkitListener implements CompatabilityEntity {
 
     private final ArrayDeque<Player> desyncedPlayer = Queues.newArrayDeque();
 

@@ -1,10 +1,10 @@
 package de.fabilucius.advancedperks.commons;
 
+import de.fabilucius.advancedperks.AdvancedPerks;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
@@ -25,6 +25,13 @@ import java.util.zip.GZIPOutputStream;
 
 public class Metrics {
 
+    public static Metrics load() {
+        if (AdvancedPerks.getSettingsConfiguration().METRICS_ENABLED.get()) {
+            return new Metrics(AdvancedPerks.getInstance(), 12771);
+        }
+        return null;
+    }
+
     private final Plugin plugin;
 
     private final MetricsBase metricsBase;
@@ -36,7 +43,7 @@ public class Metrics {
      * @param serviceId The id of the service. It can be found at <a
      *                  href="https://bstats.org/what-is-my-plugin-id">What is my plugin id?</a>
      */
-    public Metrics(JavaPlugin plugin, int serviceId) {
+    public Metrics(AdvancedPerks plugin, int serviceId) {
         this.plugin = plugin;
         // Get the config file
         File bStatsFolder = new File(plugin.getDataFolder().getParentFile(), "bStats");

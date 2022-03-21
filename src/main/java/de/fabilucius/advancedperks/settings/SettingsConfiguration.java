@@ -10,17 +10,11 @@ public class SettingsConfiguration extends AbstractConfig {
         super(AdvancedPerks.getInstance(), "settings.yml");
     }
 
-    public final SingleValue<Boolean> METRICS_ENABLED = new SingleValue<>(this, "Global.Metrics-Enabled", "AWDa whda ", Boolean.class, true);
-
-    public final SingleValue<Integer>
-            GLOBAL_MAX_PERKS = new SingleValue<>(this, "Global.Max-Perks-Enabled", "aw ndja wjdak wjdn", Integer.class, -1);
-
-    public final SqlType SQL_TYPE = SqlType.getSqlTypeByName(new SingleValue<>(this, "Perk-Data-Save.Save-Method", " awda widj iawdi wja", String.class, "FILE").get());
-
-    public final SingleValue<String> SQL_URL = new SingleValue<>(this, "Perk-Data-Save.Sql-Url", " wauidhaiu whduia hwdiua hwiduh", String.class, "jdbc:mysql://127.0.0.1:3306/perks?useSSL=false");
-
-    public final SingleValue<String> SQL_USERNAME = new SingleValue<>(this, "Perk-Data-Save.Sql-UserName", "a wdja wodjawoidjoa wjdoi", String.class, "");
-
-    public final SingleValue<String> SQL_PASSWORD = new SingleValue<>(this, "Perk-Data-Save.Sql-Password", "d AWDnajkw ndkj anwdkja nwkjda", String.class, "");
+    public final SingleValue<Boolean> METRICS_ENABLED = new SingleValue<>(this, "Global.Metrics-Enabled", "This option controls if the metrics for the plugin should be enabled or not.", Boolean.class, true);
+    public final SingleValue<Integer> GLOBAL_MAX_PERKS = new SingleValue<>(this, "Global.Max-Perks-Enabled", "This value controls the global limit for everyone who doesn't bypass it on how many perks he can enabled at once.", Integer.class, -1);
+    public final SqlType SQL_TYPE = SqlType.getSqlTypeByName(new SingleValue<>(this, "Perk-Data-Save.Save-Method", "This value controls the way the perk data gets saved, you can choose between FILE and DATABASE based on what you want.", String.class, "FILE").get());
+    public final SingleValue<String> SQL_URL = new SingleValue<>(this, "Perk-Data-Save.Sql-Url", "If the save-method is DATABASE this is the connection string it uses to connect to the database.", String.class, "jdbc:mysql://127.0.0.1:3306/perks?useSSL=false");
+    public final SingleValue<String> SQL_USERNAME = new SingleValue<>(this, "Perk-Data-Save.Sql-UserName", "This is the username for the database authentication.", String.class, "");
+    public final SingleValue<String> SQL_PASSWORD = new SingleValue<>(this, "Perk-Data-Save.Sql-Password", "This is the password for the database authentication.", String.class, "");
 
 }

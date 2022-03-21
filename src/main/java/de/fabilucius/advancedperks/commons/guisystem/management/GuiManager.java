@@ -16,9 +16,19 @@ import java.util.HashMap;
 
 public class GuiManager implements Listener {
 
+    private static GuiManager instance;
+
+    /* Enforce a singleton to prevent multiple listener registrations */
+    public static GuiManager getSingleton() {
+        if (instance == null) {
+            instance = new GuiManager();
+        }
+        return instance;
+    }
+
     private final HashMap<GuiWindow, Player> openedGuis = Maps.newHashMap();
 
-    public GuiManager() {
+    private GuiManager() {
         Bukkit.getPluginManager().registerEvents(this, AdvancedPerks.getInstance());
     }
 
@@ -39,16 +49,17 @@ public class GuiManager implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        Inventory inventory = event.getClickedInventory();
-        if (inventory != null && event.getCurrentItem() != null) {
-            GuiWindow guiWindow = this.getGuiWindowByInventory(inventory);
-            if (guiWindow != null) {
+        Inventory inventory = event.getClick().isShiftClick() ? event.getInventory() : event.getClickedInventory();
+        GuiWindow guiWindow = this.getGuiWindowByInventory(inventory);
+        if (guiWindow != null) {
+            if (inventory != null && event.getCurrentItem() != null) {
                 GuiElement guiElement = guiWindow.getElementBySlot(event.getSlot());
                 if (guiElement != null) {
                     guiElement.acceptInventoryClick(event);
                     event.setCancelled(guiElement.shouldCancelInventoryInteraction());
                 }
             }
+            event.setCancelled(true);
         }
     }
 

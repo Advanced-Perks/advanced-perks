@@ -20,21 +20,27 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class PerkStateController {
 
-    private static final Logger LOGGER = Bukkit.getLogger();
+    private static PerkStateController instance;
 
-    private final ExecutorService executorService = Executors.newCachedThreadPool();
+    public static PerkStateController getSingleton() {
+        if (instance == null) {
+            instance = new PerkStateController();
+        }
+        return instance;
+    }
+
+    private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
+
     private final AbstractDatabase abstractDatabase;
     private final int globalMaxPerks;
 
-    public PerkStateController() {
+    private PerkStateController() {
         SettingsConfiguration configuration = AdvancedPerks.getSettingsConfiguration();
         if (configuration.SQL_TYPE.equals(SqlType.DATABASE)) {
             Credentials credentials = Credentials.withAuth(configuration.SQL_USERNAME.get(), configuration.SQL_PASSWORD.get());
@@ -56,97 +62,119 @@ public class PerkStateController {
         }
 
         this.getAbstractDatabase().customUpdate(
+                "CREATE TABLE IF NOT EXISTS `unlocked_perks` " +
+                        "(" +
+                        "`uuid` varchar(36)," +
+                        "`perk` varchar(128)" +
+                        ")"
+        );
+        this.getAbstractDatabase().customUpdate(
                 "CREATE TABLE IF NOT EXISTS `enabled_perks` " +
-                "(" +
-                "`uuid` varchar(36) PRIMARY KEY," +
-                "`perks` varchar(1024)" +
-                ")"
+                        "(" +
+                        "`uuid` varchar(36)," +
+                        "`perk` varchar(128)" +
+                        ")"
+        );
+        this.getAbstractDatabase().customUpdate(
+                "ALTER TABLE IF EXISTS `unlocked_perks` " +
+                        "DROP PRIMARY KEY"
+        );
+        this.getAbstractDatabase().customUpdate(
+                "ALTER TABLE IF EXISTS `enabled_perks` " +
+                        "DROP PRIMARY KEY"
         );
         this.globalMaxPerks = AdvancedPerks.getSettingsConfiguration().GLOBAL_MAX_PERKS.get();
     }
 
     public void disableAllPerks(Player player) {
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
-        Lists.newArrayList(perkData.getActivatedPerks()).forEach(perk -> this.disablePerk(player, perk));
+        AdvancedPerks.getPerkDataRepository().consumePerkData(player, perkData -> {
+            /* Boxing it with newArrayList prevents a concurrent modification exception TODO: Fix the bad design here */
+            Lists.newArrayList(perkData.getActivatedPerks()).forEach(perk -> this.disablePerk(player, perk));
+        });
     }
 
     public void forceTogglePerk(Player player, Perk perk) {
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
-        if (perkData.isPerkActivated(perk)) {
-            this.disablePerk(player, perk);
-        } else {
-            this.forceEnablePerk(player, perk);
-        }
+        AdvancedPerks.getPerkDataRepository().consumePerkData(player, perkData -> {
+            if (perkData.isPerkActivated(perk)) {
+                this.disablePerk(player, perk);
+            } else {
+                this.forceEnablePerk(player, perk);
+            }
+        });
     }
 
     public void togglePerk(Player player, Perk perk) {
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
-        if (perkData.isPerkActivated(perk)) {
-            this.disablePerk(player, perk);
-        } else {
-            this.enablePerk(player, perk);
-        }
+        AdvancedPerks.getPerkDataRepository().consumePerkData(player, perkData -> {
+            if (perkData.isPerkActivated(perk)) {
+                this.disablePerk(player, perk);
+            } else {
+                this.enablePerk(player, perk);
+            }
+        });
     }
 
     public void enablePerk(Player player, Perk perk) {
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
+        AdvancedPerks.getPerkDataRepository().consumePerkData(player, perkData -> {
+            /* max perk at once checking */
+            int maxAmountOfPerks = Math.max(this.getGlobalMaxPerks(), perkData.getMaxPerks());
+            if (this.getGlobalMaxPerks() != -1 && perkData.getAmountOfActivatedPerks() >= maxAmountOfPerks) {
+                perkData.refreshMaxPerks();
+                if (perkData.getAmountOfActivatedPerks() >= perkData.getMaxPerks()) {
+                    player.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Perks.Too-Many-Perks-Enabled",
+                            new ReplaceLogic("<amount>", String.valueOf(maxAmountOfPerks))));
+                    return;
+                }
+            }
 
-        /* max perk at once checking */
-        int maxAmountOfPerks = Math.max(this.getGlobalMaxPerks(), perkData.getMaxPerks());
-        if (this.getGlobalMaxPerks() != -1 && perkData.getAmountOfActivatedPerks() >= maxAmountOfPerks) {
-            perkData.refreshMaxPerks();
-            if (perkData.getAmountOfActivatedPerks() >= perkData.getMaxPerks()) {
-                player.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Perks.Too-Many-Perks-Enabled",
-                        new ReplaceLogic("<amount>", String.valueOf(maxAmountOfPerks))));
+            /* perk permission checking */
+            if ((!perk.getPermission().isEmpty() && !player.hasPermission(perk.getPermission())) &&
+                    !perkData.getUnlockedPerks().contains(perk.getIdentifier())) {
+                player.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Perks.No-Permission"));
                 return;
             }
-        }
 
-        /* perk permission checking */
-        if (!perk.getPermission().isEmpty() && !player.hasPermission(perk.getPermission())) {
-            player.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Perks.No-Permission"));
-            return;
-        }
+            /* perk world checking */
+            if (perk.getDisabledWorlds().contains(player.getWorld().getName())) {
+                player.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Perks.Disabled-By-World",
+                        new ReplaceLogic("<perk_name>", perk.getIdentifier()),
+                        new ReplaceLogic("<world_name>", player.getWorld().getName())));
+                return;
+            }
 
-        /* perk world checking */
-        if (perk.getDisabledWorlds().contains(player.getWorld().getName())) {
-            player.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Perks.Disabled-By-World",
-                    new ReplaceLogic("<perk_name>", perk.getIdentifier()),
-                    new ReplaceLogic("<world_name>", player.getWorld().getName())));
-            return;
-        }
-
-        if (!perkData.isPerkActivated(perk)) {
-            perkData.getActivatedPerks().add(perk);
-            perk.prePerkEnable(player);
-        }
+            if (!perkData.isPerkActivated(perk)) {
+                perkData.getActivatedPerks().add(perk);
+                perk.prePerkEnable(player);
+            }
+        });
     }
 
     public void disablePerk(Player player, Perk perk) {
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
-        if (perkData.isPerkActivated(perk)) {
-            perkData.getActivatedPerks().remove(perk);
-            perk.prePerkDisable(player);
-        }
+        AdvancedPerks.getPerkDataRepository().consumePerkData(player, perkData -> {
+            if (perkData.isPerkActivated(perk)) {
+                perkData.getActivatedPerks().remove(perk);
+                perk.prePerkDisable(player);
+            }
+        });
     }
 
     public void forceEnablePerk(Player player, Perk perk) {
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
-        if (!perkData.isPerkActivated(perk)) {
-            perkData.getActivatedPerks().add(perk);
-            perk.prePerkEnable(player);
-        }
+        AdvancedPerks.getPerkDataRepository().consumePerkData(player, perkData -> {
+            if (!perkData.isPerkActivated(perk)) {
+                perkData.getActivatedPerks().add(perk);
+                perk.prePerkEnable(player);
+            }
+        });
     }
 
     public void loadPerkData(PerkData perkData) {
-        this.getExecutorService().submit(() -> {
+        Bukkit.getScheduler().runTaskAsynchronously(AdvancedPerks.getInstance(), () -> {
             String uuid = perkData.getPlayer().getUniqueId().toString();
-            ResultSet resultSet = this.getAbstractDatabase().selectQuery("activated_perks", Collections.singletonList("PERKS"), "UUID = '" + uuid + "'");
+            ResultSet resultSet = this.getAbstractDatabase().selectQuery("enabled_perks", Collections.singletonList("perks"), "uuid = '" + uuid + "'");
             if (resultSet != null) {
                 Bukkit.getScheduler().runTask(AdvancedPerks.getInstance(), () -> {
                     try {
                         while (resultSet.next()) {
-                            String perkString = resultSet.getString("PERKS");
+                            String perkString = resultSet.getString("perks");
                             Arrays.stream(perkString.split(",")).forEach(line -> {
                                 Perk perk = AdvancedPerks.getPerkRegistry().getPerkByIdentifier(line);
                                 if (perk != null) {
@@ -160,18 +188,34 @@ public class PerkStateController {
                     }
                 });
             }
+            ResultSet unlocked = this.getAbstractDatabase().selectQuery("unlocked_perks", Collections.singletonList("perks"), "uuid = '" + uuid + "'");
+            if (unlocked != null) {
+                Bukkit.getScheduler().runTask(AdvancedPerks.getInstance(), () -> {
+                    try {
+                        while (unlocked.next()) {
+                            String perkString = unlocked.getString("perks");
+                            Arrays.stream(perkString.split(",")).forEach(line -> {
+                                perkData.getUnlockedPerks().add(line);
+                            });
+                        }
+                    } catch (SQLException sqlException) {
+                        LOGGER.log(Level.WARNING, "There was an error while loading the perk data for "
+                                + perkData.getPlayer().getName() + ":" + sqlException.getMessage());
+                    }
+                });
+            }
         });
     }
 
     public void savePerkData(PerkData perkData) {
-        this.getExecutorService().submit(new SavePerkDataTask(perkData, this.getAbstractDatabase()));
+        Bukkit.getScheduler().runTaskAsynchronously(AdvancedPerks.getInstance(), new SavePerkDataTask(perkData, this.getAbstractDatabase()));
     }
 
     public void handleShutdown() {
         List<SavePerkDataTask> savePerkDataTasks = AdvancedPerks.getPerkDataRepository().getPerkDataCache().values().stream()
                 .map(perkData -> new SavePerkDataTask(perkData, this.getAbstractDatabase()))
                 .collect(Collectors.toList());
-        savePerkDataTasks.forEach(SavePerkDataTask::call);
+        savePerkDataTasks.forEach(SavePerkDataTask::run);
         this.getAbstractDatabase().closeConnection();
     }
 
@@ -183,9 +227,5 @@ public class PerkStateController {
 
     public AbstractDatabase getAbstractDatabase() {
         return abstractDatabase;
-    }
-
-    public ExecutorService getExecutorService() {
-        return executorService;
     }
 }

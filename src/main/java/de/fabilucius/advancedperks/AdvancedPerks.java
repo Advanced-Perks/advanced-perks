@@ -6,51 +6,74 @@ import de.fabilucius.advancedperks.commons.Metrics;
 import de.fabilucius.advancedperks.commons.guisystem.management.GuiManager;
 import de.fabilucius.advancedperks.compatability.CompatabilityController;
 import de.fabilucius.advancedperks.data.PerkDataRepository;
+import de.fabilucius.advancedperks.economy.EconomyController;
 import de.fabilucius.advancedperks.perks.PerkListCache;
 import de.fabilucius.advancedperks.perks.PerkStateController;
 import de.fabilucius.advancedperks.perks.PerksConfiguration;
 import de.fabilucius.advancedperks.settings.MessageConfiguration;
 import de.fabilucius.advancedperks.settings.SettingsConfiguration;
+import de.fabilucius.sympel.configuration.factory.ConfigSingletonFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AdvancedPerks extends JavaPlugin {
 
     public static final Logger LOGGER = Bukkit.getLogger();
-    private static PerkDataRepository perkDataRepository;
+
+    /* All configuration instances */
     private static SettingsConfiguration settingsConfiguration;
-    private static PerksConfiguration perksConfiguration;
     private static MessageConfiguration messageConfiguration;
+    private static PerksConfiguration perksConfiguration;
+
+    /* Perk related repositories and controller's */
+    private static PerkDataRepository perkDataRepository;
     private static PerkStateController perkStateController;
     private static PerkListCache perkRegistry;
+
+    /* Telemetry related controller and manager */
+    @Nullable
+    private static EconomyController economyController;
     private static GuiManager guiManager;
-    private static CompatabilityController compatabilityController;
 
     @Override
     public void onEnable() {
-        settingsConfiguration = new SettingsConfiguration();
-        perksConfiguration = new PerksConfiguration();
-        perkDataRepository = new PerkDataRepository();
-        messageConfiguration = new MessageConfiguration();
-        perkRegistry = new PerkListCache();
-        guiManager = new GuiManager();
-        perkStateController = new PerkStateController();
-        compatabilityController = new CompatabilityController();
-        new PerksCommand();
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            new AdvancedPerksExpansion().register();
+        /* Initialize the configurations first because they don't have any dependencies*/
+        settingsConfiguration = ConfigSingletonFactory.createConfiguration(SettingsConfiguration.class);
+        perksConfiguration = ConfigSingletonFactory.createConfiguration(PerksConfiguration.class);
+        messageConfiguration = ConfigSingletonFactory.createConfiguration(MessageConfiguration.class);
+
+        perkDataRepository = PerkDataRepository.getSingleton();
+        perkRegistry = PerkListCache.getSingleton();
+        perkStateController = PerkStateController.getSingleton();
+
+        guiManager = GuiManager.getSingleton();
+        economyController = EconomyController.getSingleton();
+        CompatabilityController.getSingleton();
+
+        PerksCommand.registerCommand();
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            AdvancedPerksExpansion expansion = new AdvancedPerksExpansion();
+            expansion.register();
+            LOGGER.log(Level.INFO, "PlaceholderAPI was found and thus the expansion for it was loaded and enabled successfully.");
         }
-        if (getSettingsConfiguration().METRICS_ENABLED.get()) {
-            new Metrics(this, 12771);
-        }
+        Metrics.load();
     }
 
     @Override
     public void onDisable() {
-        getPerkStateController().handleShutdown();
-        getGuiManager().handleShutdown();
+        perkStateController.handleShutdown();
+        guiManager.handleShutdown();
+    }
+
+    public static void reloadPlugin() {
+        settingsConfiguration = ConfigSingletonFactory.reloadConfiguration(SettingsConfiguration.class);
+        perksConfiguration = ConfigSingletonFactory.reloadConfiguration(PerksConfiguration.class);
+        messageConfiguration = ConfigSingletonFactory.reloadConfiguration(MessageConfiguration.class);
     }
 
     /* the getter and setter of this class */
@@ -65,6 +88,10 @@ public class AdvancedPerks extends JavaPlugin {
 
     public static PerksConfiguration getPerksConfiguration() {
         return perksConfiguration;
+    }
+
+    public static Optional<EconomyController> getEconomyController() {
+        return economyController == null ? Optional.empty() : Optional.of(economyController);
     }
 
     public static PerkDataRepository getPerkDataRepository() {
@@ -85,9 +112,5 @@ public class AdvancedPerks extends JavaPlugin {
 
     public static PerkStateController getPerkStateController() {
         return perkStateController;
-    }
-
-    public static CompatabilityController getCompatabilityController() {
-        return compatabilityController;
     }
 }

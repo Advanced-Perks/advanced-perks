@@ -2,7 +2,8 @@ package de.fabilucius.advancedperks.commands.subcommands;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.gui.PerkGuiWindow;
-import de.fabilucius.sympel.command.types.AbstractSubCommand;
+import de.fabilucius.sympel.command.command.AbstractSubCommand;
+import de.fabilucius.sympel.command.metadata.Permission;
 import de.fabilucius.sympel.configuration.utilities.ReplaceLogic;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -10,8 +11,12 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-@AbstractSubCommand.Details(identifier = "open", permission = "advancedperks.command.open", aliases = {"o"})
+@Permission("advancedperks.command.open")
 public class OpenSubCommand extends AbstractSubCommand {
+    public OpenSubCommand() {
+        super("open");
+    }
+
     @Override
     public void handleCommandExecute(CommandSender commandSender, String... arguments) {
         if (arguments.length == 0) {

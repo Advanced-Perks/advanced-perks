@@ -2,11 +2,12 @@ package de.fabilucius.advancedperks.compatability.compats;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.BukkitListener;
+import de.fabilucius.advancedperks.compatability.CompatabilityEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 
-public class ChangeWorldCompatability extends BukkitListener {
+public class ChangeWorldCompatability extends BukkitListener implements CompatabilityEntity {
 
     @EventHandler
     public void onPlayerChangedWorld(PlayerChangedWorldEvent event) {

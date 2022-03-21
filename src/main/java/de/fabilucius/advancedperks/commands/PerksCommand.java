@@ -1,22 +1,31 @@
 package de.fabilucius.advancedperks.commands;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.commands.subcommands.BuySubCommand;
 import de.fabilucius.advancedperks.commands.subcommands.OpenSubCommand;
+import de.fabilucius.advancedperks.commands.subcommands.ReloadSubCommand;
 import de.fabilucius.advancedperks.commands.subcommands.ToggleSubCommand;
 import de.fabilucius.advancedperks.gui.PerkGuiWindow;
-import de.fabilucius.sympel.command.types.AbstractCommand;
-import de.fabilucius.sympel.command.types.AbstractSubCommand;
+import de.fabilucius.sympel.command.command.AbstractCommand;
+import de.fabilucius.sympel.command.command.AbstractSubCommand;
+import de.fabilucius.sympel.command.metadata.SubCommands;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@AbstractCommand.Details(identifier = "perks", subCommands = {OpenSubCommand.class, ToggleSubCommand.class})
+@SubCommands({OpenSubCommand.class, ToggleSubCommand.class, BuySubCommand.class, ReloadSubCommand.class})
 public class PerksCommand extends AbstractCommand {
 
-    public PerksCommand() {
-        this.setNoPermissionMessage(AdvancedPerks.getMessageConfiguration().getMessage("Command.No-Permission"));
+    private PerksCommand() {
+        super("perks");
+    }
+
+    public static PerksCommand registerCommand() {
+        PerksCommand perksCommand = new PerksCommand();
+        perksCommand.setNoPermissionMessage(AdvancedPerks.getMessageConfiguration().getMessage("Command.No-Permission"));
+        return perksCommand;
     }
 
     @Override

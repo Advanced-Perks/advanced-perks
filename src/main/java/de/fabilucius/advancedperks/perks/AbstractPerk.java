@@ -3,6 +3,7 @@ package de.fabilucius.advancedperks.perks;
 import com.google.common.collect.Lists;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.NullSafety;
+import de.fabilucius.sympel.configuration.value.types.SingleValue;
 import de.fabilucius.sympel.multiversion.ServerVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -55,8 +56,8 @@ public abstract class AbstractPerk implements Perk {
         }
         try {
             NullSafety.validateNotNull(this.getDisplayName(), this.getPermission(), this.getDescription(), this.getIcon());
-            this.enabled = false;
         } catch (NullPointerException exception) {
+            this.enabled = false;
             LOGGER.log(Level.SEVERE, String.format("Cannot create instance of perk %s: %s",
                     this.getClass().getName(), exception.getMessage()));
         }
@@ -125,5 +126,11 @@ public abstract class AbstractPerk implements Perk {
     @Override
     public void setMinimumServerVersion(ServerVersion minimumServerVersion) {
         this.minimumServerVersion = minimumServerVersion;
+    }
+
+    @Override
+    public SingleValue<Number> getPrice() {
+        return new SingleValue<>(AdvancedPerks.getPerksConfiguration(), this.getIdentifier() + ".Price",
+                "The amount of currency this perk should cost.", Number.class, -1);
     }
 }

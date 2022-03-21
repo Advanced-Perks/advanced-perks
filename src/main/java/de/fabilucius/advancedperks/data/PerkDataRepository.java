@@ -11,13 +11,19 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.logging.Logger;
 
 public class PerkDataRepository extends MapCache<Player, PerkData> implements Listener {
 
-    private static final Logger LOGGER = Bukkit.getLogger();
+    private static PerkDataRepository instance;
 
-    public PerkDataRepository() {
+    public static PerkDataRepository getSingleton() {
+        if (instance == null) {
+            instance = new PerkDataRepository();
+        }
+        return instance;
+    }
+
+    private PerkDataRepository() {
         Bukkit.getPluginManager().registerEvents(this, AdvancedPerks.getInstance());
     }
 

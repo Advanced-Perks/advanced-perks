@@ -1,7 +1,7 @@
-#This configuration can be used to change the various messages of the plugin
-#Name and description of the default perks can be changed inside the perks.yml
-#It can of course also be used to translate the plugin
-#Beware a full language system is in the works but there is no eta for that feature
+# This configuration can be used to change the various messages of the plugin
+# Name and description of the default perks can be changed inside the perks.yml
+# It can of course also be used to translate the plugin
+# Beware a full language system is in the works but there is no eta for that feature
 
 Prefix: '&8[&6Perks&8]'
 Perks:
@@ -9,6 +9,14 @@ Perks:
   No-Permission: '<prefix> &cUnable to activated perk, you dont have the permission to use this perk.'
   Disabled-By-World: '<prefix> &cUnable to activate perk <perk_name> in the world <world_name> because the perk isnt allowed in that world.'
 Command:
+  Buy:
+    No-Eco-Support: '<prefix> &cThe plugin is missing either an economy plugin or vault to use this feature.'
+    Perk-Not-Found: '<prefix> &cThe perk <perk> was either misspelled or doesnt exist.'
+    Success: '<prefix> &7You &asuccessfully &7bought the perk <perk>.'
+    Error: '<prefix> &cThere was an error while buying the perk <perk> contact the administrator of the server for further information.'
+    Already-Unlocked: '<prefix> &cYou already have that perk unlocked.'
+    Not-Enough-Money: '<prefix> &cYou dont have enough money for that perk.'
+    Cannot-Be-Purchased: '<prefix> &cThat perk cannot be purchased.'
   No-Permission: '<prefix> &cYou dont have permission to execute that command.'
   Player-Offline: '<prefix> &cThe player <name> was either misspelled or currently not online.'
   Open:

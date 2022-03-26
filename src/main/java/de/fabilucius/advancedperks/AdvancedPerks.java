@@ -12,6 +12,7 @@ import de.fabilucius.advancedperks.perks.PerkStateController;
 import de.fabilucius.advancedperks.perks.PerksConfiguration;
 import de.fabilucius.advancedperks.settings.MessageConfiguration;
 import de.fabilucius.advancedperks.settings.SettingsConfiguration;
+import de.fabilucius.advancedperks.utilities.update.UpdateChecker;
 import de.fabilucius.sympel.configuration.factory.ConfigSingletonFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -62,6 +63,7 @@ public class AdvancedPerks extends JavaPlugin {
             LOGGER.log(Level.INFO, "PlaceholderAPI was found and thus the expansion for it was loaded and enabled successfully.");
         }
         Metrics.load();
+        UpdateChecker.getSingleton();
     }
 
     @Override

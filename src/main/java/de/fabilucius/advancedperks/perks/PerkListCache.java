@@ -4,6 +4,7 @@ import com.google.common.reflect.ClassPath;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.ListCache;
 import de.fabilucius.advancedperks.event.types.PerkRegistryEvent;
+import de.fabilucius.advancedperks.exception.PerkRegisterException;
 import de.fabilucius.sympel.multiversion.ServerVersion;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Nullable;
@@ -11,7 +12,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PerkListCache extends ListCache<Perk> {
@@ -37,7 +37,7 @@ public class PerkListCache extends ListCache<Perk> {
     }
 
     @SuppressWarnings({"UnstableApiUsage", "unchecked"})
-    private void registerDefaultPerks() {
+    private void registerDefaultPerks() throws PerkRegisterException {
         try {
             ClassPath classPath = ClassPath.from(this.getClass().getClassLoader());
             classPath.getTopLevelClassesRecursive("de.fabilucius.advancedperks.perks.defaultperks").stream().filter(classInfo -> Perk.class.isAssignableFrom(classInfo.load())).forEach(classInfo -> {
@@ -45,11 +45,11 @@ public class PerkListCache extends ListCache<Perk> {
                 this.registerPerks(perkClass);
             });
         } catch (Exception exception) {
-            LOGGER.log(Level.SEVERE, "An error occurred while registering a default perk:", exception);
+            throw new PerkRegisterException("An error occurred while trying to register the default perks recursively.", exception);
         }
     }
 
-    public void registerPerks(Class<? extends Perk>... perkClasses) {
+    public void registerPerks(Class<? extends Perk>... perkClasses) throws PerkRegisterException {
         Arrays.stream(perkClasses).forEach(perkClass -> {
             try {
                 Perk perk = perkClass.getDeclaredConstructor().newInstance();
@@ -58,8 +58,7 @@ public class PerkListCache extends ListCache<Perk> {
                     this.getPerks().add(perk);
                 }
             } catch (Exception exception) {
-                LOGGER.log(Level.SEVERE, String.format("An error occurred " +
-                        "while registering a new perk from the class %s:", perkClass.getSimpleName()), exception);
+                throw new PerkRegisterException(String.format("An error occurred while registering a new perk from the class %s:", perkClass.getName()), exception);
             }
         });
     }

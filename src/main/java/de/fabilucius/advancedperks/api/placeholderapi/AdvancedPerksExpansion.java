@@ -1,4 +1,4 @@
-package de.fabilucius.advancedperks.api;
+package de.fabilucius.advancedperks.api.placeholderapi;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.data.PerkData;

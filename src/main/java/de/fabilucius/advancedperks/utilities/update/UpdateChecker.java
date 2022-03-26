@@ -2,6 +2,7 @@ package de.fabilucius.advancedperks.utilities.update;
 
 import com.google.gson.Gson;
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.commons.Singleton;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -21,16 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+@Singleton
 public class UpdateChecker implements Listener {
-
-    private static UpdateChecker instance;
-
-    public static UpdateChecker getSingleton() {
-        if (instance == null) {
-            instance = new UpdateChecker();
-        }
-        return instance;
-    }
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
 
@@ -102,4 +95,16 @@ public class UpdateChecker implements Listener {
             return changes;
         }
     }
+
+    /* Singleton stuff */
+
+    private static UpdateChecker instance;
+
+    public static UpdateChecker getSingleton() {
+        if (instance == null) {
+            instance = new UpdateChecker();
+        }
+        return instance;
+    }
+
 }

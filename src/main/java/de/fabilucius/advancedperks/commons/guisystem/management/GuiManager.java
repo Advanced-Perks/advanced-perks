@@ -15,7 +15,7 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.HashMap;
 
-@Singleton
+@Singleton("To prevent multiple registrations of this as a listener class resulting in preventing memory leaks.")
 public class GuiManager implements Listener {
 
     private final HashMap<GuiWindow, Player> openedGuis = Maps.newHashMap();

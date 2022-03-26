@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Singleton
+@Singleton("Not actually necessary but will left me in control of the economy controller to prevent not authorized changes by other that could break other plugins.")
 public class EconomyController {
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();

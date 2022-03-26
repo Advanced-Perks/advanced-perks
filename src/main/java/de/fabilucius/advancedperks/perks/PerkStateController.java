@@ -25,7 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-@Singleton
+@Singleton("To prevent multiple unnecessary connections to the database and unwanted behaviour when changing the state of perks and players.")
 public class PerkStateController {
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();

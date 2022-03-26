@@ -27,7 +27,7 @@ public class EconomyController {
                 LOGGER.log(Level.WARNING, "All economy based features will be disabled.");
             }
         }
-        return null;
+        return instance;
     }
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();

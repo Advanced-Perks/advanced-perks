@@ -1,6 +1,7 @@
 package de.fabilucius.advancedperks.economy;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.commons.Singleton;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.economy.types.VaultEconomyInterface;
 import de.fabilucius.advancedperks.exception.EconomyInterfaceInitializationException;
@@ -12,23 +13,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Singleton
 public class EconomyController {
-
-    private static EconomyController instance;
-
-    @Nullable
-    public static EconomyController getSingleton() {
-        if (instance == null) {
-            try {
-                instance = new EconomyController();
-            } catch (EconomyInterfaceInitializationException exception) {
-                LOGGER.log(Level.WARNING, "There was an error while loading the economy controller: " +
-                        exception.getMessage());
-                LOGGER.log(Level.WARNING, "All economy based features will be disabled.");
-            }
-        }
-        return instance;
-    }
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
 
@@ -63,6 +49,24 @@ public class EconomyController {
             perkData.getUnlockedPerks().add(perk.getIdentifier());
         }
         return result;
+    }
+
+    /* Singleton stuff */
+
+    private static EconomyController instance;
+
+    @Nullable
+    public static EconomyController getSingleton() {
+        if (instance == null) {
+            try {
+                instance = new EconomyController();
+            } catch (EconomyInterfaceInitializationException exception) {
+                LOGGER.log(Level.WARNING, "There was an error while loading the economy controller: " +
+                        exception.getMessage());
+                LOGGER.log(Level.WARNING, "All economy based features will be disabled.");
+            }
+        }
+        return instance;
     }
 
 }

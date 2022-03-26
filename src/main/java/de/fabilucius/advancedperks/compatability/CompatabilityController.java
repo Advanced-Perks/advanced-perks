@@ -2,22 +2,15 @@ package de.fabilucius.advancedperks.compatability;
 
 import com.google.common.reflect.ClassPath;
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.commons.Singleton;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+@Singleton
 public class CompatabilityController {
-
-    private static CompatabilityController instance;
-
-    public static CompatabilityController getSingleton() {
-        if (instance == null) {
-            instance = new CompatabilityController();
-        }
-        return instance;
-    }
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
 
@@ -39,6 +32,17 @@ public class CompatabilityController {
         } catch (Exception exception) {
             LOGGER.log(Level.SEVERE, "An error occurred while registering a compatability class:", exception);
         }
+    }
+
+    /* Singleton stuff */
+
+    private static CompatabilityController instance;
+
+    public static CompatabilityController getSingleton() {
+        if (instance == null) {
+            instance = new CompatabilityController();
+        }
+        return instance;
     }
 
 }

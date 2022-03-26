@@ -2,6 +2,7 @@ package de.fabilucius.advancedperks.perks;
 
 import com.google.common.collect.Lists;
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.commons.Singleton;
 import de.fabilucius.advancedperks.commons.sql.SqlType;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.tasks.SavePerkDataTask;
@@ -24,16 +25,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+@Singleton
 public class PerkStateController {
-
-    private static PerkStateController instance;
-
-    public static PerkStateController getSingleton() {
-        if (instance == null) {
-            instance = new PerkStateController();
-        }
-        return instance;
-    }
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
 
@@ -247,4 +240,16 @@ public class PerkStateController {
     public AbstractDatabase getAbstractDatabase() {
         return abstractDatabase;
     }
+
+    /*Singleton stuff */
+
+    private static PerkStateController instance;
+
+    public static PerkStateController getSingleton() {
+        if (instance == null) {
+            instance = new PerkStateController();
+        }
+        return instance;
+    }
+
 }

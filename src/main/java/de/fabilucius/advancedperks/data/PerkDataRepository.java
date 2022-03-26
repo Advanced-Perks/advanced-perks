@@ -2,6 +2,7 @@ package de.fabilucius.advancedperks.data;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.MapCache;
+import de.fabilucius.advancedperks.commons.Singleton;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,16 +13,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.Map;
 import java.util.function.Consumer;
 
+@Singleton
 public class PerkDataRepository extends MapCache<Player, PerkData> implements Listener {
-
-    private static PerkDataRepository instance;
-
-    public static PerkDataRepository getSingleton() {
-        if (instance == null) {
-            instance = new PerkDataRepository();
-        }
-        return instance;
-    }
 
     private PerkDataRepository() {
         Bukkit.getPluginManager().registerEvents(this, AdvancedPerks.getInstance());
@@ -69,4 +62,16 @@ public class PerkDataRepository extends MapCache<Player, PerkData> implements Li
     public Map<Player, PerkData> getPerkDataCache() {
         return super.getCache();
     }
+
+    /* Singleton stuff */
+
+    private static PerkDataRepository instance;
+
+    public static PerkDataRepository getSingleton() {
+        if (instance == null) {
+            instance = new PerkDataRepository();
+        }
+        return instance;
+    }
+
 }

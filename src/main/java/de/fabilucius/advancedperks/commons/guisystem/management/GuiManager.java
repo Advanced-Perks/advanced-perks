@@ -2,6 +2,7 @@ package de.fabilucius.advancedperks.commons.guisystem.management;
 
 import com.google.common.collect.Maps;
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.commons.Singleton;
 import de.fabilucius.advancedperks.commons.guisystem.GuiElement;
 import de.fabilucius.advancedperks.commons.guisystem.GuiWindow;
 import org.bukkit.Bukkit;
@@ -14,17 +15,8 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.HashMap;
 
+@Singleton
 public class GuiManager implements Listener {
-
-    private static GuiManager instance;
-
-    /* Enforce a singleton to prevent multiple listener registrations */
-    public static GuiManager getSingleton() {
-        if (instance == null) {
-            instance = new GuiManager();
-        }
-        return instance;
-    }
 
     private final HashMap<GuiWindow, Player> openedGuis = Maps.newHashMap();
 
@@ -77,4 +69,16 @@ public class GuiManager implements Listener {
     public HashMap<GuiWindow, Player> getOpenedGuis() {
         return openedGuis;
     }
+
+    /* Singleton stuff */
+
+    private static GuiManager instance;
+
+    public static GuiManager getSingleton() {
+        if (instance == null) {
+            instance = new GuiManager();
+        }
+        return instance;
+    }
+
 }

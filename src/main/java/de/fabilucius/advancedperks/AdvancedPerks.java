@@ -3,6 +3,7 @@ package de.fabilucius.advancedperks;
 import de.fabilucius.advancedperks.api.placeholderapi.AdvancedPerksExpansion;
 import de.fabilucius.advancedperks.commands.PerksCommand;
 import de.fabilucius.advancedperks.commons.Metrics;
+import de.fabilucius.advancedperks.commons.Singleton;
 import de.fabilucius.advancedperks.commons.guisystem.management.GuiManager;
 import de.fabilucius.advancedperks.compatability.CompatabilityController;
 import de.fabilucius.advancedperks.data.PerkDataRepository;
@@ -43,7 +44,7 @@ public class AdvancedPerks extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        /* Initialize the configurations first because they don't have any dependencies*/
+        /* Initialize the configurations first because they don't have any dependencies*/ 
         settingsConfiguration = ConfigSingletonFactory.createConfiguration(SettingsConfiguration.class);
         perksConfiguration = ConfigSingletonFactory.createConfiguration(PerksConfiguration.class);
         messageConfiguration = ConfigSingletonFactory.createConfiguration(MessageConfiguration.class);

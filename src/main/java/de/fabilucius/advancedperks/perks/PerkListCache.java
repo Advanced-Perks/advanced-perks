@@ -3,6 +3,7 @@ package de.fabilucius.advancedperks.perks;
 import com.google.common.reflect.ClassPath;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.ListCache;
+import de.fabilucius.advancedperks.commons.Singleton;
 import de.fabilucius.advancedperks.event.types.PerkRegistryEvent;
 import de.fabilucius.advancedperks.exception.PerkRegisterException;
 import de.fabilucius.sympel.multiversion.ServerVersion;
@@ -14,19 +15,8 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+@Singleton
 public class PerkListCache extends ListCache<Perk> {
-
-    private static PerkListCache instance;
-
-    public static PerkListCache getSingleton() {
-        if (instance == null) {
-            instance = new PerkListCache();
-        }
-        return instance;
-    }
-
-    private PerkListCache() {
-    }
 
     private static final Logger LOGGER = Bukkit.getLogger();
 
@@ -76,4 +66,19 @@ public class PerkListCache extends ListCache<Perk> {
     public List<Perk> getPerks() {
         return this.getCache();
     }
+
+    /* Singleton stuff */
+
+    private static PerkListCache instance;
+
+    public static PerkListCache getSingleton() {
+        if (instance == null) {
+            instance = new PerkListCache();
+        }
+        return instance;
+    }
+
+    private PerkListCache() {
+    }
+
 }

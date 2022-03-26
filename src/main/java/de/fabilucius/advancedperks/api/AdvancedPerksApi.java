@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Singleton
+@Singleton("This class has no reason to exist more than once, and to prevent static abuse.")
 public class AdvancedPerksApi {
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();

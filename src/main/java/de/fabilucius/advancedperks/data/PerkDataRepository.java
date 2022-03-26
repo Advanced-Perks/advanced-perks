@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.Map;
 import java.util.function.Consumer;
 
-@Singleton
+@Singleton("For obvious reasons regarding the structure of the plugin there should only ever be one instance of this class.")
 public class PerkDataRepository extends MapCache<Player, PerkData> implements Listener {
 
     private PerkDataRepository() {

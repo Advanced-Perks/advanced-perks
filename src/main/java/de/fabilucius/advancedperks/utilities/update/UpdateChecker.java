@@ -22,7 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-@Singleton
+@Singleton("No reason to have more than one instance of the class, where more instances could potentially lead to a memory leak.")
 public class UpdateChecker implements Listener {
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-@Singleton
+@Singleton("For obvious reasons regarding the structure of the plugin there should only ever be one instance of this class.")
 public class PerkListCache extends ListCache<Perk> {
 
     private static final Logger LOGGER = Bukkit.getLogger();

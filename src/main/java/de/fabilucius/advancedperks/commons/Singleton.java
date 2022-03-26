@@ -5,4 +5,7 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.CLASS)
 public @interface Singleton {
+
+    String value() default  "";
+
 }

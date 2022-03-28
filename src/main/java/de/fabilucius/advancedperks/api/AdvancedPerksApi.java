@@ -17,9 +17,6 @@ import java.util.logging.Logger;
 public class AdvancedPerksApi {
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
-    /* References to the for the Api important endpoints inside the plugin */
-    private static final PerkListCache PERK_LIST_CACHE = AdvancedPerks.getPerkRegistry();
-    private static final PerkDataRepository PERK_DATA_REPOSITORY = AdvancedPerks.getPerkDataRepository();
 
     /**
      * This method will try to register the as parameter passed class extending {@link Perk}.
@@ -28,9 +25,9 @@ public class AdvancedPerksApi {
      * @param perk the perk class that should be registered
      * @return either SUCCESS when it was successful or ERROR if not
      */
-    public RegisterResponse registerPerk(Class<Perk> perk) {
+    public RegisterResponse registerPerk(Class<? extends Perk> perk) {
         try {
-            PERK_LIST_CACHE.registerPerks(perk);
+            AdvancedPerks.getPerkRegistry().registerPerks(perk);
             return RegisterResponse.SUCCESS;
         } catch (PerkRegisterException exception) {
             LOGGER.log(Level.WARNING, "Unable to register a perk with the Api:", exception);
@@ -48,7 +45,7 @@ public class AdvancedPerksApi {
      */
     @NotNull
     public PerkData getPerkData(Player player) {
-        return PERK_DATA_REPOSITORY.getPerkData(player);
+        return AdvancedPerks.getPerkDataRepository().getPerkData(player);
     }
 
     /* Singleton stuff */
@@ -58,7 +55,7 @@ public class AdvancedPerksApi {
     private AdvancedPerksApi() {
     }
 
-    public AdvancedPerksApi getInstance() {
+    public static AdvancedPerksApi getInstance() {
         if (instance == null) {
             instance = new AdvancedPerksApi();
         }

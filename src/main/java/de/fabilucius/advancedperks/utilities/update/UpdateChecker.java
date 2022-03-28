@@ -32,7 +32,7 @@ public class UpdateChecker implements Listener {
     private UpdateChecker() {
         Bukkit.getPluginManager().registerEvents(this, AdvancedPerks.getInstance());
         try {
-            URL url = new URL("https://pastebin.com/raw/cCQqpzA3");
+            URL url = new URL("https://pastebin.com/raw/nsjaSbHT");
             URLConnection connection = url.openConnection();
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder builder = new StringBuilder();

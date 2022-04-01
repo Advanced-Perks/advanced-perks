@@ -166,55 +166,6 @@ public class PerkStateController {
         });
     }
 
-    public void loadPerkData(PerkData perkData) {
-        Bukkit.getScheduler().runTaskAsynchronously(AdvancedPerks.getInstance(), () -> {
-            String uuid = perkData.getPlayer().getUniqueId().toString();
-            try {
-                ResultSet resultSet = this.getAbstractDatabase().selectQuery("enabled_perks", Collections.singletonList("perk"), "uuid = '" + uuid + "'");
-                if (resultSet != null) {
-                    Bukkit.getScheduler().runTask(AdvancedPerks.getInstance(), () -> {
-                        try {
-                            while (resultSet.next()) {
-                                String perkString = resultSet.getString("perk");
-                                Arrays.stream(perkString.split(",")).forEach(line -> {
-                                    Perk perk = AdvancedPerks.getPerkRegistry().getPerkByIdentifier(line);
-                                    if (perk != null) {
-                                        this.enablePerk(perkData.getPlayer(), perk);
-                                    }
-                                });
-                            }
-                        } catch (SQLException sqlException) {
-                            LOGGER.log(Level.WARNING, "There was an error while loading the perk data for "
-                                    + perkData.getPlayer().getName() + ":" + sqlException.getMessage());
-                        }
-                    });
-                }
-            } catch (SQLException sqlException) {
-                LOGGER.log(Level.WARNING, "Unable to load the enabled perks from " + perkData.getPlayer().getName() + ": " + sqlException.getMessage());
-            }
-            try {
-                ResultSet unlocked = this.getAbstractDatabase().selectQuery("unlocked_perks", Collections.singletonList("perk"), "uuid = '" + uuid + "'");
-                if (unlocked != null) {
-                    Bukkit.getScheduler().runTask(AdvancedPerks.getInstance(), () -> {
-                        try {
-                            while (unlocked.next()) {
-                                String perkString = unlocked.getString("perk");
-                                Arrays.stream(perkString.split(",")).forEach(line -> {
-                                    perkData.getUnlockedPerks().add(line);
-                                });
-                            }
-                        } catch (SQLException sqlException) {
-                            LOGGER.log(Level.WARNING, "There was an error while loading the perk data for "
-                                    + perkData.getPlayer().getName() + ":" + sqlException.getMessage());
-                        }
-                    });
-                }
-            } catch (SQLException sqlException) {
-                LOGGER.log(Level.WARNING, "Unable to load the unlocked perks from " + perkData.getPlayer().getName() + ": " + sqlException.getMessage());
-            }
-        });
-    }
-
     public void savePerkData(PerkData perkData) {
         Bukkit.getScheduler().runTaskAsynchronously(AdvancedPerks.getInstance(), new SavePerkDataTask(perkData, this.getAbstractDatabase()));
     }

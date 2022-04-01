@@ -3,6 +3,8 @@ package de.fabilucius.advancedperks.data;
 import com.google.common.collect.Sets;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.perks.Perk;
+import de.fabilucius.advancedperks.perks.tasks.LoadPerkDataTask;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.OptionalInt;
@@ -20,7 +22,7 @@ public class PerkData {
     public PerkData(Player player) {
         this.player = player;
         this.maxPerks = this.queryMaxPerks();
-        AdvancedPerks.getPerkStateController().loadPerkData(this);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(AdvancedPerks.getInstance(), new LoadPerkDataTask(this), 40L);
     }
 
     private int queryMaxPerks() {

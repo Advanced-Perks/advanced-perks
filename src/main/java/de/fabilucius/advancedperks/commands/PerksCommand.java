@@ -5,10 +5,10 @@ import de.fabilucius.advancedperks.commands.subcommands.BuySubCommand;
 import de.fabilucius.advancedperks.commands.subcommands.OpenSubCommand;
 import de.fabilucius.advancedperks.commands.subcommands.ReloadSubCommand;
 import de.fabilucius.advancedperks.commands.subcommands.ToggleSubCommand;
+import de.fabilucius.advancedperks.commons.command.command.AbstractCommand;
+import de.fabilucius.advancedperks.commons.command.command.AbstractSubCommand;
+import de.fabilucius.advancedperks.commons.command.metadata.SubCommands;
 import de.fabilucius.advancedperks.gui.PerkGuiWindow;
-import de.fabilucius.sympel.command.command.AbstractCommand;
-import de.fabilucius.sympel.command.command.AbstractSubCommand;
-import de.fabilucius.sympel.command.metadata.SubCommands;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

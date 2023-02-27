@@ -4,7 +4,7 @@ import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.guisystem.GuiElement;
 import de.fabilucius.advancedperks.commons.guisystem.GuiWindow;
 import de.fabilucius.advancedperks.commons.guisystem.annotation.CancelInventoryInteraction;
-import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
+import de.fabilucius.advancedperks.commons.item.impl.ItemStackBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 

@@ -1,10 +1,10 @@
 package de.fabilucius.advancedperks.perks.defaultperks.task;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.commons.item.impl.ItemStackBuilder;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.Perk;
 import de.fabilucius.advancedperks.perks.types.AbstractTaskPerk;
-import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Statistic;

@@ -3,23 +3,20 @@ package de.fabilucius.advancedperks.perks;
 import com.google.common.collect.Lists;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.Singleton;
+import de.fabilucius.advancedperks.commons.database.AbstractDatabase;
+import de.fabilucius.advancedperks.commons.database.details.Credentials;
+import de.fabilucius.advancedperks.commons.database.types.FileDatabase;
+import de.fabilucius.advancedperks.commons.database.types.RemoteDatabase;
 import de.fabilucius.advancedperks.commons.sql.SqlType;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.tasks.SavePerkDataTask;
 import de.fabilucius.advancedperks.settings.SettingsConfiguration;
-import de.fabilucius.sympel.configuration.utilities.ReplaceLogic;
-import de.fabilucius.sympel.database.AbstractDatabase;
-import de.fabilucius.sympel.database.details.Credentials;
-import de.fabilucius.sympel.database.types.FileDatabase;
-import de.fabilucius.sympel.database.types.RemoteDatabase;
+import de.fabilucius.advancedperks.commons.configuration.utilities.ReplaceLogic;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,56 +31,52 @@ public class PerkStateController {
     private final int globalMaxPerks;
 
     private PerkStateController() {
-        try {
-            SettingsConfiguration configuration = AdvancedPerks.getSettingsConfiguration();
-            if (configuration.SQL_TYPE.equals(SqlType.DATABASE)) {
-                Credentials credentials = Credentials.withAuth(configuration.SQL_USERNAME.get(), configuration.SQL_PASSWORD.get());
-                this.abstractDatabase = RemoteDatabase.withCredentials(configuration.SQL_URL.get(), credentials);
-                LOGGER.log(Level.INFO, "Successfully connected to the database.");
-            } else {
-                File databaseFile = new File(AdvancedPerks.getInstance().getDataFolder(), "data.db");
-                if (!databaseFile.exists()) {
-                    try {
-                        databaseFile.getParentFile().mkdirs();
-                        databaseFile.createNewFile();
-                    } catch (Exception exception) {
-                        LOGGER.log(Level.SEVERE, "An error occurred while " +
-                                "creating a local database file for perk data storage:", exception);
-                    }
+        SettingsConfiguration configuration = AdvancedPerks.getSettingsConfiguration();
+        if (configuration.SQL_TYPE.equals(SqlType.DATABASE)) {
+            Credentials credentials = Credentials.withAuth(configuration.SQL_USERNAME.get(), configuration.SQL_PASSWORD.get());
+            this.abstractDatabase = RemoteDatabase.withCredentials(configuration.SQL_URL.get(), credentials);
+            LOGGER.log(Level.INFO, "Successfully connected to the database.");
+        } else {
+            File databaseFile = new File(AdvancedPerks.getInstance().getDataFolder(), "data.db");
+            if (!databaseFile.exists()) {
+                try {
+                    databaseFile.getParentFile().mkdirs();
+                    databaseFile.createNewFile();
+                } catch (Exception exception) {
+                    LOGGER.log(Level.SEVERE, "An error occurred while " +
+                            "creating a local database file for perk data storage:", exception);
                 }
-                this.abstractDatabase = FileDatabase.fromFile(databaseFile);
-                LOGGER.log(Level.INFO, "Successfully connected to the local file based database.");
             }
-
-            this.getAbstractDatabase().customUpdate(
-                    "CREATE TABLE IF NOT EXISTS `unlocked_perks` " +
-                            "(" +
-                            "`uuid` varchar(36)," +
-                            "`perk` varchar(128)" +
-                            ")"
-            );
-            this.getAbstractDatabase().customUpdate(
-                    "CREATE TABLE IF NOT EXISTS `enabled_perks` " +
-                            "(" +
-                            "`uuid` varchar(36)," +
-                            "`perk` varchar(128)" +
-                            ")"
-            );
-            try {
-                this.getAbstractDatabase().customUpdate(
-                        "ALTER TABLE IF EXISTS `unlocked_perks` " +
-                                "DROP PRIMARY KEY"
-                );
-                this.getAbstractDatabase().customUpdate(
-                        "ALTER TABLE IF EXISTS `enabled_perks` " +
-                                "DROP PRIMARY KEY"
-                );
-            } catch (Exception ignored) {
-            }
-            this.globalMaxPerks = AdvancedPerks.getSettingsConfiguration().GLOBAL_MAX_PERKS.get();
-        } catch (SQLException sqlException) {
-            throw new IllegalStateException("There was an error while creating a connection to the database", sqlException);
+            this.abstractDatabase = FileDatabase.fromFile(databaseFile);
+            LOGGER.log(Level.INFO, "Successfully connected to the local file based database.");
         }
+
+        this.getAbstractDatabase().customUpdate(
+                "CREATE TABLE IF NOT EXISTS `unlocked_perks` " +
+                        "(" +
+                        "`uuid` varchar(36)," +
+                        "`perk` varchar(128)" +
+                        ")"
+        );
+        this.getAbstractDatabase().customUpdate(
+                "CREATE TABLE IF NOT EXISTS `enabled_perks` " +
+                        "(" +
+                        "`uuid` varchar(36)," +
+                        "`perk` varchar(128)" +
+                        ")"
+        );
+        try {
+            this.getAbstractDatabase().customUpdate(
+                    "ALTER TABLE IF EXISTS `unlocked_perks` " +
+                            "DROP PRIMARY KEY"
+            );
+            this.getAbstractDatabase().customUpdate(
+                    "ALTER TABLE IF EXISTS `enabled_perks` " +
+                            "DROP PRIMARY KEY"
+            );
+        } catch (Exception ignored) {
+        }
+        this.globalMaxPerks = AdvancedPerks.getSettingsConfiguration().GLOBAL_MAX_PERKS.get();
     }
 
     public void disableAllPerks(Player player) {
@@ -175,11 +168,7 @@ public class PerkStateController {
                 .map(perkData -> new SavePerkDataTask(perkData, this.getAbstractDatabase()))
                 .collect(Collectors.toList());
         savePerkDataTasks.forEach(SavePerkDataTask::run);
-        try {
-            this.getAbstractDatabase().closeConnection();
-        } catch (SQLException sqlException) {
-            LOGGER.log(Level.WARNING, "Unable to close connection to the database: " + sqlException.getMessage());
-        }
+        this.getAbstractDatabase().closeConnection();
     }
 
     /* the getter and setter of this class */

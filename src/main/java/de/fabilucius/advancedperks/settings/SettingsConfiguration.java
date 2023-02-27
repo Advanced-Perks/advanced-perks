@@ -2,8 +2,8 @@ package de.fabilucius.advancedperks.settings;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.sql.SqlType;
-import de.fabilucius.sympel.configuration.AbstractConfig;
-import de.fabilucius.sympel.configuration.value.types.SingleValue;
+import de.fabilucius.advancedperks.commons.configuration.AbstractConfig;
+import de.fabilucius.advancedperks.commons.configuration.value.types.SingleValue;
 
 public class SettingsConfiguration extends AbstractConfig {
     public SettingsConfiguration() {

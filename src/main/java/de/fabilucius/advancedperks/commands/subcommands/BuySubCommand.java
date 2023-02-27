@@ -4,8 +4,8 @@ import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.economy.PurchaseResult;
 import de.fabilucius.advancedperks.perks.Perk;
 import de.fabilucius.advancedperks.settings.MessageConfiguration;
-import de.fabilucius.sympel.command.command.AbstractSubCommand;
-import de.fabilucius.sympel.configuration.utilities.ReplaceLogic;
+import de.fabilucius.advancedperks.commons.command.command.AbstractSubCommand;
+import de.fabilucius.advancedperks.commons.configuration.utilities.ReplaceLogic;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

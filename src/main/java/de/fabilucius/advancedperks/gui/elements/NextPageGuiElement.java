@@ -4,8 +4,8 @@ import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.guisystem.GuiElement;
 import de.fabilucius.advancedperks.commons.guisystem.GuiWindow;
 import de.fabilucius.advancedperks.commons.guisystem.annotation.CancelInventoryInteraction;
+import de.fabilucius.advancedperks.commons.item.impl.SkullStackBuilder;
 import de.fabilucius.advancedperks.gui.PerkGuiWindow;
-import de.fabilucius.sympel.item.builder.types.SkullStackBuilder;
 
 @CancelInventoryInteraction
 public class NextPageGuiElement extends GuiElement {

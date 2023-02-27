@@ -6,7 +6,6 @@ import de.fabilucius.advancedperks.commons.ListCache;
 import de.fabilucius.advancedperks.commons.Singleton;
 import de.fabilucius.advancedperks.event.types.PerkRegistryEvent;
 import de.fabilucius.advancedperks.exception.PerkRegisterException;
-import de.fabilucius.sympel.multiversion.ServerVersion;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,8 +42,7 @@ public class PerkListCache extends ListCache<Perk> {
         Arrays.stream(perkClasses).forEach(perkClass -> {
             try {
                 Perk perk = perkClass.getDeclaredConstructor().newInstance();
-                if (perk.isEnabled() && ServerVersion.is(perk.getMinimumServerVersion(), ServerVersion.ComparisonType.LOWER_OR_EQUAL) &&
-                        this.isIdentifierUnique(perk.getIdentifier())) {
+                if (perk.isEnabled() && this.isIdentifierUnique(perk.getIdentifier())) {
                     this.getPerks().add(perk);
                 }
             } catch (Exception exception) {

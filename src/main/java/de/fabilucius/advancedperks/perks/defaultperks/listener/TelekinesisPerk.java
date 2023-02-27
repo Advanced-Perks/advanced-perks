@@ -1,9 +1,9 @@
 package de.fabilucius.advancedperks.perks.defaultperks.listener;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.commons.item.impl.ItemStackBuilder;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.types.AbstractListenerPerk;
-import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;

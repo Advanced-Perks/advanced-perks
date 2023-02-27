@@ -2,9 +2,9 @@ package de.fabilucius.advancedperks.commands.subcommands;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.gui.PerkGuiWindow;
-import de.fabilucius.sympel.command.command.AbstractSubCommand;
-import de.fabilucius.sympel.command.metadata.Permission;
-import de.fabilucius.sympel.configuration.utilities.ReplaceLogic;
+import de.fabilucius.advancedperks.commons.command.command.AbstractSubCommand;
+import de.fabilucius.advancedperks.commons.command.metadata.Permission;
+import de.fabilucius.advancedperks.commons.configuration.utilities.ReplaceLogic;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

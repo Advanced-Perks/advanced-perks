@@ -1,10 +1,9 @@
 package de.fabilucius.advancedperks.perks.defaultperks.listener;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.commons.item.impl.ItemStackBuilder;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.types.AbstractListenerPerk;
-import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
-import de.fabilucius.sympel.multiversion.ServerVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.CropState;
 import org.bukkit.Material;
@@ -21,16 +20,9 @@ public class FarmerPerk extends AbstractListenerPerk {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        if (ServerVersion.is(ServerVersion.v1_12, ServerVersion.ComparisonType.LOWER_OR_EQUAL)) {
-            if (!(event.getBlock().getState().getData() instanceof Crops) ||
-                    !((Crops) event.getBlock().getState().getData()).getState().equals(CropState.RIPE)) {
-                return;
-            }
-        } else {
-            if (!(event.getBlock().getBlockData() instanceof Ageable) ||
-                    ((Ageable) event.getBlock().getBlockData()).getAge() != ((Ageable) event.getBlock().getBlockData()).getMaximumAge()) {
-                return;
-            }
+        if (!(event.getBlock().getBlockData() instanceof Ageable) ||
+                ((Ageable) event.getBlock().getBlockData()).getAge() != ((Ageable) event.getBlock().getBlockData()).getMaximumAge()) {
+            return;
         }
         PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(event.getPlayer());
         if (perkData.isPerkActivated(this)) {

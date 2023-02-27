@@ -3,8 +3,7 @@ package de.fabilucius.advancedperks.perks;
 import com.google.common.collect.Lists;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.NullSafety;
-import de.fabilucius.sympel.configuration.value.types.SingleValue;
-import de.fabilucius.sympel.multiversion.ServerVersion;
+import de.fabilucius.advancedperks.commons.configuration.value.types.SingleValue;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +16,6 @@ public abstract class AbstractPerk implements Perk {
 
     private static final Logger LOGGER = Bukkit.getLogger();
     private final ItemStack icon;
-    private ServerVersion minimumServerVersion = ServerVersion.v1_8;
     private final String identifier;
     private final String displayName;
     private final String permission;
@@ -116,16 +114,6 @@ public abstract class AbstractPerk implements Perk {
     @Override
     public ItemStack getIcon() {
         return this.icon == null ? this.getDefaultIcon() : this.icon;
-    }
-
-    @Override
-    public ServerVersion getMinimumServerVersion() {
-        return minimumServerVersion;
-    }
-
-    @Override
-    public void setMinimumServerVersion(ServerVersion minimumServerVersion) {
-        this.minimumServerVersion = minimumServerVersion;
     }
 
     @Override

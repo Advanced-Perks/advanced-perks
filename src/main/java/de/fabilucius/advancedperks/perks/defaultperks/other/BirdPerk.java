@@ -1,10 +1,10 @@
 package de.fabilucius.advancedperks.perks.defaultperks.other;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.commons.item.impl.ItemStackBuilder;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.AbstractPerk;
-import de.fabilucius.sympel.configuration.value.types.SingleValue;
-import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
+import de.fabilucius.advancedperks.commons.configuration.value.types.SingleValue;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;

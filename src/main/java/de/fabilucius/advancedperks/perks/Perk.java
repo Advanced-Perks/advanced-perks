@@ -1,7 +1,6 @@
 package de.fabilucius.advancedperks.perks;
 
-import de.fabilucius.sympel.configuration.value.types.SingleValue;
-import de.fabilucius.sympel.multiversion.ServerVersion;
+import de.fabilucius.advancedperks.commons.configuration.value.types.SingleValue;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,10 +17,6 @@ public interface Perk {
     List<String> getDescription();
 
     List<String> getDisabledWorlds();
-
-    ServerVersion getMinimumServerVersion();
-
-    void setMinimumServerVersion(ServerVersion serverVersion);
 
     ItemStack getIcon();
 

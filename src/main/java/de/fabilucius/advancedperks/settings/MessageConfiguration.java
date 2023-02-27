@@ -1,8 +1,8 @@
 package de.fabilucius.advancedperks.settings;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.sympel.configuration.types.MessageConfig;
-import de.fabilucius.sympel.configuration.value.types.SingleValue;
+import de.fabilucius.advancedperks.commons.configuration.types.MessageConfig;
+import de.fabilucius.advancedperks.commons.configuration.value.types.SingleValue;
 import org.bukkit.ChatColor;
 
 public class MessageConfiguration extends MessageConfig {

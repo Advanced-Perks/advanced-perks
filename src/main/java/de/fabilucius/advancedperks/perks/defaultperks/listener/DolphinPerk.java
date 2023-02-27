@@ -1,9 +1,9 @@
 package de.fabilucius.advancedperks.perks.defaultperks.listener;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.commons.item.impl.SkullStackBuilder;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.types.AbstractListenerPerk;
-import de.fabilucius.sympel.item.builder.types.SkullStackBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

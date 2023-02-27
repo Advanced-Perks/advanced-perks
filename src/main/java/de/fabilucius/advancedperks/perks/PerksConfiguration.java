@@ -1,11 +1,11 @@
 package de.fabilucius.advancedperks.perks;
 
+import com.cryptomorin.xseries.XMaterial;
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.sympel.configuration.AbstractConfig;
-import de.fabilucius.sympel.configuration.value.types.ListValue;
-import de.fabilucius.sympel.configuration.value.types.SingleValue;
-import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
-import de.fabilucius.sympel.item.external.XMaterial;
+import de.fabilucius.advancedperks.commons.configuration.AbstractConfig;
+import de.fabilucius.advancedperks.commons.configuration.value.types.ListValue;
+import de.fabilucius.advancedperks.commons.configuration.value.types.SingleValue;
+import de.fabilucius.advancedperks.commons.item.impl.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 

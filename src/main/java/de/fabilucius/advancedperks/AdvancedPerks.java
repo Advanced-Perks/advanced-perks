@@ -13,7 +13,7 @@ import de.fabilucius.advancedperks.perks.PerksConfiguration;
 import de.fabilucius.advancedperks.settings.MessageConfiguration;
 import de.fabilucius.advancedperks.settings.SettingsConfiguration;
 import de.fabilucius.advancedperks.utilities.update.UpdateChecker;
-import de.fabilucius.sympel.configuration.factory.ConfigSingletonFactory;
+import de.fabilucius.advancedperks.commons.configuration.factory.ConfigSingletonFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;

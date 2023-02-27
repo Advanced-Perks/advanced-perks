@@ -26,7 +26,7 @@ import java.util.zip.GZIPOutputStream;
 public class Metrics {
 
     public static Metrics load() {
-        if (true) {//TODOAdvancedPerks.getSettingsConfiguration().METRICS_ENABLED.get()) {
+        if (AdvancedPerks.getSettingsConfiguration().METRICS_ENABLED.get()) {
             return new Metrics(AdvancedPerks.getInstance(), 12771);
         }
         return null;

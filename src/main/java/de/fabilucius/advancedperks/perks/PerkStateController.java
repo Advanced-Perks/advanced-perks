@@ -65,17 +65,6 @@ public class PerkStateController {
                         "`perk` varchar(128)" +
                         ")"
         );
-        try {
-            this.getAbstractDatabase().customUpdate(
-                    "ALTER TABLE IF EXISTS `unlocked_perks` " +
-                            "DROP PRIMARY KEY"
-            );
-            this.getAbstractDatabase().customUpdate(
-                    "ALTER TABLE IF EXISTS `enabled_perks` " +
-                            "DROP PRIMARY KEY"
-            );
-        } catch (Exception ignored) {
-        }
         this.globalMaxPerks = AdvancedPerks.getSettingsConfiguration().GLOBAL_MAX_PERKS.get();
     }
 

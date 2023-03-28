@@ -26,23 +26,30 @@ public class LoadPerkDataTask implements Runnable {
     public LoadPerkDataTask(PerkData perkData) {
         this.perkData = perkData;
     }
-
+    
     @Override
     public void run() {
         UUID uuid = this.perkData.getPlayer().getUniqueId();
         try {
             ResultSet enabledPerksResultSet = PERK_STATE_CONTROLLER.getAbstractDatabase().selectQuery("enabled_perks", Lists.newArrayList("perk"), "uuid = '" + uuid + "'");
             if (enabledPerksResultSet != null) {
+                List<Perk> toEnable = Lists.newArrayList();
                 while (enabledPerksResultSet.next()) {
                     for (String perkLine : enabledPerksResultSet.getString("perk").split(",")) {
                         Perk perk = AdvancedPerks.getPerkRegistry().getPerkByIdentifier(perkLine);
-                        if (perk == null) {
-                            continue;
+                        if (perk != null) {
+                            toEnable.add(perk);
                         }
-                        Bukkit.getScheduler().runTask(AdvancedPerks.getInstance(),
-                                () -> PERK_STATE_CONTROLLER.enablePerk(this.perkData.getPlayer(), perk));
                     }
                 }
+                /* Load the found perks synchronously */
+
+                Bukkit.getScheduler().runTask(AdvancedPerks.getInstance(),
+                        () -> {
+                            toEnable.forEach(perk -> {
+                                PERK_STATE_CONTROLLER.enablePerk(this.perkData.getPlayer(), perk);
+                            });
+                        });
             }
             ResultSet unlockedPerksResultSet = PERK_STATE_CONTROLLER.getAbstractDatabase().selectQuery("unlocked_perks",
                     Lists.newArrayList("perk"),

@@ -5,6 +5,7 @@ import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.Perk;
 import de.fabilucius.advancedperks.perks.PerkStateController;
+import org.apache.logging.log4j.util.Strings;
 import org.bukkit.Bukkit;
 
 import java.sql.ResultSet;
@@ -26,7 +27,7 @@ public class LoadPerkDataTask implements Runnable {
     public LoadPerkDataTask(PerkData perkData) {
         this.perkData = perkData;
     }
-    
+
     @Override
     public void run() {
         UUID uuid = this.perkData.getPlayer().getUniqueId();
@@ -57,7 +58,8 @@ public class LoadPerkDataTask implements Runnable {
             if (unlockedPerksResultSet != null) {
                 while (unlockedPerksResultSet.next()) {
                     List<String> unlockedPerks = Arrays.stream(unlockedPerksResultSet.getString("perk").split(","))
-                            .collect(Collectors.toList());
+                            .filter(perk -> !Strings.isBlank(perk) && !Strings.isEmpty(perk))
+                            .toList();
                     this.perkData.getUnlockedPerks().addAll(unlockedPerks);
                 }
             }

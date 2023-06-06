@@ -9,6 +9,11 @@ Perks:
   No-Permission: '<prefix> &cUnable to activated perk, you dont have the permission to use this perk.'
   Disabled-By-World: '<prefix> &cUnable to activate perk <perk_name> in the world <world_name> because the perk isnt allowed in that world.'
 Command:
+  Info:
+    Text:
+      - '<prefix> &7The player &6<player> &7has bought the following perks:'
+      - '<prefix> <bought_perks>'
+    Syntax: '<prefix> &7The command syntax is: /perks info <player>'
   Buy:
     No-Eco-Support: '<prefix> &cThe plugin is missing either an economy plugin or vault to use this feature.'
     Perk-Not-Found: '<prefix> &cThe perk <perk> was either misspelled or doesnt exist.'

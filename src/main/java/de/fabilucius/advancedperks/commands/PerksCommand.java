@@ -1,10 +1,7 @@
 package de.fabilucius.advancedperks.commands;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.commands.subcommands.BuySubCommand;
-import de.fabilucius.advancedperks.commands.subcommands.OpenSubCommand;
-import de.fabilucius.advancedperks.commands.subcommands.ReloadSubCommand;
-import de.fabilucius.advancedperks.commands.subcommands.ToggleSubCommand;
+import de.fabilucius.advancedperks.commands.subcommands.*;
 import de.fabilucius.advancedperks.commons.command.command.AbstractCommand;
 import de.fabilucius.advancedperks.commons.command.command.AbstractSubCommand;
 import de.fabilucius.advancedperks.commons.command.metadata.SubCommands;
@@ -15,7 +12,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SubCommands({OpenSubCommand.class, ToggleSubCommand.class, BuySubCommand.class, ReloadSubCommand.class})
+@SubCommands({OpenSubCommand.class, ToggleSubCommand.class, BuySubCommand.class, ReloadSubCommand.class, InfoSubCommand.class})
 public class PerksCommand extends AbstractCommand {
 
     private PerksCommand() {

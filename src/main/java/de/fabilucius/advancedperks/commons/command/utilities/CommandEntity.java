@@ -1,5 +1,7 @@
 package de.fabilucius.advancedperks.commons.command.utilities;
 
+import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.settings.MessageConfiguration;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
@@ -8,6 +10,11 @@ import java.util.List;
  * A command entity is any form of command that can be run be it a command itself or one of its subcommands.
  */
 public interface CommandEntity {
+
+    default MessageConfiguration getMessageConfig() {
+        return AdvancedPerks.getMessageConfiguration();
+    }
+
 
     /**
      * This method will be forwarded by the bukkit default's onCommand and simplifies the arguments to only include the useful.

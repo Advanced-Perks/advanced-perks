@@ -10,6 +10,10 @@ public class SettingsConfiguration extends AbstractConfig {
         super(AdvancedPerks.getInstance(), "settings.yml");
     }
 
+    public final boolean isMetricsCollectionEnabled() {
+        return this.getConfig().getBoolean("Global.Metrics-Enabled", true);
+    }
+
     public final SingleValue<Boolean> METRICS_ENABLED = new SingleValue<>(this, "Global.Metrics-Enabled", "This option controls if the metrics for the plugin should be enabled or not.", Boolean.class, true);
     public final SingleValue<Integer> GLOBAL_MAX_PERKS = new SingleValue<>(this, "Global.Max-Perks-Enabled", "This value controls the global limit for everyone who doesn't bypass it on how many perks he can enabled at once.", Integer.class, -1);
     public final SqlType SQL_TYPE = SqlType.getSqlTypeByName(new SingleValue<>(this, "Perk-Data-Save.Save-Method", "This value controls the way the perk data gets saved, you can choose between FILE and DATABASE based on what you want.", String.class, "FILE").get());

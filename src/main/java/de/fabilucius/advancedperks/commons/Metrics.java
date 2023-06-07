@@ -20,16 +20,23 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
 
 public class Metrics {
 
-    public static Metrics load() {
-        if (AdvancedPerks.getSettingsConfiguration().METRICS_ENABLED.get()) {
-            return new Metrics(AdvancedPerks.getInstance(), 12771);
+    private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
+
+    public static void load() {
+        if (AdvancedPerks.getSettingsConfiguration().isMetricsCollectionEnabled()) {
+            LOGGER.info("Metrics collection has started, thanks for providing useful and anonymous metrics " +
+                    "data to improve my software.");
+            new Metrics(AdvancedPerks.getInstance(), 12771);
+        } else {
+            LOGGER.info("Collecting of metrics was disabled in the config, please consider enabling it " +
+                    "as it would help me improve my software with no additional cost for you.");
         }
-        return null;
     }
 
     private final Plugin plugin;

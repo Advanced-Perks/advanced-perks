@@ -47,6 +47,7 @@ public class EconomyController {
         PurchaseResult result = this.economyInterface.buyPerk(perkData, perk);
         if (result.equals(PurchaseResult.SUCCESS)) {
             perkData.getUnlockedPerks().add(perk.getIdentifier());
+            perkData.getPerkDataStatus().setDataChanged();
         }
         return result;
     }

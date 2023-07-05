@@ -50,6 +50,7 @@ public class LoadPerkDataTask implements Runnable {
                             toEnable.forEach(perk -> {
                                 PERK_STATE_CONTROLLER.enablePerk(this.perkData.getPlayer(), perk);
                             });
+                            this.perkData.getPerkDataStatus().setDataLoaded();
                         });
             }
             ResultSet unlockedPerksResultSet = PERK_STATE_CONTROLLER.getAbstractDatabase().selectQuery("unlocked_perks",

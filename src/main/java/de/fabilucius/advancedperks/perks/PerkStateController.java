@@ -126,6 +126,7 @@ public class PerkStateController {
             if (!perkData.isPerkActivated(perk)) {
                 perkData.getActivatedPerks().add(perk);
                 perk.prePerkEnable(player);
+                perkData.getPerkDataStatus().setDataChanged();
             }
         });
     }
@@ -135,6 +136,7 @@ public class PerkStateController {
             if (perkData.isPerkActivated(perk)) {
                 perkData.getActivatedPerks().remove(perk);
                 perk.prePerkDisable(player);
+                perkData.getPerkDataStatus().setDataChanged();
             }
         });
     }
@@ -144,12 +146,15 @@ public class PerkStateController {
             if (!perkData.isPerkActivated(perk)) {
                 perkData.getActivatedPerks().add(perk);
                 perk.prePerkEnable(player);
+                perkData.getPerkDataStatus().setDataChanged();
             }
         });
     }
 
     public void savePerkData(PerkData perkData) {
-        Bukkit.getScheduler().runTaskAsynchronously(AdvancedPerks.getInstance(), new SavePerkDataTask(perkData, this.getAbstractDatabase()));
+        if (perkData.getPerkDataStatus().isDataChanged()) {
+            Bukkit.getScheduler().runTaskAsynchronously(AdvancedPerks.getInstance(), new SavePerkDataTask(perkData, this.getAbstractDatabase()));
+        }
     }
 
     public void handleShutdown() {

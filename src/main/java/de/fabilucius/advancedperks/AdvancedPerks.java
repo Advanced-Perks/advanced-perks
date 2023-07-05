@@ -26,6 +26,8 @@ public class AdvancedPerks extends JavaPlugin {
 
     public static final Logger LOGGER = Bukkit.getLogger();
 
+    private static AdvancedPerks instance;
+
     /* All configuration instances */
     private static SettingsConfiguration settingsConfiguration;
     private static MessageConfiguration messageConfiguration;
@@ -43,6 +45,8 @@ public class AdvancedPerks extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
+
         /* Initialize the configurations first because they don't have any dependencies*/
         settingsConfiguration = ConfigSingletonFactory.createConfiguration(SettingsConfiguration.class);
         perksConfiguration = ConfigSingletonFactory.createConfiguration(PerksConfiguration.class);
@@ -81,7 +85,7 @@ public class AdvancedPerks extends JavaPlugin {
     /* the getter and setter of this class */
 
     public static AdvancedPerks getInstance() {
-        return getPlugin(AdvancedPerks.class);
+        return instance;
     }
 
     public static SettingsConfiguration getSettingsConfiguration() {

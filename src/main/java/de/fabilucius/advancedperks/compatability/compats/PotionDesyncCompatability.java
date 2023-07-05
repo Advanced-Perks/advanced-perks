@@ -20,7 +20,7 @@ public class PotionDesyncCompatability extends BukkitListener implements Compata
 
     public PotionDesyncCompatability() {
         Bukkit.getScheduler().runTaskTimer(AdvancedPerks.getInstance(), this.getPotionResyncTask(), 10L, 10L);
-        Bukkit.getScheduler().runTaskTimerAsynchronously(AdvancedPerks.getInstance(), this.getWatchdogTask(), 10L, 10L);
+        Bukkit.getScheduler().runTaskTimer(AdvancedPerks.getInstance(), this.getWatchdogTask(), 10L, 10L);
     }
 
     private final Runnable potionResyncTask = () -> {

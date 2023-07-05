@@ -43,7 +43,7 @@ public class AdvancedPerks extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        /* Initialize the configurations first because they don't have any dependencies*/ 
+        /* Initialize the configurations first because they don't have any dependencies*/
         settingsConfiguration = ConfigSingletonFactory.createConfiguration(SettingsConfiguration.class);
         perksConfiguration = ConfigSingletonFactory.createConfiguration(PerksConfiguration.class);
         messageConfiguration = ConfigSingletonFactory.createConfiguration(MessageConfiguration.class);
@@ -56,7 +56,7 @@ public class AdvancedPerks extends JavaPlugin {
         economyController = EconomyController.getSingleton();
         CompatabilityController.getSingleton();
 
-        PerksCommand.registerCommand();
+        new PerksCommand();
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             AdvancedPerksExpansion expansion = new AdvancedPerksExpansion();
             expansion.register();

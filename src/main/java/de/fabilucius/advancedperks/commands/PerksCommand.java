@@ -15,14 +15,9 @@ import java.util.stream.Collectors;
 @SubCommands({OpenSubCommand.class, ToggleSubCommand.class, BuySubCommand.class, ReloadSubCommand.class, InfoSubCommand.class})
 public class PerksCommand extends AbstractCommand {
 
-    private PerksCommand() {
+    public PerksCommand() {
         super("perks");
-    }
-
-    public static PerksCommand registerCommand() {
-        PerksCommand perksCommand = new PerksCommand();
-        perksCommand.setNoPermissionMessage(AdvancedPerks.getMessageConfiguration().getMessage("Command.No-Permission"));
-        return perksCommand;
+        this.setNoPermissionMessage(AdvancedPerks.getMessageConfiguration().getMessage("Command.No-Permission"));
     }
 
     @Override

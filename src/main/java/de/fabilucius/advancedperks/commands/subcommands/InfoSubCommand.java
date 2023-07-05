@@ -26,16 +26,16 @@ public class InfoSubCommand extends AbstractSubCommand {
         }
         Player target = Bukkit.getPlayer(arguments[0]);
         if (target == null) {
-            commandSender.sendMessage("Player offline.");
-            //TODO improving offline perk loading
-            return;
+            commandSender.sendMessage(this.getMessageConfig().getMessage("Command.Info.Player-Offline",
+                    new ReplaceLogic("<player>", arguments[0])));
+        } else {
+            PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(target);
+            String boughtPerks = String.join(", ", perkData.getUnlockedPerks());
+            this.getMessageConfig().getMessageList("Command.Info.Text",
+                            new ReplaceLogic("<player>", target.getName()),
+                            new ReplaceLogic("<bought_perks>", Strings.isEmpty(boughtPerks) ? "none" : boughtPerks))
+                    .forEach(commandSender::sendMessage);
         }
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(target);
-        this.getMessageConfig().getMessageList("Command.Info.Text",
-                        new ReplaceLogic("<player>", target.getName()),
-                        new ReplaceLogic("<bought_perks>", String.join(", ", perkData.getUnlockedPerks())))
-                .forEach(commandSender::sendMessage);
-        System.out.println(perkData.getUnlockedPerks().size());
     }
 
     @Override

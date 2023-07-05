@@ -10,6 +10,7 @@ Perks:
   Disabled-By-World: '<prefix> &cUnable to activate perk <perk_name> in the world <world_name> because the perk isnt allowed in that world.'
 Command:
   Info:
+    Player-Offline: '<prefix> &cThe player <player> either does not exist or is offline.'
     Text:
       - '<prefix> &7The player &6<player> &7has bought the following perks:'
       - '<prefix> <bought_perks>'

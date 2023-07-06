@@ -5,6 +5,7 @@ import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.Perk;
 import de.fabilucius.advancedperks.perks.PerkStateController;
+import org.apache.logging.log4j.util.Strings;
 import org.bukkit.Bukkit;
 
 import java.sql.ResultSet;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class LoadPerkDataTask implements Runnable {
 
-    private static final PerkStateController PERK_STATE_CONTROLLER = AdvancedPerks.getPerkStateController();
+    private static final PerkStateController PERK_STATE_CONTROLLER = AdvancedPerks.getInstance().getPerkStateController();
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
 
     private final PerkData perkData;
@@ -33,16 +34,24 @@ public class LoadPerkDataTask implements Runnable {
         try {
             ResultSet enabledPerksResultSet = PERK_STATE_CONTROLLER.getAbstractDatabase().selectQuery("enabled_perks", Lists.newArrayList("perk"), "uuid = '" + uuid + "'");
             if (enabledPerksResultSet != null) {
+                List<Perk> toEnable = Lists.newArrayList();
                 while (enabledPerksResultSet.next()) {
                     for (String perkLine : enabledPerksResultSet.getString("perk").split(",")) {
-                        Perk perk = AdvancedPerks.getPerkRegistry().getPerkByIdentifier(perkLine);
-                        if (perk == null) {
-                            continue;
+                        Perk perk = AdvancedPerks.getInstance().getPerkRegistry().getPerkByIdentifier(perkLine);
+                        if (perk != null) {
+                            toEnable.add(perk);
                         }
-                        Bukkit.getScheduler().runTask(AdvancedPerks.getInstance(),
-                                () -> PERK_STATE_CONTROLLER.enablePerk(this.perkData.getPlayer(), perk));
                     }
                 }
+                /* Load the found perks synchronously */
+
+                Bukkit.getScheduler().runTask(AdvancedPerks.getInstance(),
+                        () -> {
+                            toEnable.forEach(perk -> {
+                                PERK_STATE_CONTROLLER.enablePerk(this.perkData.getPlayer(), perk);
+                            });
+                            this.perkData.getPerkDataStatus().setDataLoaded();
+                        });
             }
             ResultSet unlockedPerksResultSet = PERK_STATE_CONTROLLER.getAbstractDatabase().selectQuery("unlocked_perks",
                     Lists.newArrayList("perk"),
@@ -50,7 +59,8 @@ public class LoadPerkDataTask implements Runnable {
             if (unlockedPerksResultSet != null) {
                 while (unlockedPerksResultSet.next()) {
                     List<String> unlockedPerks = Arrays.stream(unlockedPerksResultSet.getString("perk").split(","))
-                            .collect(Collectors.toList());
+                            .filter(perk -> !Strings.isBlank(perk) && !Strings.isEmpty(perk))
+                            .toList();
                     this.perkData.getUnlockedPerks().addAll(unlockedPerks);
                 }
             }

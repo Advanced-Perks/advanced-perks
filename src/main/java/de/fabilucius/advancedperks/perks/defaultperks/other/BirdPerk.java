@@ -1,10 +1,10 @@
 package de.fabilucius.advancedperks.perks.defaultperks.other;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.commons.item.impl.ItemStackBuilder;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.AbstractPerk;
-import de.fabilucius.sympel.configuration.value.types.SingleValue;
-import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
+import de.fabilucius.advancedperks.commons.configuration.value.types.SingleValue;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -18,7 +18,7 @@ public class BirdPerk extends AbstractPerk implements Listener {
 
     public BirdPerk() {
         super("Bird");
-        SingleValue<Boolean> disableInLava = new SingleValue<>(AdvancedPerks.getPerksConfiguration(), "Bird.Disable-In-Lava", "Option to disable the Bird perk in the lava.", Boolean.class, false);
+        SingleValue<Boolean> disableInLava = new SingleValue<>(AdvancedPerks.getInstance().getPerksConfiguration(), "Bird.Disable-In-Lava", "Option to disable the Bird perk in the lava.", Boolean.class, false);
         if (disableInLava.get()) {
             Bukkit.getPluginManager().registerEvents(this, AdvancedPerks.getInstance());
         }
@@ -27,13 +27,13 @@ public class BirdPerk extends AbstractPerk implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         if (event.getTo() != null && event.getTo().getBlock().isLiquid() && event.getTo().getBlock().getType().name().contains("LAVA")) {
-            PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(event.getPlayer());
+            PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(event.getPlayer());
             if (perkData.isPerkActivated(this)) {
                 event.getPlayer().setFlying(false);
             }
         } else if (event.getFrom().getBlock().isLiquid() && event.getFrom().getBlock().getType().name().contains("LAVA") &&
                 event.getTo() != null && !event.getTo().getBlock().getType().name().contains("LAVA")) {
-            PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(event.getPlayer());
+            PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(event.getPlayer());
             if (perkData.isPerkActivated(this)) {
                 event.getPlayer().setFlying(true);
             }

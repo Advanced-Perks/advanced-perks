@@ -3,10 +3,8 @@ package de.fabilucius.advancedperks.perks;
 import com.google.common.reflect.ClassPath;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.ListCache;
-import de.fabilucius.advancedperks.commons.Singleton;
 import de.fabilucius.advancedperks.event.types.PerkRegistryEvent;
 import de.fabilucius.advancedperks.exception.PerkRegisterException;
-import de.fabilucius.sympel.multiversion.ServerVersion;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,7 +13,6 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-@Singleton("For obvious reasons regarding the structure of the plugin there should only ever be one instance of this class.")
 public class PerkListCache extends ListCache<Perk> {
 
     private static final Logger LOGGER = Bukkit.getLogger();
@@ -43,8 +40,7 @@ public class PerkListCache extends ListCache<Perk> {
         Arrays.stream(perkClasses).forEach(perkClass -> {
             try {
                 Perk perk = perkClass.getDeclaredConstructor().newInstance();
-                if (perk.isEnabled() && ServerVersion.is(perk.getMinimumServerVersion(), ServerVersion.ComparisonType.LOWER_OR_EQUAL) &&
-                        this.isIdentifierUnique(perk.getIdentifier())) {
+                if (perk.isEnabled() && this.isIdentifierUnique(perk.getIdentifier())) {
                     this.getPerks().add(perk);
                 }
             } catch (Exception exception) {

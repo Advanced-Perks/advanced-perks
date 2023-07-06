@@ -1,19 +1,15 @@
 package de.fabilucius.advancedperks.api;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.commons.Singleton;
 import de.fabilucius.advancedperks.data.PerkData;
-import de.fabilucius.advancedperks.data.PerkDataRepository;
 import de.fabilucius.advancedperks.exception.PerkRegisterException;
 import de.fabilucius.advancedperks.perks.Perk;
-import de.fabilucius.advancedperks.perks.PerkListCache;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Singleton("This class has no reason to exist more than once, and to prevent static abuse.")
 public class AdvancedPerksApi {
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
@@ -27,7 +23,7 @@ public class AdvancedPerksApi {
      */
     public RegisterResponse registerPerk(Class<? extends Perk> perk) {
         try {
-            AdvancedPerks.getPerkRegistry().registerPerks(perk);
+            AdvancedPerks.getInstance().getPerkRegistry().registerPerks(perk);
             return RegisterResponse.SUCCESS;
         } catch (PerkRegisterException exception) {
             LOGGER.log(Level.WARNING, "Unable to register a perk with the Api:", exception);
@@ -45,7 +41,7 @@ public class AdvancedPerksApi {
      */
     @NotNull
     public PerkData getPerkData(Player player) {
-        return AdvancedPerks.getPerkDataRepository().getPerkData(player);
+        return AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
     }
 
     /* Singleton stuff */

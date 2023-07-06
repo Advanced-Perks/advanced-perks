@@ -1,8 +1,8 @@
 package de.fabilucius.advancedperks.commands.subcommands;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.sympel.command.command.AbstractSubCommand;
-import de.fabilucius.sympel.command.metadata.Permission;
+import de.fabilucius.advancedperks.commons.command.command.AbstractSubCommand;
+import de.fabilucius.advancedperks.commons.command.metadata.Permission;
 import org.bukkit.command.CommandSender;
 
 import java.util.Collections;
@@ -16,7 +16,7 @@ public class ReloadSubCommand extends AbstractSubCommand {
 
     @Override
     public void handleCommandExecute(CommandSender commandSender, String... strings) {
-        AdvancedPerks.reloadPlugin();
+        AdvancedPerks.getInstance().reloadPlugin();
         commandSender.sendMessage("~ Successfully reloaded Advanced Perks");
     }
 

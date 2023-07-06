@@ -3,8 +3,7 @@ package de.fabilucius.advancedperks.perks;
 import com.google.common.collect.Lists;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.NullSafety;
-import de.fabilucius.sympel.configuration.value.types.SingleValue;
-import de.fabilucius.sympel.multiversion.ServerVersion;
+import de.fabilucius.advancedperks.commons.configuration.value.types.SingleValue;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +16,6 @@ public abstract class AbstractPerk implements Perk {
 
     private static final Logger LOGGER = Bukkit.getLogger();
     private final ItemStack icon;
-    private ServerVersion minimumServerVersion = ServerVersion.v1_8;
     private final String identifier;
     private final String displayName;
     private final String permission;
@@ -27,7 +25,7 @@ public abstract class AbstractPerk implements Perk {
 
     public AbstractPerk(String identifier) {
         this.identifier = identifier;
-        PerksConfiguration perksConfiguration = AdvancedPerks.getPerksConfiguration();
+        PerksConfiguration perksConfiguration = AdvancedPerks.getInstance().getPerksConfiguration();
         this.displayName = perksConfiguration.getDisplayName(this);
         this.permission = perksConfiguration.getPermission(this);
         this.description = perksConfiguration.getDescription(this);
@@ -51,7 +49,7 @@ public abstract class AbstractPerk implements Perk {
     public abstract ItemStack getDefaultIcon();
 
     private void validatePerkIntegrity() {
-        if(this.getIdentifier().contains(",")){
+        if (this.getIdentifier().contains(",")) {
             throw new IllegalStateException("The identifier of a perk isn't allowed to contain a comma in order to make easy database serializing possible.");
         }
         try {
@@ -119,18 +117,8 @@ public abstract class AbstractPerk implements Perk {
     }
 
     @Override
-    public ServerVersion getMinimumServerVersion() {
-        return minimumServerVersion;
-    }
-
-    @Override
-    public void setMinimumServerVersion(ServerVersion minimumServerVersion) {
-        this.minimumServerVersion = minimumServerVersion;
-    }
-
-    @Override
     public SingleValue<Number> getPrice() {
-        return new SingleValue<>(AdvancedPerks.getPerksConfiguration(), this.getIdentifier() + ".Price",
+        return new SingleValue<>(AdvancedPerks.getInstance().getPerksConfiguration(), this.getIdentifier() + ".Price",
                 "The amount of currency this perk should cost.", Number.class, -1);
     }
 }

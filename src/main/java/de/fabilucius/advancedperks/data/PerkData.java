@@ -18,6 +18,7 @@ public class PerkData {
     private int maxPerks;
     private final Set<Perk> activatedPerks = Sets.newHashSet();
     private final Set<String> unlockedPerks = Sets.newHashSet();
+    private final PerkDataStatus perkDataStatus = new PerkDataStatus();
 
     public PerkData(Player player) {
         this.player = player;
@@ -55,6 +56,10 @@ public class PerkData {
 
     /* the getter and setter of this class */
 
+    public PerkDataStatus getPerkDataStatus() {
+        return perkDataStatus;
+    }
+
     public int getMaxPerks() {
         return maxPerks;
     }
@@ -74,4 +79,5 @@ public class PerkData {
     public Player getPlayer() {
         return player;
     }
+
 }

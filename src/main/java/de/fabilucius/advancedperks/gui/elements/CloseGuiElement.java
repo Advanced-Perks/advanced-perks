@@ -4,7 +4,7 @@ import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.guisystem.GuiElement;
 import de.fabilucius.advancedperks.commons.guisystem.GuiWindow;
 import de.fabilucius.advancedperks.commons.guisystem.annotation.CancelInventoryInteraction;
-import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
+import de.fabilucius.advancedperks.commons.item.impl.ItemStackBuilder;
 import org.bukkit.Material;
 
 @CancelInventoryInteraction
@@ -13,8 +13,8 @@ public class CloseGuiElement extends GuiElement {
         super(guiWindow, (guiElement, event) -> {
             event.getWhoClicked().closeInventory();
         }, ItemStackBuilder.fromMaterial(Material.BARRIER)
-                .setDisplayName(AdvancedPerks.getMessageConfiguration().getMessage("Gui.Close-Gui.Name"))
-                .setDescription(AdvancedPerks.getMessageConfiguration().getMessageList("Gui.Close-Gui.Description"))
+                .setDisplayName(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Close-Gui.Name"))
+                .setDescription(AdvancedPerks.getInstance().getMessageConfiguration().getMessageList("Gui.Close-Gui.Description"))
                 .build());
     }
 }

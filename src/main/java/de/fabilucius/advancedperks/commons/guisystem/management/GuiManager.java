@@ -2,7 +2,6 @@ package de.fabilucius.advancedperks.commons.guisystem.management;
 
 import com.google.common.collect.Maps;
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.commons.Singleton;
 import de.fabilucius.advancedperks.commons.guisystem.GuiElement;
 import de.fabilucius.advancedperks.commons.guisystem.GuiWindow;
 import org.bukkit.Bukkit;
@@ -15,7 +14,6 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.HashMap;
 
-@Singleton("To prevent multiple registrations of this as a listener class resulting in preventing memory leaks.")
 public class GuiManager implements Listener {
 
     private final HashMap<GuiWindow, Player> openedGuis = Maps.newHashMap();

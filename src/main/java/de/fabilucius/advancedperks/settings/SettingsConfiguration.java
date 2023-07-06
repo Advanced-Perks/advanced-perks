@@ -2,12 +2,16 @@ package de.fabilucius.advancedperks.settings;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.sql.SqlType;
-import de.fabilucius.sympel.configuration.AbstractConfig;
-import de.fabilucius.sympel.configuration.value.types.SingleValue;
+import de.fabilucius.advancedperks.commons.configuration.AbstractConfig;
+import de.fabilucius.advancedperks.commons.configuration.value.types.SingleValue;
 
 public class SettingsConfiguration extends AbstractConfig {
     public SettingsConfiguration() {
         super(AdvancedPerks.getInstance(), "settings.yml");
+    }
+
+    public final boolean isMetricsCollectionEnabled() {
+        return this.getConfig().getBoolean("Global.Metrics-Enabled", true);
     }
 
     public final SingleValue<Boolean> METRICS_ENABLED = new SingleValue<>(this, "Global.Metrics-Enabled", "This option controls if the metrics for the plugin should be enabled or not.", Boolean.class, true);

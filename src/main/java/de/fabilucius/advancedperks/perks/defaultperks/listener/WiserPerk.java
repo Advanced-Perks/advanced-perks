@@ -1,9 +1,9 @@
 package de.fabilucius.advancedperks.perks.defaultperks.listener;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.commons.item.impl.ItemStackBuilder;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.types.AbstractListenerPerk;
-import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -24,7 +24,7 @@ public class WiserPerk extends AbstractListenerPerk {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(event.getEntity());
+        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(event.getEntity());
         if (perkData.isPerkActivated(this)) {
             event.setKeepLevel(true);
             event.setDroppedExp(0);

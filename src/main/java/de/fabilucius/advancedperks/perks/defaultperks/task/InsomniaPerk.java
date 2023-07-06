@@ -1,10 +1,10 @@
 package de.fabilucius.advancedperks.perks.defaultperks.task;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.commons.item.impl.ItemStackBuilder;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.Perk;
 import de.fabilucius.advancedperks.perks.types.AbstractTaskPerk;
-import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
@@ -17,8 +17,8 @@ public class InsomniaPerk extends AbstractTaskPerk {
             @Override
             public void run() {
                 Bukkit.getOnlinePlayers().forEach(player -> {
-                    PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
-                    Perk perk = AdvancedPerks.getPerkRegistry().getPerkByIdentifier("insomnia");
+                    PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
+                    Perk perk = AdvancedPerks.getInstance().getPerkRegistry().getPerkByIdentifier("insomnia");
                     if (perkData.isPerkActivated(perk)) {
                         player.setStatistic(Statistic.TIME_SINCE_REST, 0);
                     }

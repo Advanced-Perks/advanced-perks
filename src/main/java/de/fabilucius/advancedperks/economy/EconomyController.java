@@ -1,7 +1,6 @@
 package de.fabilucius.advancedperks.economy;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.commons.Singleton;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.economy.types.VaultEconomyInterface;
 import de.fabilucius.advancedperks.exception.EconomyInterfaceInitializationException;
@@ -13,7 +12,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Singleton("Not actually necessary but will left me in control of the economy controller to prevent not authorized changes by other that could break other plugins.")
 public class EconomyController {
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
@@ -32,7 +30,7 @@ public class EconomyController {
         if (perk.getPrice().get().doubleValue() < 0) {
             return PurchaseResult.NO_VALID_PRICE;
         }
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
+        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
         if (perkData == null) {
             LOGGER.log(Level.WARNING, "Purchase of perk "
                     + perk.getIdentifier()
@@ -47,6 +45,7 @@ public class EconomyController {
         PurchaseResult result = this.economyInterface.buyPerk(perkData, perk);
         if (result.equals(PurchaseResult.SUCCESS)) {
             perkData.getUnlockedPerks().add(perk.getIdentifier());
+            perkData.getPerkDataStatus().setDataChanged();
         }
         return result;
     }

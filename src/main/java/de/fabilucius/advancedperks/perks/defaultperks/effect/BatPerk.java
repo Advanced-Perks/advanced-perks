@@ -1,7 +1,7 @@
 package de.fabilucius.advancedperks.perks.defaultperks.effect;
 
+import de.fabilucius.advancedperks.commons.item.impl.ItemStackBuilder;
 import de.fabilucius.advancedperks.perks.types.AbstractEffectPerk;
-import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;

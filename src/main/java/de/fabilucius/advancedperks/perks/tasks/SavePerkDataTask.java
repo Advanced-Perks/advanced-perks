@@ -3,7 +3,7 @@ package de.fabilucius.advancedperks.perks.tasks;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.Perk;
-import de.fabilucius.sympel.database.AbstractDatabase;
+import de.fabilucius.advancedperks.commons.database.AbstractDatabase;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -28,20 +28,16 @@ public class SavePerkDataTask implements Runnable {
     }
 
     public void run() {
-        try {
-            this.getAbstractDatabase().insertOrUpdateQuery("unlocked_perks",
-                    Arrays.asList("uuid", "perk"),
-                    Arrays.asList(this.uuid, this.unlockedPerks),
-                    "uuid ='" + this.uuid + "'",
-                    "perk = '" + unlockedPerks + "'");
-            this.getAbstractDatabase().insertOrUpdateQuery("enabled_perks",
-                    Arrays.asList("uuid", "perk"),
-                    Arrays.asList(this.uuid, this.perks),
-                    "uuid = '" + this.uuid + "'",
-                    "perk = '" + this.perks + "'");
-        } catch (SQLException sqlException) {
-            LOGGER.log(Level.WARNING, "Unable to save perk data from " + this.uuid + ": " + sqlException.getMessage());
-        }
+        this.getAbstractDatabase().insertOrUpdateQuery("unlocked_perks",
+                Arrays.asList("uuid", "perk"),
+                Arrays.asList(this.uuid, this.unlockedPerks),
+                "uuid ='" + this.uuid + "'",
+                "perk = '" + unlockedPerks + "'");
+        this.getAbstractDatabase().insertOrUpdateQuery("enabled_perks",
+                Arrays.asList("uuid", "perk"),
+                Arrays.asList(this.uuid, this.perks),
+                "uuid = '" + this.uuid + "'",
+                "perk = '" + this.perks + "'");
     }
 
     /* the getter and setter of the class */

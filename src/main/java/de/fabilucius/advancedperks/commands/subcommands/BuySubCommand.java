@@ -4,8 +4,8 @@ import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.economy.PurchaseResult;
 import de.fabilucius.advancedperks.perks.Perk;
 import de.fabilucius.advancedperks.settings.MessageConfiguration;
-import de.fabilucius.sympel.command.command.AbstractSubCommand;
-import de.fabilucius.sympel.configuration.utilities.ReplaceLogic;
+import de.fabilucius.advancedperks.commons.command.command.AbstractSubCommand;
+import de.fabilucius.advancedperks.commons.configuration.utilities.ReplaceLogic;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -22,19 +22,19 @@ public class BuySubCommand extends AbstractSubCommand {
     public void handleCommandExecute(CommandSender commandSender, String... strings) {
         if (commandSender instanceof Player) {
             Player player = (Player) commandSender;
-            MessageConfiguration configuration = AdvancedPerks.getMessageConfiguration();
-            if (!AdvancedPerks.getEconomyController().isPresent()) {
+            MessageConfiguration configuration = AdvancedPerks.getInstance().getMessageConfiguration();
+            if (AdvancedPerks.getInstance().getEconomyController().isEmpty()) {
                 player.sendMessage(configuration.getMessage("Command.Buy.No-Eco-Support"));
                 return;
             }
             if (strings.length == 1) {
-                Perk perk = AdvancedPerks.getPerkRegistry().getPerkByIdentifier(strings[0]);
+                Perk perk = AdvancedPerks.getInstance().getPerkRegistry().getPerkByIdentifier(strings[0]);
                 if (perk == null) {
                     player.sendMessage(configuration.getMessage("Command.Buy.Perk-Not-Found",
                             new ReplaceLogic("<perk>", strings[0])));
                     return;
                 }
-                PurchaseResult result = AdvancedPerks.getEconomyController().get().buyPerk(player, perk);
+                PurchaseResult result = AdvancedPerks.getInstance().getEconomyController().get().buyPerk(player, perk);
                 switch (result) {
                     case SUCCESS:
                         player.sendMessage(configuration.getMessage("Command.Buy.Success",
@@ -60,7 +60,7 @@ public class BuySubCommand extends AbstractSubCommand {
 
     @Override
     public List<String> handleTabComplete(CommandSender commandSender, String... strings) {
-        return AdvancedPerks.getPerkRegistry().getPerks().stream()
+        return AdvancedPerks.getInstance().getPerkRegistry().getPerks().stream()
                 .map(Perk::getIdentifier)
                 .filter(perk -> {
                     if (strings.length == 0 || strings[0].isEmpty()) {

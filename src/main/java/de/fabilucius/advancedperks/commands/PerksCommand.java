@@ -1,31 +1,23 @@
 package de.fabilucius.advancedperks.commands;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.commands.subcommands.BuySubCommand;
-import de.fabilucius.advancedperks.commands.subcommands.OpenSubCommand;
-import de.fabilucius.advancedperks.commands.subcommands.ReloadSubCommand;
-import de.fabilucius.advancedperks.commands.subcommands.ToggleSubCommand;
+import de.fabilucius.advancedperks.commands.subcommands.*;
+import de.fabilucius.advancedperks.commons.command.command.AbstractCommand;
+import de.fabilucius.advancedperks.commons.command.command.AbstractSubCommand;
+import de.fabilucius.advancedperks.commons.command.metadata.SubCommands;
 import de.fabilucius.advancedperks.gui.PerkGuiWindow;
-import de.fabilucius.sympel.command.command.AbstractCommand;
-import de.fabilucius.sympel.command.command.AbstractSubCommand;
-import de.fabilucius.sympel.command.metadata.SubCommands;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SubCommands({OpenSubCommand.class, ToggleSubCommand.class, BuySubCommand.class, ReloadSubCommand.class})
+@SubCommands({OpenSubCommand.class, ToggleSubCommand.class, BuySubCommand.class, ReloadSubCommand.class, InfoSubCommand.class})
 public class PerksCommand extends AbstractCommand {
 
-    private PerksCommand() {
+    public PerksCommand() {
         super("perks");
-    }
-
-    public static PerksCommand registerCommand() {
-        PerksCommand perksCommand = new PerksCommand();
-        perksCommand.setNoPermissionMessage(AdvancedPerks.getMessageConfiguration().getMessage("Command.No-Permission"));
-        return perksCommand;
+        this.setNoPermissionMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.No-Permission"));
     }
 
     @Override
@@ -33,7 +25,7 @@ public class PerksCommand extends AbstractCommand {
         if (commandSender instanceof Player) {
             if (arguments.length == 0) {
                 Player player = (Player) commandSender;
-                AdvancedPerks.getGuiManager().openGui(player, new PerkGuiWindow(player));
+                AdvancedPerks.getInstance().getGuiManager().openGui(player, new PerkGuiWindow(player));
             }
         }
     }

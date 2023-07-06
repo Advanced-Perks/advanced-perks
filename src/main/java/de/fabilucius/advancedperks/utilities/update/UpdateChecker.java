@@ -2,7 +2,6 @@ package de.fabilucius.advancedperks.utilities.update;
 
 import com.google.gson.Gson;
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.commons.Singleton;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -22,7 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-@Singleton("No reason to have more than one instance of the class, where more instances could potentially lead to a memory leak.")
 public class UpdateChecker implements Listener {
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
@@ -55,7 +53,7 @@ public class UpdateChecker implements Listener {
         Player player = event.getPlayer();
         if ((player.isOp() || player.hasPermission("advancedperks.admin")) && this.isUpdateAvailable()) {
             this.getUpdateData().ifPresent(data -> {
-                player.sendMessage(AdvancedPerks.getMessageConfiguration().getPrefix() + " §7theres an §aupdate §7available for §aAdvanced Perks");
+                player.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getPrefix() + " §7theres an §aupdate §7available for §aAdvanced Perks");
                 TextComponent textComponent = new TextComponent(TextComponent.fromLegacyText("§8To see whats new hover over this message."));
                 String updateText = data.getChanges().stream().map(line -> ChatColor.translateAlternateColorCodes('&', line)).collect(Collectors.joining("\n"));
                 textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(updateText)));

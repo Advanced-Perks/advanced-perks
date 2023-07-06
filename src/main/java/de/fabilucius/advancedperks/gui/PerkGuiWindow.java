@@ -16,13 +16,13 @@ public class PerkGuiWindow extends GuiWindow {
     public static final int PERKS_PER_PAGE = 8;
 
     public PerkGuiWindow(Player player) {
-        super(Bukkit.createInventory(null, 54, AdvancedPerks.getMessageConfiguration().getMessage("Gui.Title")), player);
+        super(Bukkit.createInventory(null, 54, AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Title")), player);
     }
 
     @Override
     public void initialize() {
         this.clearGuiWindow();
-        List<Perk> perks = AdvancedPerks.getPerkRegistry().getPerks();
+        List<Perk> perks = AdvancedPerks.getInstance().getPerkRegistry().getPerks();
         int maxPages = (perks.size() / PERKS_PER_PAGE);
         if (this.getPage() != 0) {
             this.addGuiElement(47, new PreviousPageGuiElement(this));

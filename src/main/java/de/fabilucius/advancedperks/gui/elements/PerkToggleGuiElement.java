@@ -4,9 +4,9 @@ import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.guisystem.GuiElement;
 import de.fabilucius.advancedperks.commons.guisystem.GuiWindow;
 import de.fabilucius.advancedperks.commons.guisystem.annotation.CancelInventoryInteraction;
+import de.fabilucius.advancedperks.commons.item.impl.ItemStackBuilder;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.Perk;
-import de.fabilucius.sympel.item.builder.types.ItemStackBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,10 +14,10 @@ import org.bukkit.inventory.ItemStack;
 public class PerkToggleGuiElement extends GuiElement {
 
     private static final ItemStack ACTIVATED_ICON = ItemStackBuilder.fromApproximateMaterial("LIME_DYE")
-            .setDisplayName(AdvancedPerks.getMessageConfiguration().getMessage("Gui.Perk-Toggle.Activated"))
+            .setDisplayName(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Perk-Toggle.Activated"))
             .build();
     private static final ItemStack DEACTIVATED_ICON = ItemStackBuilder.fromApproximateMaterial("GRAY_DYE")
-            .setDisplayName(AdvancedPerks.getMessageConfiguration().getMessage("Gui.Perk-Toggle.Deactivated"))
+            .setDisplayName(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Perk-Toggle.Deactivated"))
             .build();
 
     private final Perk perk;
@@ -26,7 +26,7 @@ public class PerkToggleGuiElement extends GuiElement {
         super(guiWindow, (guiElement, event) -> {
             if (event.getWhoClicked() instanceof Player) {
                 Player player = ((Player) event.getWhoClicked()).getPlayer();
-                AdvancedPerks.getPerkStateController().togglePerk(player, perk);
+                AdvancedPerks.getInstance().getPerkStateController().togglePerk(player, perk);
                 guiElement.setItemStack(guiElement.getItemStack());
             }
         }, ACTIVATED_ICON);
@@ -35,7 +35,7 @@ public class PerkToggleGuiElement extends GuiElement {
     }
 
     public void refreshIcon() {
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(this.getGuiWindow().getPlayer());
+        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(this.getGuiWindow().getPlayer());
         ItemStack state = perkData.isPerkActivated(this.getPerk()) ? ACTIVATED_ICON : DEACTIVATED_ICON;
         if (!this.getItemStack().getType().equals(state.getType())) {
             this.setItemStack(state);
@@ -46,7 +46,7 @@ public class PerkToggleGuiElement extends GuiElement {
 
     @Override
     public ItemStack getItemStack() {
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(this.getGuiWindow().getPlayer());
+        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(this.getGuiWindow().getPlayer());
         return perkData.isPerkActivated(this.getPerk()) ? ACTIVATED_ICON : DEACTIVATED_ICON;
     }
 

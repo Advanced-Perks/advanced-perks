@@ -18,7 +18,7 @@ public class BirdPerk extends AbstractPerk implements Listener {
 
     public BirdPerk() {
         super("Bird");
-        SingleValue<Boolean> disableInLava = new SingleValue<>(AdvancedPerks.getPerksConfiguration(), "Bird.Disable-In-Lava", "Option to disable the Bird perk in the lava.", Boolean.class, false);
+        SingleValue<Boolean> disableInLava = new SingleValue<>(AdvancedPerks.getInstance().getPerksConfiguration(), "Bird.Disable-In-Lava", "Option to disable the Bird perk in the lava.", Boolean.class, false);
         if (disableInLava.get()) {
             Bukkit.getPluginManager().registerEvents(this, AdvancedPerks.getInstance());
         }

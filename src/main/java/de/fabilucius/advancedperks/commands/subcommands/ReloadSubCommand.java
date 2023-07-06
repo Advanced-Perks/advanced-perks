@@ -16,7 +16,7 @@ public class ReloadSubCommand extends AbstractSubCommand {
 
     @Override
     public void handleCommandExecute(CommandSender commandSender, String... strings) {
-        AdvancedPerks.reloadPlugin();
+        AdvancedPerks.getInstance().reloadPlugin();
         commandSender.sendMessage("~ Successfully reloaded Advanced Perks");
     }
 

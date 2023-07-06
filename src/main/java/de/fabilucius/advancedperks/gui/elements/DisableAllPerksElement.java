@@ -17,8 +17,8 @@ public class DisableAllPerksElement extends GuiElement {
                 AdvancedPerks.getPerkStateController().disableAllPerks(player);
             }
         }, ItemStackBuilder.fromMaterial(Material.REDSTONE_BLOCK)
-                .setDisplayName(AdvancedPerks.getMessageConfiguration().getMessage("Gui.Disable-All-Perks.Name"))
-                .setDescription(AdvancedPerks.getMessageConfiguration().getMessageList("Gui.Disable-All-Perks.Description"))
+                .setDisplayName(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Disable-All-Perks.Name"))
+                .setDescription(AdvancedPerks.getInstance().getMessageConfiguration().getMessageList("Gui.Disable-All-Perks.Description"))
                 .build());
     }
 }

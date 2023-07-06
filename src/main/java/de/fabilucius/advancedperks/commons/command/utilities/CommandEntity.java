@@ -12,7 +12,7 @@ import java.util.List;
 public interface CommandEntity {
 
     default MessageConfiguration getMessageConfig() {
-        return AdvancedPerks.getMessageConfiguration();
+        return AdvancedPerks.getInstance().getMessageConfiguration();
     }
 
 

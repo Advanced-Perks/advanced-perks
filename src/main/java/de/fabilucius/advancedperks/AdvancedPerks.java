@@ -29,9 +29,9 @@ public class AdvancedPerks extends JavaPlugin {
     private static AdvancedPerks instance;
 
     /* All configuration instances */
-    private static SettingsConfiguration settingsConfiguration;
-    private static MessageConfiguration messageConfiguration;
-    private static PerksConfiguration perksConfiguration;
+    private SettingsConfiguration settingsConfiguration;
+    private MessageConfiguration messageConfiguration;
+    private PerksConfiguration perksConfiguration;
 
     /* Perk related repositories and controller's */
     private static PerkDataRepository perkDataRepository;
@@ -54,7 +54,7 @@ public class AdvancedPerks extends JavaPlugin {
 
         perkDataRepository = PerkDataRepository.getSingleton();
         perkRegistry = PerkListCache.getSingleton();
-        perkStateController = PerkStateController.getSingleton();
+        perkStateController = PerkStateController.getSingleton(this);
 
         guiManager = GuiManager.getSingleton();
         economyController = EconomyController.getSingleton();
@@ -76,7 +76,7 @@ public class AdvancedPerks extends JavaPlugin {
         guiManager.handleShutdown();
     }
 
-    public static void reloadPlugin() {
+    public void reloadPlugin() {
         settingsConfiguration = ConfigSingletonFactory.reloadConfiguration(SettingsConfiguration.class);
         perksConfiguration = ConfigSingletonFactory.reloadConfiguration(PerksConfiguration.class);
         messageConfiguration = ConfigSingletonFactory.reloadConfiguration(MessageConfiguration.class);
@@ -88,11 +88,11 @@ public class AdvancedPerks extends JavaPlugin {
         return instance;
     }
 
-    public static SettingsConfiguration getSettingsConfiguration() {
+    public SettingsConfiguration getSettingsConfiguration() {
         return settingsConfiguration;
     }
 
-    public static PerksConfiguration getPerksConfiguration() {
+    public PerksConfiguration getPerksConfiguration() {
         return perksConfiguration;
     }
 
@@ -108,7 +108,7 @@ public class AdvancedPerks extends JavaPlugin {
         return guiManager;
     }
 
-    public static MessageConfiguration getMessageConfiguration() {
+    public MessageConfiguration getMessageConfiguration() {
         return messageConfiguration;
     }
 

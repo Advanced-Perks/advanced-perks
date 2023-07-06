@@ -25,7 +25,7 @@ public abstract class AbstractPerk implements Perk {
 
     public AbstractPerk(String identifier) {
         this.identifier = identifier;
-        PerksConfiguration perksConfiguration = AdvancedPerks.getPerksConfiguration();
+        PerksConfiguration perksConfiguration = AdvancedPerks.getInstance().getPerksConfiguration();
         this.displayName = perksConfiguration.getDisplayName(this);
         this.permission = perksConfiguration.getPermission(this);
         this.description = perksConfiguration.getDescription(this);
@@ -49,7 +49,7 @@ public abstract class AbstractPerk implements Perk {
     public abstract ItemStack getDefaultIcon();
 
     private void validatePerkIntegrity() {
-        if(this.getIdentifier().contains(",")){
+        if (this.getIdentifier().contains(",")) {
             throw new IllegalStateException("The identifier of a perk isn't allowed to contain a comma in order to make easy database serializing possible.");
         }
         try {
@@ -118,7 +118,7 @@ public abstract class AbstractPerk implements Perk {
 
     @Override
     public SingleValue<Number> getPrice() {
-        return new SingleValue<>(AdvancedPerks.getPerksConfiguration(), this.getIdentifier() + ".Price",
+        return new SingleValue<>(AdvancedPerks.getInstance().getPerksConfiguration(), this.getIdentifier() + ".Price",
                 "The amount of currency this perk should cost.", Number.class, -1);
     }
 }

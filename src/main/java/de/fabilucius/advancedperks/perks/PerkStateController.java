@@ -27,8 +27,8 @@ public class PerkStateController {
     private final AbstractDatabase abstractDatabase;
     private final int globalMaxPerks;
 
-    private PerkStateController() {
-        SettingsConfiguration configuration = AdvancedPerks.getSettingsConfiguration();
+    private PerkStateController(AdvancedPerks plugin) {
+        SettingsConfiguration configuration = plugin.getSettingsConfiguration();
         if (configuration.SQL_TYPE.equals(SqlType.DATABASE)) {
             Credentials credentials = Credentials.withAuth(configuration.SQL_USERNAME.get(), configuration.SQL_PASSWORD.get());
             this.abstractDatabase = RemoteDatabase.withCredentials(configuration.SQL_URL.get(), credentials);
@@ -62,7 +62,7 @@ public class PerkStateController {
                         "`perk` varchar(128)" +
                         ")"
         );
-        this.globalMaxPerks = AdvancedPerks.getSettingsConfiguration().GLOBAL_MAX_PERKS.get();
+        this.globalMaxPerks = plugin.getSettingsConfiguration().GLOBAL_MAX_PERKS.get();
     }
 
     public void disableAllPerks(Player player) {
@@ -99,7 +99,7 @@ public class PerkStateController {
             if (this.getGlobalMaxPerks() != -1 && perkData.getAmountOfActivatedPerks() >= maxAmountOfPerks) {
                 perkData.refreshMaxPerks();
                 if (perkData.getAmountOfActivatedPerks() >= perkData.getMaxPerks()) {
-                    player.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Perks.Too-Many-Perks-Enabled",
+                    player.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Perks.Too-Many-Perks-Enabled",
                             new ReplaceLogic("<amount>", String.valueOf(maxAmountOfPerks))));
                     return;
                 }
@@ -108,13 +108,13 @@ public class PerkStateController {
             /* perk permission checking */
             if ((!perk.getPermission().isEmpty() && !player.hasPermission(perk.getPermission())) &&
                     !perkData.getUnlockedPerks().contains(perk.getIdentifier())) {
-                player.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Perks.No-Permission"));
+                player.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Perks.No-Permission"));
                 return;
             }
 
             /* perk world checking */
             if (perk.getDisabledWorlds().contains(player.getWorld().getName())) {
-                player.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Perks.Disabled-By-World",
+                player.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Perks.Disabled-By-World",
                         new ReplaceLogic("<perk_name>", perk.getIdentifier()),
                         new ReplaceLogic("<world_name>", player.getWorld().getName())));
                 return;
@@ -176,9 +176,9 @@ public class PerkStateController {
 
     private static PerkStateController instance;
 
-    public static PerkStateController getSingleton() {
+    public static PerkStateController getSingleton(AdvancedPerks plugin) {
         if (instance == null) {
-            instance = new PerkStateController();
+            instance = new PerkStateController(plugin);
         }
         return instance;
     }

@@ -17,7 +17,7 @@ public class PerksCommand extends AbstractCommand {
 
     public PerksCommand() {
         super("perks");
-        this.setNoPermissionMessage(AdvancedPerks.getMessageConfiguration().getMessage("Command.No-Permission"));
+        this.setNoPermissionMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.No-Permission"));
     }
 
     @Override

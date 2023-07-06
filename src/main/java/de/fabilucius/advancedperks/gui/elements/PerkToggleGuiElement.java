@@ -14,10 +14,10 @@ import org.bukkit.inventory.ItemStack;
 public class PerkToggleGuiElement extends GuiElement {
 
     private static final ItemStack ACTIVATED_ICON = ItemStackBuilder.fromApproximateMaterial("LIME_DYE")
-            .setDisplayName(AdvancedPerks.getMessageConfiguration().getMessage("Gui.Perk-Toggle.Activated"))
+            .setDisplayName(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Perk-Toggle.Activated"))
             .build();
     private static final ItemStack DEACTIVATED_ICON = ItemStackBuilder.fromApproximateMaterial("GRAY_DYE")
-            .setDisplayName(AdvancedPerks.getMessageConfiguration().getMessage("Gui.Perk-Toggle.Deactivated"))
+            .setDisplayName(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Perk-Toggle.Deactivated"))
             .build();
 
     private final Perk perk;

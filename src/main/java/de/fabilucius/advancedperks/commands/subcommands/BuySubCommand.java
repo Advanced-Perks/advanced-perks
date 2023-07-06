@@ -22,8 +22,8 @@ public class BuySubCommand extends AbstractSubCommand {
     public void handleCommandExecute(CommandSender commandSender, String... strings) {
         if (commandSender instanceof Player) {
             Player player = (Player) commandSender;
-            MessageConfiguration configuration = AdvancedPerks.getMessageConfiguration();
-            if (!AdvancedPerks.getEconomyController().isPresent()) {
+            MessageConfiguration configuration = AdvancedPerks.getInstance().getMessageConfiguration();
+            if (AdvancedPerks.getEconomyController().isEmpty()) {
                 player.sendMessage(configuration.getMessage("Command.Buy.No-Eco-Support"));
                 return;
             }

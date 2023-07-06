@@ -16,8 +16,8 @@ public class NextPageGuiElement extends GuiElement {
             guiWindow.initialize();
         }, SkullStackBuilder.fromApproximateMaterial("PLAYER_HEAD")
                 .setBase64Value("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjgyYWQxYjljYjRkZDIxMjU5YzBkNzVhYTMxNWZmMzg5YzNjZWY3NTJiZTM5NDkzMzgxNjRiYWM4NGE5NmUifX19")
-                .setDisplayName(AdvancedPerks.getMessageConfiguration().getMessage("Gui.Next-Page.Name"))
-                .setDescription(AdvancedPerks.getMessageConfiguration().getMessageList("Gui.Next-Page.Description"))
+                .setDisplayName(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Next-Page.Name"))
+                .setDescription(AdvancedPerks.getInstance().getMessageConfiguration().getMessageList("Gui.Next-Page.Description"))
                 .build());
     }
 }

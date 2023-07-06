@@ -28,13 +28,13 @@ public class OpenSubCommand extends AbstractSubCommand {
         } else if (arguments.length == 1) {
             Player target = Bukkit.getPlayer(arguments[0]);
             if (target == null) {
-                commandSender.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Command.Player-Offline", new ReplaceLogic("<name>", arguments[0])));
+                commandSender.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.Player-Offline", new ReplaceLogic("<name>", arguments[0])));
                 return;
             }
             AdvancedPerks.getGuiManager().openGui(target, new PerkGuiWindow(target));
             return;
         }
-        commandSender.sendMessage(AdvancedPerks.getMessageConfiguration().getMessage("Command.Open.Syntax"));
+        commandSender.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.Open.Syntax"));
     }
 
     @Override

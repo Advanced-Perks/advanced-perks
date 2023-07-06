@@ -16,7 +16,7 @@ public class PerkGuiWindow extends GuiWindow {
     public static final int PERKS_PER_PAGE = 8;
 
     public PerkGuiWindow(Player player) {
-        super(Bukkit.createInventory(null, 54, AdvancedPerks.getMessageConfiguration().getMessage("Gui.Title")), player);
+        super(Bukkit.createInventory(null, 54, AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Gui.Title")), player);
     }
 
     @Override

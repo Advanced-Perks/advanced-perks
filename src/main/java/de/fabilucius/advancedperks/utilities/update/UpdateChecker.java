@@ -53,7 +53,7 @@ public class UpdateChecker implements Listener {
         Player player = event.getPlayer();
         if ((player.isOp() || player.hasPermission("advancedperks.admin")) && this.isUpdateAvailable()) {
             this.getUpdateData().ifPresent(data -> {
-                player.sendMessage(AdvancedPerks.getMessageConfiguration().getPrefix() + " §7theres an §aupdate §7available for §aAdvanced Perks");
+                player.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getPrefix() + " §7theres an §aupdate §7available for §aAdvanced Perks");
                 TextComponent textComponent = new TextComponent(TextComponent.fromLegacyText("§8To see whats new hover over this message."));
                 String updateText = data.getChanges().stream().map(line -> ChatColor.translateAlternateColorCodes('&', line)).collect(Collectors.joining("\n"));
                 textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(updateText)));

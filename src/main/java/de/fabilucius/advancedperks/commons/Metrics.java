@@ -29,7 +29,7 @@ public class Metrics {
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
 
     public static void load() {
-        if (AdvancedPerks.getSettingsConfiguration().isMetricsCollectionEnabled()) {
+        if (AdvancedPerks.getInstance().getSettingsConfiguration().isMetricsCollectionEnabled()) {
             LOGGER.info("Metrics collection has started, thanks for providing useful and anonymous metrics " +
                     "data to improve my software.");
             new Metrics(AdvancedPerks.getInstance(), 12771);

@@ -23,7 +23,7 @@ public class BuySubCommand extends AbstractSubCommand {
         if (commandSender instanceof Player) {
             Player player = (Player) commandSender;
             MessageConfiguration configuration = AdvancedPerks.getInstance().getMessageConfiguration();
-            if (AdvancedPerks.getEconomyController().isEmpty()) {
+            if (AdvancedPerks.getInstance().getEconomyController().isEmpty()) {
                 player.sendMessage(configuration.getMessage("Command.Buy.No-Eco-Support"));
                 return;
             }
@@ -34,7 +34,7 @@ public class BuySubCommand extends AbstractSubCommand {
                             new ReplaceLogic("<perk>", strings[0])));
                     return;
                 }
-                PurchaseResult result = AdvancedPerks.getEconomyController().get().buyPerk(player, perk);
+                PurchaseResult result = AdvancedPerks.getInstance().getEconomyController().get().buyPerk(player, perk);
                 switch (result) {
                     case SUCCESS:
                         player.sendMessage(configuration.getMessage("Command.Buy.Success",

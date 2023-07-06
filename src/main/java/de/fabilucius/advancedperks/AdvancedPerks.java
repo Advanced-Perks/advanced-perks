@@ -40,8 +40,8 @@ public class AdvancedPerks extends JavaPlugin {
 
     /* Telemetry related controller and manager */
     @Nullable
-    private static EconomyController economyController;
-    private static GuiManager guiManager;
+    private EconomyController economyController;
+    private GuiManager guiManager;
 
     @Override
     public void onEnable() {
@@ -96,7 +96,7 @@ public class AdvancedPerks extends JavaPlugin {
         return perksConfiguration;
     }
 
-    public static Optional<EconomyController> getEconomyController() {
+    public Optional<EconomyController> getEconomyController() {
         return economyController == null ? Optional.empty() : Optional.of(economyController);
     }
 
@@ -104,7 +104,7 @@ public class AdvancedPerks extends JavaPlugin {
         return perkDataRepository;
     }
 
-    public static GuiManager getGuiManager() {
+    public GuiManager getGuiManager() {
         return guiManager;
     }
 

@@ -22,7 +22,7 @@ public class OpenSubCommand extends AbstractSubCommand {
         if (arguments.length == 0) {
             if (commandSender instanceof Player) {
                 Player player = (Player) commandSender;
-                AdvancedPerks.getGuiManager().openGui(player, new PerkGuiWindow(player));
+                AdvancedPerks.getInstance().getGuiManager().openGui(player, new PerkGuiWindow(player));
             }
             return;
         } else if (arguments.length == 1) {
@@ -31,7 +31,7 @@ public class OpenSubCommand extends AbstractSubCommand {
                 commandSender.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.Player-Offline", new ReplaceLogic("<name>", arguments[0])));
                 return;
             }
-            AdvancedPerks.getGuiManager().openGui(target, new PerkGuiWindow(target));
+            AdvancedPerks.getInstance().getGuiManager().openGui(target, new PerkGuiWindow(target));
             return;
         }
         commandSender.sendMessage(AdvancedPerks.getInstance().getMessageConfiguration().getMessage("Command.Open.Syntax"));

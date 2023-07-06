@@ -25,7 +25,7 @@ public class PerksCommand extends AbstractCommand {
         if (commandSender instanceof Player) {
             if (arguments.length == 0) {
                 Player player = (Player) commandSender;
-                AdvancedPerks.getGuiManager().openGui(player, new PerkGuiWindow(player));
+                AdvancedPerks.getInstance().getGuiManager().openGui(player, new PerkGuiWindow(player));
             }
         }
     }

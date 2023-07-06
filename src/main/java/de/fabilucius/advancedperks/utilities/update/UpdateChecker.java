@@ -2,7 +2,6 @@ package de.fabilucius.advancedperks.utilities.update;
 
 import com.google.gson.Gson;
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.commons.Singleton;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -22,7 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-@Singleton("No reason to have more than one instance of the class, where more instances could potentially lead to a memory leak.")
 public class UpdateChecker implements Listener {
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();

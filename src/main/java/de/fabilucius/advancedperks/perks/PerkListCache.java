@@ -3,7 +3,6 @@ package de.fabilucius.advancedperks.perks;
 import com.google.common.reflect.ClassPath;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.ListCache;
-import de.fabilucius.advancedperks.commons.Singleton;
 import de.fabilucius.advancedperks.event.types.PerkRegistryEvent;
 import de.fabilucius.advancedperks.exception.PerkRegisterException;
 import org.bukkit.Bukkit;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-@Singleton("For obvious reasons regarding the structure of the plugin there should only ever be one instance of this class.")
 public class PerkListCache extends ListCache<Perk> {
 
     private static final Logger LOGGER = Bukkit.getLogger();

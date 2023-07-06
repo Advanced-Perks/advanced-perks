@@ -2,7 +2,6 @@ package de.fabilucius.advancedperks.data;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.MapCache;
-import de.fabilucius.advancedperks.commons.Singleton;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +12,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.Map;
 import java.util.function.Consumer;
 
-@Singleton("For obvious reasons regarding the structure of the plugin there should only ever be one instance of this class.")
 public class PerkDataRepository extends MapCache<Player, PerkData> implements Listener {
 
     private PerkDataRepository() {

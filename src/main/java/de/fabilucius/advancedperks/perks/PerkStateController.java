@@ -2,7 +2,6 @@ package de.fabilucius.advancedperks.perks;
 
 import com.google.common.collect.Lists;
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.commons.Singleton;
 import de.fabilucius.advancedperks.commons.database.AbstractDatabase;
 import de.fabilucius.advancedperks.commons.database.details.Credentials;
 import de.fabilucius.advancedperks.commons.database.types.FileDatabase;
@@ -16,13 +15,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-@Singleton("To prevent multiple unnecessary connections to the database and unwanted behaviour when changing the state of perks and players.")
 public class PerkStateController {
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();

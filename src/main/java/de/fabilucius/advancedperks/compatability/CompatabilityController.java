@@ -2,14 +2,12 @@ package de.fabilucius.advancedperks.compatability;
 
 import com.google.common.reflect.ClassPath;
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.commons.Singleton;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-@Singleton("Preventing the registration of more than one listener class to prevent memory leaks.")
 public class CompatabilityController {
 
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();

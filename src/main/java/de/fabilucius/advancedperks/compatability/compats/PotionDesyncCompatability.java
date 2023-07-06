@@ -26,7 +26,7 @@ public class PotionDesyncCompatability extends BukkitListener implements Compata
     private final Runnable potionResyncTask = () -> {
         while (!this.getDesyncedPlayer().isEmpty()) {
             Player player = this.getDesyncedPlayer().poll();
-            PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
+            PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
             perkData.getActivatedPerks().forEach(perk -> {
                 if (perk instanceof AbstractEffectPerk) {
                     AbstractEffectPerk effectPerk = (AbstractEffectPerk) perk;
@@ -39,7 +39,7 @@ public class PotionDesyncCompatability extends BukkitListener implements Compata
     };
 
     private final Runnable watchdogTask = () -> Bukkit.getOnlinePlayers().forEach(player -> {
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
+        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
         perkData.getActivatedPerks().forEach(perk -> {
             if (perk instanceof AbstractEffectPerk) {
                 AbstractEffectPerk effectPerk = (AbstractEffectPerk) perk;

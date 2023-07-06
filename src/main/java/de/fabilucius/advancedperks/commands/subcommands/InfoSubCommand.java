@@ -29,7 +29,7 @@ public class InfoSubCommand extends AbstractSubCommand {
             commandSender.sendMessage(this.getMessageConfig().getMessage("Command.Info.Player-Offline",
                     new ReplaceLogic("<player>", arguments[0])));
         } else {
-            PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(target);
+            PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(target);
             String boughtPerks = String.join(", ", perkData.getUnlockedPerks());
             this.getMessageConfig().getMessageList("Command.Info.Text",
                             new ReplaceLogic("<player>", target.getName()),

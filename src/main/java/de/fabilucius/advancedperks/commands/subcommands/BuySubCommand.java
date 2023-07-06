@@ -28,7 +28,7 @@ public class BuySubCommand extends AbstractSubCommand {
                 return;
             }
             if (strings.length == 1) {
-                Perk perk = AdvancedPerks.getPerkRegistry().getPerkByIdentifier(strings[0]);
+                Perk perk = AdvancedPerks.getInstance().getPerkRegistry().getPerkByIdentifier(strings[0]);
                 if (perk == null) {
                     player.sendMessage(configuration.getMessage("Command.Buy.Perk-Not-Found",
                             new ReplaceLogic("<perk>", strings[0])));
@@ -60,7 +60,7 @@ public class BuySubCommand extends AbstractSubCommand {
 
     @Override
     public List<String> handleTabComplete(CommandSender commandSender, String... strings) {
-        return AdvancedPerks.getPerkRegistry().getPerks().stream()
+        return AdvancedPerks.getInstance().getPerkRegistry().getPerks().stream()
                 .map(Perk::getIdentifier)
                 .filter(perk -> {
                     if (strings.length == 0 || strings[0].isEmpty()) {

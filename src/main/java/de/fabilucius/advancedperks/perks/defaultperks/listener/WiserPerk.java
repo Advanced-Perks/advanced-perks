@@ -24,7 +24,7 @@ public class WiserPerk extends AbstractListenerPerk {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(event.getEntity());
+        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(event.getEntity());
         if (perkData.isPerkActivated(this)) {
             event.setKeepLevel(true);
             event.setDroppedExp(0);

@@ -24,7 +24,7 @@ public class FarmerPerk extends AbstractListenerPerk {
                 ((Ageable) event.getBlock().getBlockData()).getAge() != ((Ageable) event.getBlock().getBlockData()).getMaximumAge()) {
             return;
         }
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(event.getPlayer());
+        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(event.getPlayer());
         if (perkData.isPerkActivated(this)) {
             Material crop = event.getBlock().getType();
             Bukkit.getScheduler().runTaskLater(AdvancedPerks.getInstance(), () -> {

@@ -26,7 +26,7 @@ public class PerkToggleGuiElement extends GuiElement {
         super(guiWindow, (guiElement, event) -> {
             if (event.getWhoClicked() instanceof Player) {
                 Player player = ((Player) event.getWhoClicked()).getPlayer();
-                AdvancedPerks.getPerkStateController().togglePerk(player, perk);
+                AdvancedPerks.getInstance().getPerkStateController().togglePerk(player, perk);
                 guiElement.setItemStack(guiElement.getItemStack());
             }
         }, ACTIVATED_ICON);
@@ -35,7 +35,7 @@ public class PerkToggleGuiElement extends GuiElement {
     }
 
     public void refreshIcon() {
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(this.getGuiWindow().getPlayer());
+        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(this.getGuiWindow().getPlayer());
         ItemStack state = perkData.isPerkActivated(this.getPerk()) ? ACTIVATED_ICON : DEACTIVATED_ICON;
         if (!this.getItemStack().getType().equals(state.getType())) {
             this.setItemStack(state);
@@ -46,7 +46,7 @@ public class PerkToggleGuiElement extends GuiElement {
 
     @Override
     public ItemStack getItemStack() {
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(this.getGuiWindow().getPlayer());
+        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(this.getGuiWindow().getPlayer());
         return perkData.isPerkActivated(this.getPerk()) ? ACTIVATED_ICON : DEACTIVATED_ICON;
     }
 

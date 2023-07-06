@@ -17,8 +17,8 @@ public class InsomniaPerk extends AbstractTaskPerk {
             @Override
             public void run() {
                 Bukkit.getOnlinePlayers().forEach(player -> {
-                    PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
-                    Perk perk = AdvancedPerks.getPerkRegistry().getPerkByIdentifier("insomnia");
+                    PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
+                    Perk perk = AdvancedPerks.getInstance().getPerkRegistry().getPerkByIdentifier("insomnia");
                     if (perkData.isPerkActivated(perk)) {
                         player.setStatistic(Statistic.TIME_SINCE_REST, 0);
                     }

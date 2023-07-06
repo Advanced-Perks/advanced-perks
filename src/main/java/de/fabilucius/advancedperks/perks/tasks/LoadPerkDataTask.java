@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class LoadPerkDataTask implements Runnable {
 
-    private static final PerkStateController PERK_STATE_CONTROLLER = AdvancedPerks.getPerkStateController();
+    private static final PerkStateController PERK_STATE_CONTROLLER = AdvancedPerks.getInstance().getPerkStateController();
     private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
 
     private final PerkData perkData;
@@ -37,7 +37,7 @@ public class LoadPerkDataTask implements Runnable {
                 List<Perk> toEnable = Lists.newArrayList();
                 while (enabledPerksResultSet.next()) {
                     for (String perkLine : enabledPerksResultSet.getString("perk").split(",")) {
-                        Perk perk = AdvancedPerks.getPerkRegistry().getPerkByIdentifier(perkLine);
+                        Perk perk = AdvancedPerks.getInstance().getPerkRegistry().getPerkByIdentifier(perkLine);
                         if (perk != null) {
                             toEnable.add(perk);
                         }

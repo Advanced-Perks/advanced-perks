@@ -27,13 +27,13 @@ public class BirdPerk extends AbstractPerk implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         if (event.getTo() != null && event.getTo().getBlock().isLiquid() && event.getTo().getBlock().getType().name().contains("LAVA")) {
-            PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(event.getPlayer());
+            PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(event.getPlayer());
             if (perkData.isPerkActivated(this)) {
                 event.getPlayer().setFlying(false);
             }
         } else if (event.getFrom().getBlock().isLiquid() && event.getFrom().getBlock().getType().name().contains("LAVA") &&
                 event.getTo() != null && !event.getTo().getBlock().getType().name().contains("LAVA")) {
-            PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(event.getPlayer());
+            PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(event.getPlayer());
             if (perkData.isPerkActivated(this)) {
                 event.getPlayer().setFlying(true);
             }

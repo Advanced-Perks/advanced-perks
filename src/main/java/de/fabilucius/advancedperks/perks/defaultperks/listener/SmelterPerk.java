@@ -21,7 +21,7 @@ public class SmelterPerk extends AbstractListenerPerk {
         if (event.isCancelled()) {
             return;
         }
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(event.getPlayer());
+        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(event.getPlayer());
         if (perkData.isPerkActivated(this)) {
             for (Item item : event.getItems()) {
                 Material material = item.getItemStack().getType();

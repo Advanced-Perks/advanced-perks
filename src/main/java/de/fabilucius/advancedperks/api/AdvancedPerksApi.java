@@ -23,7 +23,7 @@ public class AdvancedPerksApi {
      */
     public RegisterResponse registerPerk(Class<? extends Perk> perk) {
         try {
-            AdvancedPerks.getPerkRegistry().registerPerks(perk);
+            AdvancedPerks.getInstance().getPerkRegistry().registerPerks(perk);
             return RegisterResponse.SUCCESS;
         } catch (PerkRegisterException exception) {
             LOGGER.log(Level.WARNING, "Unable to register a perk with the Api:", exception);
@@ -41,7 +41,7 @@ public class AdvancedPerksApi {
      */
     @NotNull
     public PerkData getPerkData(Player player) {
-        return AdvancedPerks.getPerkDataRepository().getPerkData(player);
+        return AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
     }
 
     /* Singleton stuff */

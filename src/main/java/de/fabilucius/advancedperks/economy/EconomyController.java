@@ -30,7 +30,7 @@ public class EconomyController {
         if (perk.getPrice().get().doubleValue() < 0) {
             return PurchaseResult.NO_VALID_PRICE;
         }
-        PerkData perkData = AdvancedPerks.getPerkDataRepository().getPerkData(player);
+        PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
         if (perkData == null) {
             LOGGER.log(Level.WARNING, "Purchase of perk "
                     + perk.getIdentifier()

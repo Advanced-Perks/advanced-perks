@@ -34,9 +34,9 @@ public class AdvancedPerks extends JavaPlugin {
     private PerksConfiguration perksConfiguration;
 
     /* Perk related repositories and controller's */
-    private static PerkDataRepository perkDataRepository;
-    private static PerkStateController perkStateController;
-    private static PerkListCache perkRegistry;
+    private PerkDataRepository perkDataRepository;
+    private PerkStateController perkStateController;
+    private PerkListCache perkRegistry;
 
     /* Telemetry related controller and manager */
     @Nullable
@@ -100,7 +100,7 @@ public class AdvancedPerks extends JavaPlugin {
         return economyController == null ? Optional.empty() : Optional.of(economyController);
     }
 
-    public static PerkDataRepository getPerkDataRepository() {
+    public PerkDataRepository getPerkDataRepository() {
         return perkDataRepository;
     }
 
@@ -112,11 +112,11 @@ public class AdvancedPerks extends JavaPlugin {
         return messageConfiguration;
     }
 
-    public static PerkListCache getPerkRegistry() {
+    public PerkListCache getPerkRegistry() {
         return perkRegistry;
     }
 
-    public static PerkStateController getPerkStateController() {
+    public PerkStateController getPerkStateController() {
         return perkStateController;
     }
 }

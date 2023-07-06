@@ -11,7 +11,7 @@ import de.fabilucius.advancedperks.gui.PerkGuiWindow;
 public class NextPageGuiElement extends GuiElement {
     public NextPageGuiElement(GuiWindow guiWindow) {
         super(guiWindow, (guiElement, event) -> {
-            guiWindow.setPage(Math.min(AdvancedPerks.getPerkRegistry()
+            guiWindow.setPage(Math.min(AdvancedPerks.getInstance().getPerkRegistry()
                     .getPerks().size() / PerkGuiWindow.PERKS_PER_PAGE, guiWindow.getPage() + 1));
             guiWindow.initialize();
         }, SkullStackBuilder.fromApproximateMaterial("PLAYER_HEAD")

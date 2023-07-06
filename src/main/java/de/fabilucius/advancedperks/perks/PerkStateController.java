@@ -66,14 +66,14 @@ public class PerkStateController {
     }
 
     public void disableAllPerks(Player player) {
-        AdvancedPerks.getPerkDataRepository().consumePerkData(player, perkData -> {
+        AdvancedPerks.getInstance().getPerkDataRepository().consumePerkData(player, perkData -> {
             /* Boxing it with newArrayList prevents a concurrent modification exception TODO: Fix the bad design here */
             Lists.newArrayList(perkData.getActivatedPerks()).forEach(perk -> this.disablePerk(player, perk));
         });
     }
 
     public void forceTogglePerk(Player player, Perk perk) {
-        AdvancedPerks.getPerkDataRepository().consumePerkData(player, perkData -> {
+        AdvancedPerks.getInstance().getPerkDataRepository().consumePerkData(player, perkData -> {
             if (perkData.isPerkActivated(perk)) {
                 this.disablePerk(player, perk);
             } else {
@@ -83,7 +83,7 @@ public class PerkStateController {
     }
 
     public void togglePerk(Player player, Perk perk) {
-        AdvancedPerks.getPerkDataRepository().consumePerkData(player, perkData -> {
+        AdvancedPerks.getInstance().getPerkDataRepository().consumePerkData(player, perkData -> {
             if (perkData.isPerkActivated(perk)) {
                 this.disablePerk(player, perk);
             } else {
@@ -93,7 +93,7 @@ public class PerkStateController {
     }
 
     public void enablePerk(Player player, Perk perk) {
-        AdvancedPerks.getPerkDataRepository().consumePerkData(player, perkData -> {
+        AdvancedPerks.getInstance().getPerkDataRepository().consumePerkData(player, perkData -> {
             /* max perk at once checking */
             int maxAmountOfPerks = Math.max(this.getGlobalMaxPerks(), perkData.getMaxPerks());
             if (this.getGlobalMaxPerks() != -1 && perkData.getAmountOfActivatedPerks() >= maxAmountOfPerks) {
@@ -129,7 +129,7 @@ public class PerkStateController {
     }
 
     public void disablePerk(Player player, Perk perk) {
-        AdvancedPerks.getPerkDataRepository().consumePerkData(player, perkData -> {
+        AdvancedPerks.getInstance().getPerkDataRepository().consumePerkData(player, perkData -> {
             if (perkData.isPerkActivated(perk)) {
                 perkData.getActivatedPerks().remove(perk);
                 perk.prePerkDisable(player);
@@ -139,7 +139,7 @@ public class PerkStateController {
     }
 
     public void forceEnablePerk(Player player, Perk perk) {
-        AdvancedPerks.getPerkDataRepository().consumePerkData(player, perkData -> {
+        AdvancedPerks.getInstance().getPerkDataRepository().consumePerkData(player, perkData -> {
             if (!perkData.isPerkActivated(perk)) {
                 perkData.getActivatedPerks().add(perk);
                 perk.prePerkEnable(player);
@@ -155,7 +155,7 @@ public class PerkStateController {
     }
 
     public void handleShutdown() {
-        List<SavePerkDataTask> savePerkDataTasks = AdvancedPerks.getPerkDataRepository().getPerkDataCache().values().stream()
+        List<SavePerkDataTask> savePerkDataTasks = AdvancedPerks.getInstance().getPerkDataRepository().getPerkDataCache().values().stream()
                 .map(perkData -> new SavePerkDataTask(perkData, this.getAbstractDatabase()))
                 .collect(Collectors.toList());
         savePerkDataTasks.forEach(SavePerkDataTask::run);

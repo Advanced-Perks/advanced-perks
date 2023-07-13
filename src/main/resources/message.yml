@@ -10,10 +10,14 @@ Perks:
   Disabled-By-World: '<prefix> &cUnable to activate perk <perk_name> in the world <world_name> because the perk isnt allowed in that world.'
 Command:
   Info:
-    Player-Offline: '<prefix> &cThe player <player> either does not exist or is offline.'
+    Player-Does-Not-Exist: '<prefix> &cThe player <player> either does not exist.'
+    # <bought_perks> = the bought perks in the following format ("perk1, perk2, perk3")
+    # <enabled_perks> = the perks enabled by the player in the following format ("perk1, perk2, perk3")
     Text:
       - '<prefix> &7The player &6<player> &7has bought the following perks:'
       - '<prefix> <bought_perks>'
+      - '<prefix> &7The player &6<player> &7has enabled the following perks:'
+      - '<prefix> <enabled_perks>'
     Syntax: '<prefix> &7The command syntax is: /perks info <player>'
   Buy:
     No-Eco-Support: '<prefix> &cThe plugin is missing either an economy plugin or vault to use this feature.'

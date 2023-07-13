@@ -8,8 +8,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 public class PerkDataRepository extends MapCache<Player, PerkData> implements Listener {
@@ -33,6 +36,11 @@ public class PerkDataRepository extends MapCache<Player, PerkData> implements Li
         if (data != null) {
             perkData.accept(data);
         }
+    }
+
+    public Optional<PerkData> getPerkDataByUuid(UUID uuid) {
+        return this.getPerkDataCache().entrySet().stream().filter(playerPerkDataEntry ->
+                playerPerkDataEntry.getKey().getUniqueId().equals(uuid)).findFirst().map(Map.Entry::getValue);
     }
 
     public PerkData getPerkData(Player player) {

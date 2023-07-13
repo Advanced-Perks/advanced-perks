@@ -1,5 +1,6 @@
 package de.fabilucius.advancedperks.data;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.perks.Perk;
@@ -7,6 +8,7 @@ import de.fabilucius.advancedperks.perks.tasks.LoadPerkDataTask;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -16,8 +18,8 @@ public class PerkData {
 
     private final Player player;
     private int maxPerks;
-    private final Set<Perk> activatedPerks = Sets.newHashSet();
-    private final Set<String> unlockedPerks = Sets.newHashSet();
+    private final List<Perk> activatedPerks = Lists.newArrayList();
+    private final List<String> unlockedPerks = Lists.newArrayList();
     private final PerkDataStatus perkDataStatus = new PerkDataStatus();
 
     public PerkData(Player player) {
@@ -64,7 +66,7 @@ public class PerkData {
         return maxPerks;
     }
 
-    public Set<String> getUnlockedPerks() {
+    public List<String> getUnlockedPerks() {
         return unlockedPerks;
     }
 
@@ -72,7 +74,7 @@ public class PerkData {
         this.maxPerks = maxPerks;
     }
 
-    public Set<Perk> getActivatedPerks() {
+    public List<Perk> getActivatedPerks() {
         return activatedPerks;
     }
 

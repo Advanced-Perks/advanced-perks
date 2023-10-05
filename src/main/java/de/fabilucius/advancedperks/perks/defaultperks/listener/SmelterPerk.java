@@ -16,7 +16,7 @@ public class SmelterPerk extends AbstractListenerPerk {
         super("Smelter");
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockDropItem(BlockDropItemEvent event) {
         if (event.isCancelled()) {
             return;

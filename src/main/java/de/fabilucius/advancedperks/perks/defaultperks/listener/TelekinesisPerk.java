@@ -18,7 +18,7 @@ public class TelekinesisPerk extends AbstractListenerPerk {
         super("Telekinesis");
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW)
     public void onBlockDropItem(BlockDropItemEvent event) {
         if (event.isCancelled()) {
             return;

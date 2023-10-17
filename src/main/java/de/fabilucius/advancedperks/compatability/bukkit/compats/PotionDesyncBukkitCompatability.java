@@ -1,9 +1,9 @@
-package de.fabilucius.advancedperks.compatability.compats;
+package de.fabilucius.advancedperks.compatability.bukkit.compats;
 
 import com.google.common.collect.Queues;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.commons.BukkitListener;
-import de.fabilucius.advancedperks.compatability.CompatabilityEntity;
+import de.fabilucius.advancedperks.compatability.bukkit.BukkitCompatabilityEntity;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.perks.types.AbstractEffectPerk;
 import org.bukkit.Bukkit;
@@ -14,11 +14,11 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import java.util.ArrayDeque;
 
-public class PotionDesyncCompatability extends BukkitListener implements CompatabilityEntity {
+public class PotionDesyncBukkitCompatability extends BukkitListener implements BukkitCompatabilityEntity {
 
     private final ArrayDeque<Player> desyncedPlayer = Queues.newArrayDeque();
 
-    public PotionDesyncCompatability() {
+    public PotionDesyncBukkitCompatability() {
         Bukkit.getScheduler().runTaskTimer(AdvancedPerks.getInstance(), this.getPotionResyncTask(), 10L, 10L);
         Bukkit.getScheduler().runTaskTimer(AdvancedPerks.getInstance(), this.getWatchdogTask(), 10L, 10L);
     }

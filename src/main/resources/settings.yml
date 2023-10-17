@@ -1,5 +1,8 @@
 Global:
 
+  # If Luckperms runs on the server and a player looses a permission for a perk he has enabled it will be disabled automatically.
+  Enable-LuckPerms-Support: true
+
   #I would highly suggest leaving this enabled as it helps me to get a clear picture on
   #which environments my plugin is used the most (cpu count, mc version etc)
   #Note the submitted data is completely anonymous.

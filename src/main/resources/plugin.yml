@@ -1,11 +1,4 @@
 name: AdvancedPerks
-version: ${project.version}
+prefix: [AP]
 main: de.fabilucius.advancedperks.AdvancedPerks
-api-version: 1.13
-softdepend:
-  - PlaceholderAPI
-  - Vault
-commands:
-  perks:
-    aliases:
-      - perk
+version: ${version}

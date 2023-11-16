@@ -1,0 +1,4 @@
+test_string: 'test'
+test_double: 2.0
+test_int: 2
+test_boolean: true

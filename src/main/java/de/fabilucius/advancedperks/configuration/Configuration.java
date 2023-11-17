@@ -19,9 +19,9 @@ public class Configuration extends YamlConfiguration {
     private final String configurationPath;
     private final File file;
 
-    public Configuration(File dataFolder, String configurationPath) {
-        this.configurationPath = configurationPath;
-        this.file = new File(dataFolder, configurationPath);
+    public Configuration(ConfigurationProperties configurationProperties) {
+        this.configurationPath = configurationProperties.configurationPath();
+        this.file = new File(configurationProperties.dataFolder(), this.configurationPath);
     }
 
     public void extractConfigurationFileFromJar() throws ConfigurationFileNotInClasspathException, ConfigurationInitializationException {

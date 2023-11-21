@@ -23,8 +23,7 @@ repositories {
 dependencies {
     testImplementation("org.mockito", "mockito-inline", Version.MOCKITO)
     testImplementation("org.mockito", "mockito-junit-jupiter", Version.MOCKITO)
-    testImplementation("org.junit.jupiter", "junit-jupiter-api", Version.JUNIT)
-    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", Version.JUNIT)
+    testImplementation("org.junit.jupiter", "junit-jupiter", Version.JUNIT)
 
     implementation("org.spigotmc", "spigot-api", Version.SPIGOT)
     implementation("com.google.inject", "guice", Version.GUICE)

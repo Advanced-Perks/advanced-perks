@@ -1,26 +1,22 @@
 package de.fabilucius.advancedperks.configuration;
 
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationFileNotInClasspathException;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationOperationException;
-
-import java.io.File;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 import org.mockito.Mockito;
 
-public class ConfigurationTest {
+public class ConfigurationTest extends AbstractConfigurationTest {
 
-    @TempDir
-    File testDataFolder;
+    @Inject
+    private Injector injector;
 
     @Test
     void testConfigurationFileExtraction() throws Exception {
-        ConfigurationProperties configurationProperties = new ConfigurationProperties("configuration/test_config.yml", this.testDataFolder);
-
-        Configuration configuration = Mockito.spy(new Configuration(configurationProperties));
+        Configuration configuration = Mockito.spy(this.injector.getInstance(TestConfiguration.class));
         configuration.extractConfigurationFileFromJar();
 
         Assertions.assertTrue(configuration.getFile().exists());
@@ -28,18 +24,14 @@ public class ConfigurationTest {
 
     @Test
     void testExceptionWhenConfigurationFileDoesntExistOnClasspath() {
-        ConfigurationProperties configurationProperties = new ConfigurationProperties("configuration/file_doesnt_exist.yml", this.testDataFolder);
-
-        Configuration configuration = Mockito.spy(new Configuration(configurationProperties));
+        Configuration configuration = Mockito.spy(this.injector.getInstance(NotExistingTestConfiguration.class));
 
         Assertions.assertThrows(ConfigurationFileNotInClasspathException.class, configuration::extractConfigurationFileFromJar);
     }
 
     @Test
     void testConfigurationLoadingCorrect() throws Exception {
-        ConfigurationProperties configurationProperties = new ConfigurationProperties("configuration/test_config.yml", this.testDataFolder);
-
-        Configuration configuration = Mockito.spy(new Configuration(configurationProperties));
+        Configuration configuration = Mockito.spy(this.injector.getInstance(TestConfiguration.class));
         configuration.extractConfigurationFileFromJar();
         configuration.loadConfigurationFile();
 
@@ -51,9 +43,7 @@ public class ConfigurationTest {
 
     @Test
     void testExceptionWhenConfigurationInvalid() throws Exception {
-        ConfigurationProperties configurationProperties = new ConfigurationProperties("configuration/invalid_test_config.yml", this.testDataFolder);
-
-        Configuration configuration = Mockito.spy(new Configuration(configurationProperties));
+        Configuration configuration = Mockito.spy(this.injector.getInstance(InvalidTestConfiguration.class));
         configuration.extractConfigurationFileFromJar();
 
         Assertions.assertThrows(ConfigurationInitializationException.class, configuration::loadConfigurationFile);
@@ -61,9 +51,7 @@ public class ConfigurationTest {
 
     @Test
     void testConfigurationSaveProcess() throws Exception {
-        ConfigurationProperties configurationProperties = new ConfigurationProperties("configuration/test_config.yml", this.testDataFolder);
-
-        Configuration configuration = Mockito.spy(new Configuration(configurationProperties));
+        Configuration configuration = Mockito.spy(this.injector.getInstance(TestConfiguration.class));
         configuration.extractConfigurationFileFromJar();
         configuration.loadConfigurationFile();
 
@@ -72,7 +60,7 @@ public class ConfigurationTest {
         configuration.set("test_string", "another_string");
         configuration.saveConfiguration();
 
-        configuration = Mockito.spy(new Configuration(configurationProperties));
+        configuration = Mockito.spy(this.injector.getInstance(TestConfiguration.class));
         configuration.loadConfigurationFile();
 
         Assertions.assertEquals(configuration.getString("test_string"), "another_string");
@@ -80,9 +68,7 @@ public class ConfigurationTest {
 
     @Test
     void testConfigurationSaveProcessHandleIOException() throws Exception {
-        ConfigurationProperties configurationProperties = new ConfigurationProperties("configuration/test_config.yml", this.testDataFolder);
-
-        Configuration configuration = Mockito.spy(new Configuration(configurationProperties));
+        Configuration configuration = Mockito.spy(this.injector.getInstance(TestConfiguration.class));
         configuration.extractConfigurationFileFromJar();
 
         configuration.getFile().setReadOnly();

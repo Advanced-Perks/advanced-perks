@@ -3,25 +3,23 @@ package de.fabilucius.advancedperks.perk;
 import de.fabilucius.advancedperks.perk.properties.PerkDescription;
 import de.fabilucius.advancedperks.perk.properties.PerkGuiIcon;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 public abstract class AbstractPerk implements Perk {
 
     private final String identifier;
     private final String displayName;
     private final PerkDescription perkDescription;
-    private final Set<String> disallowedWorlds;
     private final PerkGuiIcon perkGuiIcon;
     private final boolean enabled;
     private final Map<String, Object> flags;
 
-    public AbstractPerk(String identifier, String displayName, PerkDescription perkDescription, Set<String> disallowedWorlds, PerkGuiIcon perkGuiIcon, boolean enabled, Map<String, Object> flags) {
+    public AbstractPerk(String identifier, String displayName, PerkDescription perkDescription, PerkGuiIcon perkGuiIcon, boolean enabled, Map<String, Object> flags) {
         this.identifier = identifier;
         this.displayName = displayName;
         this.perkDescription = perkDescription;
-        this.disallowedWorlds = disallowedWorlds;
         this.perkGuiIcon = perkGuiIcon;
         this.enabled = enabled;
         this.flags = flags;
@@ -40,11 +38,6 @@ public abstract class AbstractPerk implements Perk {
     @Override
     public PerkDescription getDescription() {
         return perkDescription;
-    }
-
-    @Override
-    public Set<String> getDisallowedWorlds() {
-        return disallowedWorlds;
     }
 
     @Override
@@ -76,5 +69,28 @@ public abstract class AbstractPerk implements Perk {
         } catch (Exception exception) {
             return Optional.empty();
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Optional<List<String>> getDisallowedWorlds() {
+        try {
+            List<String> disallowedWorlds = (List<String>) this.flags.get("disallowed_worlds");
+            return disallowedWorlds.isEmpty() ? Optional.empty() : Optional.of(disallowedWorlds);
+        } catch (Exception exception) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "AbstractPerk{" +
+                "identifier='" + identifier + '\'' +
+                ", displayName='" + displayName + '\'' +
+                ", perkDescription=" + perkDescription +
+                ", perkGuiIcon=" + perkGuiIcon +
+                ", enabled=" + enabled +
+                ", flags=" + flags +
+                '}';
     }
 }

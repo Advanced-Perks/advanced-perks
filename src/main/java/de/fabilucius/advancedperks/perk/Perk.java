@@ -3,9 +3,9 @@ package de.fabilucius.advancedperks.perk;
 import de.fabilucius.advancedperks.perk.properties.PerkDescription;
 import de.fabilucius.advancedperks.perk.properties.PerkGuiIcon;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 public interface Perk {
 
@@ -14,8 +14,6 @@ public interface Perk {
     String getDisplayName();
 
     PerkDescription getDescription();
-
-    Set<String> getDisallowedWorlds();
 
     PerkGuiIcon getPerkGuiIcon();
 
@@ -26,5 +24,7 @@ public interface Perk {
     Optional<String> getPermission();
 
     Optional<Double> getPrice();
+
+    Optional<List<String>> getDisallowedWorlds();
 
 }

@@ -1,0 +1,5 @@
+test:
+  display_name: '&4Test Perk'
+  description:
+    - 'First &2Line'
+    - 'Second LINE'

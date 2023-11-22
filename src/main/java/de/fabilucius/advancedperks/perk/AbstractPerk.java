@@ -2,6 +2,8 @@ package de.fabilucius.advancedperks.perk;
 
 import de.fabilucius.advancedperks.perk.properties.PerkDescription;
 import de.fabilucius.advancedperks.perk.properties.PerkGuiIcon;
+import de.fabilucius.advancedperks.perk.types.EffectPerk;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,31 @@ public abstract class AbstractPerk implements Perk {
         this.perkGuiIcon = perkGuiIcon;
         this.enabled = enabled;
         this.flags = flags;
+    }
+
+    @Override
+    public final void onPrePerkEnable(Player player) {
+        if (this instanceof EffectPerk effectPerk) {
+            player.addPotionEffects(effectPerk.getPotionEffects());
+        }
+        this.onPerkEnable(player);
+    }
+
+    @Override
+    public void onPrePerkDisable(Player player) {
+        if (this instanceof EffectPerk effectPerk) {
+            effectPerk.getPotionEffects().forEach(potionEffect ->
+                    player.removePotionEffect(potionEffect.getType()));
+        }
+        this.onPerkDisable(player);
+    }
+
+    @Override
+    public void onPerkEnable(Player player) {
+    }
+
+    @Override
+    public void onPerkDisable(Player player) {
     }
 
     @Override

@@ -9,10 +9,12 @@ import de.fabilucius.advancedperks.core.logging.APLogger;
 import de.fabilucius.advancedperks.perk.Perk;
 import de.fabilucius.advancedperks.registry.PerkRegistry;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,6 +26,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
+//TODO handle perk data saving when the plugin shuts down
 public class PerkDataRepository implements Listener {
 
     private final AdvancedPerks advancedPerks;
@@ -42,6 +45,18 @@ public class PerkDataRepository implements Listener {
     public void setupDatabase() {
         this.database.connectToDatabase();
         this.database.runSqlScript("sql/2023.sql");
+    }
+
+    @NotNull
+    public PerkData getPerkDataByPlayer(Player player) {
+        PerkData perkData = this.perkDataCache.getIfPresent(player.getUniqueId());
+        if (perkData == null) {
+            /* This normally shouldn't happen as PerkData should always be able to be tied to a player as the join and quit events automatically handle them */
+            PerkData createdPerkData = new PerkData(player.getUniqueId());
+            this.loadPerkDataAsync(createdPerkData);
+            return createdPerkData;
+        }
+        return perkData;
     }
 
     @Inject

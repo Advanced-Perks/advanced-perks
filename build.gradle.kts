@@ -10,6 +10,7 @@ object Version {
     const val SLF4J = "2.0.9"
     const val MOCKITO = "4.0.0"
     const val JUNIT = "5.8.1"
+    const val JETBRAINS_ANNOTATIONS = "24.1.0"
 }
 
 group = "de.fabilucius"
@@ -28,6 +29,7 @@ dependencies {
     implementation("org.spigotmc", "spigot-api", Version.SPIGOT)
     implementation("com.google.inject", "guice", Version.GUICE)
     implementation("org.slf4j", "slf4j-api", Version.SLF4J)
+    implementation("org.jetbrains", "annotations", Version.JETBRAINS_ANNOTATIONS)
 }
 
 tasks {

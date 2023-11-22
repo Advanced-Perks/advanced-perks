@@ -7,7 +7,6 @@ plugins {
 object Version {
     const val SPIGOT = "1.16.5-R0.1-SNAPSHOT"
     const val GUICE = "7.0.0"
-    const val SLF4J = "2.0.9"
     const val MOCKITO = "4.0.0"
     const val JUNIT = "5.8.1"
     const val JETBRAINS_ANNOTATIONS = "24.1.0"
@@ -28,7 +27,6 @@ dependencies {
 
     implementation("org.spigotmc", "spigot-api", Version.SPIGOT)
     implementation("com.google.inject", "guice", Version.GUICE)
-    implementation("org.slf4j", "slf4j-api", Version.SLF4J)
     implementation("org.jetbrains", "annotations", Version.JETBRAINS_ANNOTATIONS)
 }
 

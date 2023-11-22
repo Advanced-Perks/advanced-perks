@@ -27,6 +27,7 @@ dependencies {
 
     implementation("org.spigotmc", "spigot-api", Version.SPIGOT)
     implementation("com.google.inject", "guice", Version.GUICE)
+    implementation("commons-io", "commons-io", "2.15.0")
     implementation("org.jetbrains", "annotations", Version.JETBRAINS_ANNOTATIONS)
 }
 

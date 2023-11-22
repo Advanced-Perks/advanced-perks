@@ -1,5 +1,6 @@
 package de.fabilucius.advancedperks.registry;
 
+import com.google.common.base.Strings;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
@@ -11,8 +12,10 @@ import de.fabilucius.advancedperks.exception.AdvancedPerksException;
 import de.fabilucius.advancedperks.perk.AbstractDefaultPerk;
 import de.fabilucius.advancedperks.perk.Perk;
 import de.fabilucius.advancedperks.perk.PerksConfiguration;
+import de.fabilucius.advancedperks.registry.exception.PerkNotFoundException;
 import de.fabilucius.advancedperks.registry.exception.PerkRegistryInitializationException;
 import de.fabilucius.advancedperks.registry.loader.PerkYmlLoader;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,12 +31,32 @@ public class PerkRegistry {
     @Inject
     private APLogger logger;
 
+    //TODO create custom cache implementation to make dual keys possible
     private final Cache<Class<? extends Perk>, Perk> perkCache = CacheBuilder.newBuilder()
             .build();
 
-    //TODO add nullable
+    private final Cache<String, Perk> perkIdentifierIndexCache = CacheBuilder.newBuilder()
+            .build();
+
+    @Nullable
     public <T extends Perk> T getPerk(Class<T> perkClass) {
         return perkClass.cast(this.perkCache.getIfPresent(perkClass));
+    }
+
+    @Nullable
+    public Perk getPerkByIdentifier(String identifier) {
+        if (Strings.isNullOrEmpty(identifier)) {
+            return null;
+        }
+        try {
+            return this.perkIdentifierIndexCache.get(identifier, () -> this.perkCache.asMap().values().stream()
+                    .filter(perk -> perk.getIdentifier().equalsIgnoreCase(identifier))
+                    .findFirst()
+                    .orElseThrow(() -> new PerkNotFoundException("No perk with the identifier '%s' could be found.".formatted(identifier))));
+        } catch (Exception exception) {
+            this.logger.warning(exception.getMessage());
+            return null;
+        }
     }
 
     public void loadAndRegisterDefaultPerks() throws PerkRegistryInitializationException {
@@ -44,6 +67,7 @@ public class PerkRegistry {
                 this.logger.info("Successfully loaded the perk %s from %s.".formatted(perk.getIdentifier(), perk.getClass().getName()));
                 if (perk.isEnabled()) {
                     this.perkCache.put(perkClass, perk);
+                    this.perkIdentifierIndexCache.put(perk.getIdentifier(), perk);
                 } else {
                     this.logger.info("The perk wasn't loaded into the cache because its set to disabled in the perks.yml file.");
                 }

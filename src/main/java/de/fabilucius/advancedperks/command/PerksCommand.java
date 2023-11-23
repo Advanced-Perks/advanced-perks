@@ -10,14 +10,14 @@ import de.fabilucius.advancedperks.configuration.ConfigurationProvider;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.command.AbstractCommand;
 import de.fabilucius.advancedperks.core.command.annotation.Aliases;
-import de.fabilucius.advancedperks.core.command.annotation.Identifier;
+import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.SubCommands;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-@Identifier("perks")
+@CommandIdentifier("perks")
 @Aliases({"perk", "advancedperks"})
 @SubCommands({InfoSubCommand.class, EnableSubCommand.class, DisableSubCommand.class})
 public class PerksCommand extends AbstractCommand {

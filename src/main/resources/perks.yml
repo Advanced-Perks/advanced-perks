@@ -3,3 +3,67 @@ test:
   description:
     - 'First &2Line'
     - 'Second LINE'
+bat:
+  enabled: true
+  display_name: '&8&lBat Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oNight Vision to the player.'
+  flags:
+    permission: 'advancedperks.use.bat'
+fire_resistance:
+  enabled: true
+  display_name: '&c&lFire Resistance Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oFire Resistance to the player.'
+  flags:
+    permission: 'advancedperks.use.fire_resistance'
+frog:
+  enabled: true
+  display_name: '&a&lFrog Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oJump Boost II to the player.'
+  flags:
+    permission: 'advancedperks.use.frog'
+hulk:
+  enabled: true
+  display_name: '&a&lHulk Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oStrength to the player.'
+  flags:
+    permission: 'advancedperks.use.hulk'
+no_hunger:
+  enabled: true
+  display_name: '&f&lNo Hunger Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oSaturation to the player.'
+  flags:
+    permission: 'advancedperks.use.no_hunger'
+poseidon:
+  enabled: true
+  display_name: '&9&lPoseidon Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oWater Breathing to the player.'
+  flags:
+    permission: 'advancedperks.use.poseidon'
+speed:
+  enabled: true
+  display_name: '&e&lSpeed Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oSpeed to the player.'
+  flags:
+    permission: 'advancedperks.use.speed'
+turtle:
+  enabled: true
+  display_name: '&2&lTurtle Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oResistance to the player.'
+  flags:
+    permission: 'advancedperks.use.turtle'

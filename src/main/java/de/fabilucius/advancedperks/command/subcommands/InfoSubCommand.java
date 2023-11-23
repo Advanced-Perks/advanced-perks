@@ -5,7 +5,7 @@ import de.fabilucius.advancedperks.configuration.ConfigurationProvider;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.configuration.replace.ReplaceOptions;
 import de.fabilucius.advancedperks.core.command.AbstractSubCommand;
-import de.fabilucius.advancedperks.core.command.annotation.Identifier;
+import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.Permission;
 import de.fabilucius.advancedperks.core.mojang.MojangProfileData;
 import de.fabilucius.advancedperks.core.mojang.MojangProfileFetcher;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Identifier("info")
+@CommandIdentifier("info")
 @Permission("advancedperks.command.info")
 public class InfoSubCommand extends AbstractSubCommand {
 
@@ -73,8 +73,8 @@ public class InfoSubCommand extends AbstractSubCommand {
                 messageReceiver.sendMessage(this.messagesConfiguration.getComputedString("command.perks.info.still_loading",
                         new ReplaceOptions("<player>", name)));
             } else {
-                String enabledPerks = perkData.getEnabledPerks().stream().map(Perk::getIdentifier).collect(Collectors.joining(","));
-                String boughtPerks = String.join(",", perkData.getBoughtPerks());
+                String enabledPerks = perkData.getEnabledPerks().stream().map(Perk::getIdentifier).collect(Collectors.joining(" "));
+                String boughtPerks = String.join(" ", perkData.getBoughtPerks());
                 this.messagesConfiguration.getComputedStringList("command.perks.info.text",
                                 new ReplaceOptions("<player>", name),
                                 new ReplaceOptions("<enabled_perks>", enabledPerks.isEmpty() ? "-" : enabledPerks),

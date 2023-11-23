@@ -7,7 +7,7 @@ import de.fabilucius.advancedperks.configuration.ConfigurationProvider;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.MessagesConfiguration;
 import de.fabilucius.advancedperks.core.command.annotation.Aliases;
-import de.fabilucius.advancedperks.core.command.annotation.Identifier;
+import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.Permission;
 import de.fabilucius.advancedperks.core.command.annotation.SubCommands;
 import de.fabilucius.advancedperks.core.logging.APLogger;
@@ -41,11 +41,11 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
         this.messagesConfiguration = configurationProvider.getConfigurationAndLoad(MessagesConfiguration.class);
         this.logger = logger;
         this.injector = injector;
-        Identifier identifierAnnotation = this.getClass().getAnnotation(Identifier.class);
-        if (identifierAnnotation == null) {
+        CommandIdentifier commandIdentifierAnnotation = this.getClass().getAnnotation(CommandIdentifier.class);
+        if (commandIdentifierAnnotation == null) {
             throw new IllegalStateException("Tried to initialize the command %s but there is not @Identifier annotation present.".formatted(this.getClass().getName()));
         }
-        this.identifier = identifierAnnotation.value();
+        this.identifier = commandIdentifierAnnotation.value();
         PluginCommand pluginCommand = Bukkit.getPluginCommand(this.identifier);
         if (pluginCommand == null) {
             throw new IllegalStateException("Tried to initialize the command %s but it seems it wasn't added to the plugin.yml file.".formatted(this.getClass().getName()));

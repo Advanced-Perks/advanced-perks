@@ -6,7 +6,7 @@ import de.fabilucius.advancedperks.configuration.ConfigurationProvider;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.MessagesConfiguration;
 import de.fabilucius.advancedperks.core.command.annotation.Aliases;
-import de.fabilucius.advancedperks.core.command.annotation.Identifier;
+import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,11 +21,11 @@ public abstract class AbstractSubCommand {
     @Inject
     public AbstractSubCommand(ConfigurationProvider configurationProvider) throws ConfigurationInitializationException {
         this.messagesConfiguration = configurationProvider.getConfigurationAndLoad(MessagesConfiguration.class);
-        Identifier identifierAnnotation = this.getClass().getAnnotation(Identifier.class);
-        if (identifierAnnotation == null) {
+        CommandIdentifier commandIdentifierAnnotation = this.getClass().getAnnotation(CommandIdentifier.class);
+        if (commandIdentifierAnnotation == null) {
             throw new IllegalStateException("The sub command class %s is missing a @Identifier annotation.");
         }
-        this.identifier = identifierAnnotation.value();
+        this.identifier = commandIdentifierAnnotation.value();
     }
 
     public String getIdentifier() {

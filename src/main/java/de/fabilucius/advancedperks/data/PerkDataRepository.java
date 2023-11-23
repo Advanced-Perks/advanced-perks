@@ -127,7 +127,6 @@ public class PerkDataRepository implements Listener {
                 } else {
                     perkData.setLoaded();
                 }
-                perkData.getBoughtPerks().add("TestLOL");
             } catch (Exception exception) {
                 this.logger.log(Level.WARNING, "An error occurred while loading the PerkData for uniqueId %s.".formatted(perkData.getUuid().toString()), exception);
             }

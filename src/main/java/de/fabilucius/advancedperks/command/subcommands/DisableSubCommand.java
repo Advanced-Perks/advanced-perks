@@ -6,7 +6,7 @@ import de.fabilucius.advancedperks.configuration.ConfigurationProvider;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.configuration.replace.ReplaceOptions;
 import de.fabilucius.advancedperks.core.command.AbstractSubCommand;
-import de.fabilucius.advancedperks.core.command.annotation.Identifier;
+import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.Permission;
 import de.fabilucius.advancedperks.data.state.PerkStateController;
 import de.fabilucius.advancedperks.perk.Perk;
@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-@Identifier("disable")
+@CommandIdentifier("disable")
 @Permission("advancedperks.command.disable")
 public class DisableSubCommand extends AbstractSubCommand {
 

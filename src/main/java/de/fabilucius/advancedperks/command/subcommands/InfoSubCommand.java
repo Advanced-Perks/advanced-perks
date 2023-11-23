@@ -61,7 +61,8 @@ public class InfoSubCommand extends AbstractSubCommand {
                 this.printPerkInfo(commandSender, mojangProfileData.uniqueId(), mojangProfileData.name());
                 return;
             }
-            //TODO add not found
+            commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.info.player_not_found",
+                    new ReplaceOptions("<player>", arguments[0])));
         }
     }
 

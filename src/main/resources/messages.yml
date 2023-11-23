@@ -3,6 +3,7 @@ command:
   perks:
     no_permission: '<prefix> &cYou don`t have permission to execute that command.'
     info:
+      player_not_found: '<prefix> &cIt seems theres no data for a player with the name <player>.'
       still_loading: '<prefix> &cThe perk data for <player> is still loading...'
       text:
         - '<prefix>'

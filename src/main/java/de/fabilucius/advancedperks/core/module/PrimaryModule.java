@@ -8,6 +8,7 @@ import de.fabilucius.advancedperks.core.database.Database;
 import de.fabilucius.advancedperks.core.database.DatabaseProvider;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import de.fabilucius.advancedperks.data.PerkDataRepository;
+import de.fabilucius.advancedperks.data.state.PerkStateController;
 import de.fabilucius.advancedperks.registry.PerkRegistry;
 import de.fabilucius.advancedperks.registry.loader.PerkYmlLoader;
 
@@ -31,6 +32,7 @@ public class PrimaryModule extends AbstractModule {
         bind(PerkYmlLoader.class).asEagerSingleton();
         bind(PerkDataRepository.class).asEagerSingleton();
         bind(Database.class).toProvider(DatabaseProvider.class);
+        bind(PerkStateController.class).asEagerSingleton();
     }
 
 }

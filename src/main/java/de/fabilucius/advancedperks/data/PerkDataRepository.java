@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.core.database.Database;
 import de.fabilucius.advancedperks.core.logging.APLogger;
+import de.fabilucius.advancedperks.data.state.PerkStateController;
 import de.fabilucius.advancedperks.perk.Perk;
 import de.fabilucius.advancedperks.registry.PerkRegistry;
 import org.bukkit.Bukkit;
@@ -40,6 +41,9 @@ public class PerkDataRepository implements Listener {
 
     @Inject
     private PerkRegistry perkRegistry;
+
+    @Inject
+    private PerkStateController perkStateController;
 
     private final Cache<UUID, PerkData> perkDataCache = CacheBuilder.newBuilder().build();
 
@@ -111,7 +115,13 @@ public class PerkDataRepository implements Listener {
                             .map(perkIdentifier -> this.perkRegistry.getPerkByIdentifier(perkIdentifier))
                             .filter(Objects::nonNull)
                             .toList();
-                    //TODO force enable perks sync
+                    Bukkit.getScheduler().runTask(this.advancedPerks, () -> {
+                        Player player = Bukkit.getPlayer(uniqueId);
+                        if (player != null) {
+                            enabledPerks.forEach(perk ->
+                                    this.perkStateController.enablePerk(player, perk));
+                        }
+                    });
                     perkData.getBoughtPerks().addAll(Arrays.stream(resultSet.getString("bought_perks").split(",")).toList());
                     perkData.setDataHash(resultSet.getBytes("data_hash"));
                 } else {

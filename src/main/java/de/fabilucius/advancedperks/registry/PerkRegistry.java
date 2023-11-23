@@ -18,6 +18,7 @@ import de.fabilucius.advancedperks.registry.loader.PerkYmlLoader;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 public class PerkRegistry {
@@ -90,4 +91,9 @@ public class PerkRegistry {
             throw new PerkRegistryInitializationException("An unexpected io exception was thrown while looping over the plugins classes to find default perks.", exception);
         }
     }
+
+    public Collection<Perk> getPerks() {
+        return this.perkCache.asMap().values();
+    }
+
 }

@@ -3,6 +3,8 @@ package de.fabilucius.advancedperks.command;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import de.fabilucius.advancedperks.command.subcommands.DisableSubCommand;
+import de.fabilucius.advancedperks.command.subcommands.EnableSubCommand;
 import de.fabilucius.advancedperks.command.subcommands.InfoSubCommand;
 import de.fabilucius.advancedperks.configuration.ConfigurationProvider;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
@@ -17,7 +19,7 @@ import java.util.List;
 
 @Identifier("perks")
 @Aliases({"perk", "advancedperks"})
-@SubCommands({InfoSubCommand.class})
+@SubCommands({InfoSubCommand.class, EnableSubCommand.class, DisableSubCommand.class})
 public class PerksCommand extends AbstractCommand {
     @Inject
     public PerksCommand(ConfigurationProvider configurationProvider, APLogger logger, Injector injector) throws ConfigurationInitializationException {

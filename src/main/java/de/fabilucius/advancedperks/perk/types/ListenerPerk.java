@@ -1,4 +1,6 @@
 package de.fabilucius.advancedperks.perk.types;
 
-public interface ListenerPerk {
+import org.bukkit.event.Listener;
+
+public interface ListenerPerk extends Listener {
 }

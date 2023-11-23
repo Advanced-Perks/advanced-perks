@@ -11,6 +11,14 @@ bat:
     - '&7&oNight Vision to the player.'
   flags:
     permission: 'advancedperks.use.bat'
+chicken:
+  enabled: true
+  display_name: '&d&lChicken Perk'
+  description:
+    - '&7&oActivating this perk will stop the player from'
+    - '&7&otaking falldamage at all.'
+  flags:
+    permission: 'advancedperks.use.chicken'
 fire_resistance:
   enabled: true
   display_name: '&c&lFire Resistance Perk'

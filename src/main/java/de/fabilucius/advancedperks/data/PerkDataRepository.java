@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
@@ -48,12 +49,25 @@ public class PerkDataRepository implements Listener {
     }
 
     @NotNull
+    public CompletableFuture<PerkData> getPerkDataByUuid(UUID uuid) {
+        PerkData perkData = this.perkDataCache.getIfPresent(uuid);
+        if (perkData != null) {
+            return CompletableFuture.supplyAsync(() -> perkData);
+        } else {
+            return this.loadPerkDataAsync(uuid);
+        }
+    }
+
+    @NotNull
     public PerkData getPerkDataByPlayer(Player player) {
         PerkData perkData = this.perkDataCache.getIfPresent(player.getUniqueId());
         if (perkData == null) {
             /* This normally shouldn't happen as PerkData should always be able to be tied to a player as the join and quit events automatically handle them */
-            PerkData createdPerkData = new PerkData(player.getUniqueId());
-            this.loadPerkDataAsync(createdPerkData);
+            //TODO change this as this will actually happen when reloading the server (which technically isn't supported by me)
+            UnloadedPerkData createdPerkData = new UnloadedPerkData(player.getUniqueId());
+            this.perkDataCache.put(player.getUniqueId(), createdPerkData);
+            this.loadPerkDataAsync(player.getUniqueId()).thenAcceptAsync(perkData1 ->
+                    this.perkDataCache.put(perkData1.getUuid(), perkData1));
             return createdPerkData;
         }
         return perkData;
@@ -67,9 +81,10 @@ public class PerkDataRepository implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        PerkData perkData = new PerkData(event.getPlayer().getUniqueId());
-        this.loadPerkDataAsync(perkData);
-        this.perkDataCache.put(perkData.getUuid(), perkData);
+        UnloadedPerkData unloadedPerkData = new UnloadedPerkData(event.getPlayer().getUniqueId());
+        this.perkDataCache.put(unloadedPerkData.getUuid(), unloadedPerkData);
+        this.loadPerkDataAsync(unloadedPerkData.getUuid()).thenAcceptAsync(perkData ->
+                this.perkDataCache.put(perkData.getUuid(), perkData));
     }
 
     @EventHandler
@@ -82,11 +97,12 @@ public class PerkDataRepository implements Listener {
     }
 
     //TODO looking into splitting it up into a separate task class again
-    public void loadPerkDataAsync(PerkData perkData) {
-        Bukkit.getScheduler().runTaskAsynchronously(this.advancedPerks, () -> {
+    public CompletableFuture<PerkData> loadPerkDataAsync(UUID uniqueId) {
+        return CompletableFuture.supplyAsync(() -> {
+            PerkData perkData = new PerkData(uniqueId);
             String query = "SELECT * FROM ap_data WHERE unique_id = ?";
             try (PreparedStatement loadStatement = this.database.createPreparedStatement(query)) {
-                loadStatement.setString(1, perkData.getUuid().toString());
+                loadStatement.setString(1, uniqueId.toString());
                 ResultSet resultSet = loadStatement.executeQuery();
                 /* ResultSet is only expected to have one entry */
                 if (resultSet.next()) {
@@ -105,6 +121,7 @@ public class PerkDataRepository implements Listener {
             } catch (Exception exception) {
                 this.logger.log(Level.WARNING, "An error occurred while loading the PerkData for uniqueId %s.".formatted(perkData.getUuid().toString()), exception);
             }
+            return perkData;
         });
     }
 

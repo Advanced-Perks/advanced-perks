@@ -14,6 +14,7 @@ public class MessageConfiguration extends Configuration {
         for (ReplaceOptions replaceOption : replaceOptions) {
             message = message.replaceAll(replaceOption.replaceKey(), replaceOption.replaceData());
         }
+        message = message.replaceAll("<prefix>", this.getPrefix());
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
@@ -27,9 +28,13 @@ public class MessageConfiguration extends Configuration {
             for (ReplaceOptions replaceOption : replaceOptions) {
                 message = message.replaceAll(replaceOption.replaceKey(), replaceOption.replaceData());
             }
+            message = message.replaceAll("<prefix>", this.getPrefix());
             return ChatColor.translateAlternateColorCodes('&', message);
         }).collect(Collectors.toList());
     }
 
+    private String getPrefix() {
+        return ChatColor.translateAlternateColorCodes('&', this.getString("prefix", "no message for key 'prefix' found"));
+    }
 }
 

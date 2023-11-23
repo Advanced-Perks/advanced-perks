@@ -1,0 +1,13 @@
+prefix: '&7[&6ap&7]'
+command:
+  perks:
+    no_permission: '<prefix> &cYou don`t have permission to execute that command.'
+    info:
+      still_loading: '<prefix> &cThe perk data for <player> is still loading...'
+      text:
+        - '<prefix>'
+        - '<prefix> &8Perk information`s for &6&l<player>'
+        - '<prefix> &7Enabled perks &e<enabled_perks>'
+        - '<prefix> &7Bought perks &e<bought_perks>'
+        - '<prefix> &7Data hash &8&o<data_hash>'
+        - '<prefix>'

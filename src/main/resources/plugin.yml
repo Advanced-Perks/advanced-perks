@@ -2,3 +2,5 @@ name: AdvancedPerks
 prefix: [AP]
 main: de.fabilucius.advancedperks.AdvancedPerks
 version: ${version}
+commands:
+  perks:

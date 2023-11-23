@@ -86,7 +86,11 @@ public abstract class AbstractPerk implements Perk {
 
     @Override
     public Optional<String> getPermission() {
-        return Optional.ofNullable(this.flags.get("permission").toString());
+        try {
+            return Optional.ofNullable(this.flags.get("permission").toString());
+        } catch (Exception exception) {
+            return Optional.empty();
+        }
     }
 
     @Override

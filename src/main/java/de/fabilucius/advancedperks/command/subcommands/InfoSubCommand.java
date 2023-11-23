@@ -35,6 +35,7 @@ public class InfoSubCommand extends AbstractSubCommand {
     }
 
     /* /perks info <player> */
+    @SuppressWarnings("deprecation")
     @Override
     public void executeCommand(CommandSender commandSender, String... arguments) {
         /* Info about the sender himself */

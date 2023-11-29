@@ -1,7 +1,7 @@
 package de.fabilucius.advancedperks.command.subcommands;
 
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.configuration.ConfigurationProvider;
+import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.configuration.replace.ReplaceOptions;
 import de.fabilucius.advancedperks.core.command.AbstractSubCommand;
@@ -30,8 +30,8 @@ public class InfoSubCommand extends AbstractSubCommand {
     private PerkDataRepository perkDataRepository;
 
     @Inject
-    public InfoSubCommand(ConfigurationProvider configurationProvider) throws ConfigurationInitializationException {
-        super(configurationProvider);
+    public InfoSubCommand(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
+        super(configurationLoader);
     }
 
     /* /perks info <player> */

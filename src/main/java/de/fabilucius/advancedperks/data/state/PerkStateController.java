@@ -1,7 +1,8 @@
 package de.fabilucius.advancedperks.data.state;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.configuration.ConfigurationProvider;
+import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.SettingsConfiguration;
 import de.fabilucius.advancedperks.data.PerkData;
@@ -17,9 +18,23 @@ public class PerkStateController {
     private PerkDataRepository perkDataRepository;
 
     @Inject
-    public PerkStateController(ConfigurationProvider configurationProvider) throws ConfigurationInitializationException {
-        SettingsConfiguration settingsConfiguration = configurationProvider.getConfigurationAndLoad(SettingsConfiguration.class);
+    public PerkStateController(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
+        SettingsConfiguration settingsConfiguration = configurationLoader.getConfigurationAndLoad(SettingsConfiguration.class);
         this.globalMaxActivePerks = settingsConfiguration.getGlobalMaxActivePerks();
+    }
+
+    public void disableAllPerks(Player player) {
+        PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
+        Lists.newArrayList(perkData.getEnabledPerks()).forEach(perk -> this.disablePerk(player, perk));
+    }
+
+    public PerkToggleResult togglePerk(Player player, Perk perk) {
+        PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
+        if (perkData.getEnabledPerks().contains(perk)) {
+            return this.disablePerk(player, perk);
+        } else {
+            return this.enablePerk(player, perk);
+        }
     }
 
     public PerkToggleResult forceEnablePerk(Player player, Perk perk) {
@@ -27,7 +42,7 @@ public class PerkStateController {
         if (perkData.getEnabledPerks().add(perk)) {
             perk.onPrePerkEnable(player);
         }
-        return PerkToggleResult.SUCCESS;
+        return PerkToggleResult.ENABLED;
     }
 
     public PerkToggleResult enablePerk(Player player, Perk perk) {
@@ -50,7 +65,7 @@ public class PerkStateController {
         if (perkData.getEnabledPerks().add(perk)) {
             perk.onPrePerkEnable(player);
         }
-        return PerkToggleResult.SUCCESS;
+        return PerkToggleResult.ENABLED;
     }
 
     public PerkToggleResult disablePerk(Player player, Perk perk) {
@@ -59,7 +74,7 @@ public class PerkStateController {
             perk.onPrePerkDisable(player);
         }
         //TODO find out if this makes problems when i gets out of sync and if a PerkToggleResult.NOT_ACTIVATED/ALREADY_ACTIVATED are needed
-        return PerkToggleResult.SUCCESS;
+        return PerkToggleResult.DISABLED;
     }
 
 }

@@ -10,14 +10,18 @@ object Version {
     const val MOCKITO = "4.0.0"
     const val JUNIT = "5.8.1"
     const val JETBRAINS_ANNOTATIONS = "24.1.0"
+    const val COMMONS_IO = "2.15.0"
+    const val COMMONS_CODEC = "1.16.0"
+    const val AUTHLIB = "1.5.25"
 }
 
 group = "de.fabilucius"
 version = "3.0.0"
 
 repositories {
-    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     mavenCentral()
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven("https://libraries.minecraft.net/")
 }
 
 dependencies {
@@ -27,9 +31,10 @@ dependencies {
 
     implementation("org.spigotmc", "spigot-api", Version.SPIGOT)
     implementation("com.google.inject", "guice", Version.GUICE)
-    implementation("commons-io", "commons-io", "2.15.0")
-    implementation("commons-codec", "commons-codec", "1.16.0")
+    implementation("commons-io", "commons-io", Version.COMMONS_IO)
+    implementation("commons-codec", "commons-codec", Version.COMMONS_CODEC)
     implementation("org.jetbrains", "annotations", Version.JETBRAINS_ANNOTATIONS)
+    implementation("com.mojang", "authlib", Version.AUTHLIB)
 }
 
 tasks {

@@ -2,7 +2,7 @@ package de.fabilucius.advancedperks.command.subcommands;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.configuration.ConfigurationProvider;
+import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.configuration.replace.ReplaceOptions;
 import de.fabilucius.advancedperks.core.command.AbstractSubCommand;
@@ -28,8 +28,8 @@ public class DisableSubCommand extends AbstractSubCommand {
     private PerkStateController perkStateController;
 
     @Inject
-    public DisableSubCommand(ConfigurationProvider configurationProvider) throws ConfigurationInitializationException {
-        super(configurationProvider);
+    public DisableSubCommand(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
+        super(configurationLoader);
     }
 
     /* /perks disable <perk> [player] */

@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 import com.google.common.reflect.ClassPath;
 import com.google.inject.Inject;
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.configuration.ConfigurationProvider;
+import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import de.fabilucius.advancedperks.exception.AdvancedPerksException;
 import de.fabilucius.advancedperks.perk.AbstractDefaultPerk;
@@ -30,7 +30,7 @@ public class PerkRegistry {
     private PerkYmlLoader perkYmlLoader;
 
     @Inject
-    private ConfigurationProvider configurationProvider;
+    private ConfigurationLoader configurationLoader;
 
     @Inject
     private APLogger logger;
@@ -68,7 +68,7 @@ public class PerkRegistry {
 
     public void loadAndRegisterDefaultPerks() throws PerkRegistryInitializationException {
         try {
-            PerksConfiguration perksConfiguration = this.configurationProvider.getConfigurationAndLoad(PerksConfiguration.class);
+            PerksConfiguration perksConfiguration = this.configurationLoader.getConfigurationAndLoad(PerksConfiguration.class);
             for (Class<? extends AbstractDefaultPerk> perkClass : this.findDefaultPerkClasses()) {
                 Perk perk = this.perkYmlLoader.loadPerk(perkClass, perksConfiguration);
                 this.logger.info("Successfully loaded the perk %s from %s.".formatted(perk.getIdentifier(), perk.getClass().getName()));

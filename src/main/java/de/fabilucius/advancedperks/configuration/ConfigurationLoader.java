@@ -8,7 +8,7 @@ import com.google.inject.Singleton;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 
 @Singleton
-public class ConfigurationProvider {
+public class ConfigurationLoader {
 
     @Inject
     private Injector injector;

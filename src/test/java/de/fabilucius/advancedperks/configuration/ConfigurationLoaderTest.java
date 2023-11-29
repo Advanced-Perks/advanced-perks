@@ -5,21 +5,21 @@ import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitiali
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ConfigurationProviderTest extends AbstractConfigurationTest {
+public class ConfigurationLoaderTest extends AbstractConfigurationTest {
 
     @Inject
-    ConfigurationProvider configurationProvider;
+    ConfigurationLoader configurationLoader;
 
     @Test
     void testConfigurationExtractionAndLoading() throws Exception {
-        TestConfiguration testConfiguration = this.configurationProvider.getConfigurationAndLoad(TestConfiguration.class);
+        TestConfiguration testConfiguration = this.configurationLoader.getConfigurationAndLoad(TestConfiguration.class);
         Assertions.assertEquals(testConfiguration.getTestString(), "test");
     }
 
     @Test
     void testConfigurationProviderReturnsTheSameConfigurationTwice() throws Exception {
-        int hashCode = this.configurationProvider.getConfigurationAndLoad(TestConfiguration.class).hashCode();
-        int otherHashCode = this.configurationProvider.getConfigurationAndLoad(TestConfiguration.class).hashCode();
+        int hashCode = this.configurationLoader.getConfigurationAndLoad(TestConfiguration.class).hashCode();
+        int otherHashCode = this.configurationLoader.getConfigurationAndLoad(TestConfiguration.class).hashCode();
 
         Assertions.assertEquals(hashCode, otherHashCode);
     }
@@ -27,7 +27,7 @@ public class ConfigurationProviderTest extends AbstractConfigurationTest {
     @Test
     void testExceptionWhenConfigurationPropertiesAreWrong() {
         Assertions.assertThrows(ConfigurationInitializationException.class,
-                () -> this.configurationProvider.getConfigurationAndLoad(NotExistingTestConfiguration.class));
+                () -> this.configurationLoader.getConfigurationAndLoad(NotExistingTestConfiguration.class));
     }
 
 }

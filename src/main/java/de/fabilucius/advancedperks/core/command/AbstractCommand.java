@@ -3,7 +3,7 @@ package de.fabilucius.advancedperks.core.command;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import de.fabilucius.advancedperks.configuration.ConfigurationProvider;
+import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.MessagesConfiguration;
 import de.fabilucius.advancedperks.core.command.annotation.Aliases;
@@ -37,8 +37,8 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     //TODO figure out a stable way for auto register without adding command to plugin.yml
     @Inject
-    public AbstractCommand(ConfigurationProvider configurationProvider, APLogger logger, Injector injector) throws ConfigurationInitializationException {
-        this.messagesConfiguration = configurationProvider.getConfigurationAndLoad(MessagesConfiguration.class);
+    public AbstractCommand(ConfigurationLoader configurationLoader, APLogger logger, Injector injector) throws ConfigurationInitializationException {
+        this.messagesConfiguration = configurationLoader.getConfigurationAndLoad(MessagesConfiguration.class);
         this.logger = logger;
         this.injector = injector;
         CommandIdentifier commandIdentifierAnnotation = this.getClass().getAnnotation(CommandIdentifier.class);

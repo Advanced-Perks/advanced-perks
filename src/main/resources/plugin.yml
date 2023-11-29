@@ -1,6 +1,6 @@
 name: AdvancedPerks
-prefix: [AP]
 main: de.fabilucius.advancedperks.AdvancedPerks
 version: ${version}
+api-version: 1.16
 commands:
   perks:

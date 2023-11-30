@@ -92,8 +92,15 @@ public class PerkRegistry {
         try {
             return Lists.newArrayList(ClassPath.from(this.getClass().getClassLoader())
                     .getTopLevelClassesRecursive("de.fabilucius.advancedperks").stream()
-                    .filter(classInfo -> AbstractDefaultPerk.class.isAssignableFrom(classInfo.load())
-                            && !classInfo.load().equals(AbstractDefaultPerk.class))
+                    .filter(classInfo -> {
+                        try {
+                            return AbstractDefaultPerk.class.isAssignableFrom(classInfo.load())
+                                    && !classInfo.load().equals(AbstractDefaultPerk.class);
+                        } catch (NoClassDefFoundError error) {
+                            /* This will get triggered by stuff like PlaceholderAPI not running but still getting referenced in classes around the plugin */
+                            return false;
+                        }
+                    })
                     .map(classInfo -> (Class<? extends AbstractDefaultPerk>) classInfo.load())
                     .iterator());
         } catch (IOException exception) {

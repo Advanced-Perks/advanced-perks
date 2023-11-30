@@ -13,6 +13,7 @@ object Version {
     const val COMMONS_IO = "2.15.0"
     const val COMMONS_CODEC = "1.16.0"
     const val AUTHLIB = "1.5.25"
+    const val PLACEHOLDER_API = "2.11.5"
 }
 
 group = "de.fabilucius"
@@ -22,6 +23,7 @@ repositories {
     mavenCentral()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://libraries.minecraft.net/")
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
 }
 
 dependencies {
@@ -35,6 +37,7 @@ dependencies {
     implementation("commons-codec", "commons-codec", Version.COMMONS_CODEC)
     implementation("org.jetbrains", "annotations", Version.JETBRAINS_ANNOTATIONS)
     implementation("com.mojang", "authlib", Version.AUTHLIB)
+    implementation("me.clip", "placeholderapi", Version.PLACEHOLDER_API)
 }
 
 tasks {

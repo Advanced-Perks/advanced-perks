@@ -3,6 +3,10 @@ package de.fabilucius.advancedperks.core.module;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.api.AdvancedPerksApi;
+import de.fabilucius.advancedperks.api.AdvancedPerksApiImpl;
+import de.fabilucius.advancedperks.api.placeholderapi.AdvancedPerksEnabledExpansion;
+import de.fabilucius.advancedperks.api.placeholderapi.AdvancedPerksUseExpansion;
 import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.core.database.Database;
 import de.fabilucius.advancedperks.core.database.DatabaseProvider;
@@ -13,6 +17,7 @@ import de.fabilucius.advancedperks.data.PerkDataRepository;
 import de.fabilucius.advancedperks.data.state.PerkStateController;
 import de.fabilucius.advancedperks.registry.PerkRegistry;
 import de.fabilucius.advancedperks.registry.loader.PerkYmlLoader;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 
 import java.io.File;
@@ -38,6 +43,11 @@ public class PrimaryModule extends AbstractModule {
         bind(PerkStateController.class).asEagerSingleton();
         bind(GuiSystemManager.class).asEagerSingleton();
         bind(NamespacedKey.class).annotatedWith(Names.named("uuidKey")).toProvider(NamespacedKeyProvider.class);
+        bind(AdvancedPerksApi.class).to(AdvancedPerksApiImpl.class);
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            bind(AdvancedPerksUseExpansion.class).asEagerSingleton();
+            bind(AdvancedPerksEnabledExpansion.class).asEagerSingleton();
+        }
     }
 
 }

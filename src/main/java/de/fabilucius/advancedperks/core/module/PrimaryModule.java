@@ -23,6 +23,7 @@ import de.fabilucius.advancedperks.data.state.PerkStateController;
 import de.fabilucius.advancedperks.registry.PerkRegistry;
 import de.fabilucius.advancedperks.registry.PerkRegistryImpl;
 import de.fabilucius.advancedperks.registry.loader.PerkYmlLoader;
+import de.fabilucius.advancedperks.updatechecker.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 
@@ -61,6 +62,7 @@ public class PrimaryModule extends AbstractModule {
             bind(EconomyInterface.class).toProvider(Providers.of(null));
         }
         bind(CompatibilityController.class).asEagerSingleton();
+        bind(UpdateChecker.class).asEagerSingleton();
     }
 
 }

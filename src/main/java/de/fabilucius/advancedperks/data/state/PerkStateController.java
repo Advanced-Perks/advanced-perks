@@ -10,6 +10,8 @@ import de.fabilucius.advancedperks.data.PerkDataRepository;
 import de.fabilucius.advancedperks.perk.Perk;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public class PerkStateController {
 
     private final int globalMaxActivePerks;
@@ -97,6 +99,12 @@ public class PerkStateController {
         }
         //TODO find out if this makes problems when i gets out of sync and if a PerkToggleResult.NOT_ACTIVATED/ALREADY_ACTIVATED are needed
         return PerkToggleResult.DISABLED;
+    }
+
+    public void disablePerks(Player player, List<Perk> perks) {
+        perks.forEach(perk -> {
+            this.disablePerk(player, perk);
+        });
     }
 
 }

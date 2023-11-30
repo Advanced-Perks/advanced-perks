@@ -8,6 +8,7 @@ import de.fabilucius.advancedperks.api.AdvancedPerksApi;
 import de.fabilucius.advancedperks.api.AdvancedPerksApiImpl;
 import de.fabilucius.advancedperks.api.placeholderapi.AdvancedPerksEnabledExpansion;
 import de.fabilucius.advancedperks.api.placeholderapi.AdvancedPerksUseExpansion;
+import de.fabilucius.advancedperks.compatabilities.CompatibilityController;
 import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.core.database.Database;
 import de.fabilucius.advancedperks.core.database.DatabaseProvider;
@@ -59,6 +60,7 @@ public class PrimaryModule extends AbstractModule {
         } else {
             bind(EconomyInterface.class).toProvider(Providers.of(null));
         }
+        bind(CompatibilityController.class).asEagerSingleton();
     }
 
 }

@@ -34,6 +34,7 @@ public class PerkToggleElement extends AbstractGuiElement {
     public BiConsumer<GuiElement, InventoryClickEvent> handleInventoryClick() {
         return ((guiElement, event) -> {
             event.setCancelled(true);
+            //TODO add messages for why a perk wasnt toggled
             switch (this.perkStateController.togglePerk(this.getGuiWindow().getPlayer(), this.perk)) {
                 case ENABLED -> this.setIconAndUpdate(ItemStackBuilder.fromMaterial(Material.LIME_DYE)
                         .setDisplayName(this.enabledText)

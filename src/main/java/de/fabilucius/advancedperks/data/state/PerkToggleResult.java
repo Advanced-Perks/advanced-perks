@@ -6,6 +6,7 @@ public enum PerkToggleResult {
     ENABLED,
     TOO_MANY_ACTIVE,
     NO_PERMISSION,
-    DISALLOWED_WORLD
+    DISALLOWED_WORLD,
+    EVENT_CANCELLED
 
 }

@@ -7,7 +7,10 @@ import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitiali
 import de.fabilucius.advancedperks.core.SettingsConfiguration;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.data.PerkDataRepository;
+import de.fabilucius.advancedperks.event.perk.PerkDisableEvent;
+import de.fabilucius.advancedperks.event.perk.PerkEnableEvent;
 import de.fabilucius.advancedperks.perk.Perk;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -42,9 +45,6 @@ public class PerkStateController {
         if (perk.getDisallowedWorlds().isPresent() && perk.getDisallowedWorlds().get().stream().anyMatch(world -> world.equalsIgnoreCase(player.getWorld().getName()))) {
             return PerkUseStatus.DISALLOWED_WORLD;
         }
-        if (perkData.getEnabledPerks().add(perk)) {
-            perk.onPrePerkEnable(player);
-        }
         return PerkUseStatus.CAN_BE_USED;
     }
 
@@ -64,6 +64,8 @@ public class PerkStateController {
 
     public PerkToggleResult forceEnablePerk(Player player, Perk perk) {
         PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
+        PerkEnableEvent perkEnableEvent = new PerkEnableEvent(player, perk, true);
+        Bukkit.getPluginManager().callEvent(perkEnableEvent);
         if (perkData.getEnabledPerks().add(perk)) {
             perk.onPrePerkEnable(player);
         }
@@ -84,6 +86,11 @@ public class PerkStateController {
             }
             default -> {
                 PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
+                PerkEnableEvent perkEnableEvent = new PerkEnableEvent(player, perk, false);
+                Bukkit.getPluginManager().callEvent(perkEnableEvent);
+                if (perkEnableEvent.isCancelled()) {
+                    return PerkToggleResult.EVENT_CANCELLED;
+                }
                 if (perkData.getEnabledPerks().add(perk)) {
                     perk.onPrePerkEnable(player);
                 }
@@ -92,8 +99,21 @@ public class PerkStateController {
         }
     }
 
+    public PerkToggleResult forceDisablePerk(Player player, Perk perk) {
+        return this.disable(player, perk, true);
+    }
+
     public PerkToggleResult disablePerk(Player player, Perk perk) {
+        return this.disable(player, perk, false);
+    }
+
+    public PerkToggleResult disable(Player player, Perk perk, boolean force) {
         PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
+        PerkDisableEvent perkDisableEvent = new PerkDisableEvent(player, perk, force);
+        Bukkit.getPluginManager().callEvent(perkDisableEvent);
+        if (perkDisableEvent.isCancelled() && !force) {
+            return PerkToggleResult.EVENT_CANCELLED;
+        }
         if (perkData.getEnabledPerks().remove(perk)) {
             perk.onPrePerkDisable(player);
         }

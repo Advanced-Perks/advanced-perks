@@ -77,7 +77,7 @@ public class DisableSubCommand extends AbstractSubCommand {
     }
 
     private void disablePerk(Player player, Perk perk) {
-        this.perkStateController.disablePerk(player, perk);
+        this.perkStateController.forceDisablePerk(player, perk);
     }
 
     @Override

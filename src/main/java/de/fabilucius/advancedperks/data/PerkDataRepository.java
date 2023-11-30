@@ -52,6 +52,12 @@ public class PerkDataRepository implements Listener {
         this.database.runSqlScript("sql/2023.sql");
     }
 
+    public void loadOnlinePlayer() {
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            this.getPerkDataByUuid(player.getUniqueId());
+        });
+    }
+
     @NotNull
     public CompletableFuture<PerkData> getPerkDataByUuid(UUID uuid) {
         PerkData perkData = this.perkDataCache.getIfPresent(uuid);
@@ -66,8 +72,6 @@ public class PerkDataRepository implements Listener {
     public PerkData getPerkDataByPlayer(Player player) {
         PerkData perkData = this.perkDataCache.getIfPresent(player.getUniqueId());
         if (perkData == null) {
-            /* This normally shouldn't happen as PerkData should always be able to be tied to a player as the join and quit events automatically handle them */
-            //TODO change this as this will actually happen when reloading the server (which technically isn't supported by me)
             UnloadedPerkData createdPerkData = new UnloadedPerkData(player.getUniqueId());
             this.perkDataCache.put(player.getUniqueId(), createdPerkData);
             this.loadPerkDataAsync(player.getUniqueId()).thenAcceptAsync(perkData1 ->

@@ -25,6 +25,7 @@ public class AdvancedPerksBootstrap {
     public void initializePlugin() throws AdvancedPerksException {
         this.perkRegistryImpl.loadAndRegisterDefaultPerks();
         this.perkDataRepository.setupDatabase();
+        this.perkDataRepository.loadOnlinePlayer();
         this.injector.getInstance(PerksCommand.class);
         this.compatibilityController.registerCompatibilityClasses();
     }

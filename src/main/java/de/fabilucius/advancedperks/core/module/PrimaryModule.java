@@ -16,6 +16,7 @@ import de.fabilucius.advancedperks.core.logging.APLogger;
 import de.fabilucius.advancedperks.data.PerkDataRepository;
 import de.fabilucius.advancedperks.data.state.PerkStateController;
 import de.fabilucius.advancedperks.registry.PerkRegistry;
+import de.fabilucius.advancedperks.registry.PerkRegistryImpl;
 import de.fabilucius.advancedperks.registry.loader.PerkYmlLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -36,7 +37,7 @@ public class PrimaryModule extends AbstractModule {
         bind(File.class).annotatedWith(Names.named("configurationDirectory")).toInstance(this.advancedPerks.getDataFolder());
         bind(APLogger.class).asEagerSingleton();
         bind(ConfigurationLoader.class).asEagerSingleton();
-        bind(PerkRegistry.class).asEagerSingleton();
+        bind(PerkRegistry.class).to(PerkRegistryImpl.class);
         bind(PerkYmlLoader.class).asEagerSingleton();
         bind(PerkDataRepository.class).asEagerSingleton();
         bind(Database.class).toProvider(DatabaseProvider.class);

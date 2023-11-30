@@ -5,7 +5,7 @@ import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.api.AdvancedPerksApi;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import de.fabilucius.advancedperks.perk.Perk;
-import de.fabilucius.advancedperks.registry.PerkRegistry;
+import de.fabilucius.advancedperks.registry.PerkRegistryImpl;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 public class AdvancedPerksUseExpansion extends AdvancedPerksExpansion {
 
     @Inject
-    private PerkRegistry perkRegistry;
+    private PerkRegistryImpl perkRegistryImpl;
 
     @Inject
     private AdvancedPerksApi advancedPerksApi;
@@ -25,7 +25,7 @@ public class AdvancedPerksUseExpansion extends AdvancedPerksExpansion {
 
     @Override
     public @Nullable String onPlaceholderRequest(Player player, @NotNull String params) {
-        Perk perk = this.perkRegistry.getPerkByIdentifier(params);
+        Perk perk = this.perkRegistryImpl.getPerkByIdentifier(params);
         if (perk == null) {
             return null;
         }

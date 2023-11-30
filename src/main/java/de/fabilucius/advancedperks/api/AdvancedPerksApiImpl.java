@@ -6,6 +6,7 @@ import de.fabilucius.advancedperks.data.state.PerkStateController;
 import de.fabilucius.advancedperks.data.state.PerkToggleResult;
 import de.fabilucius.advancedperks.data.state.PerkUseStatus;
 import de.fabilucius.advancedperks.perk.Perk;
+import de.fabilucius.advancedperks.registry.PerkRegistryImpl;
 import org.bukkit.entity.Player;
 
 @Singleton
@@ -13,6 +14,19 @@ public class AdvancedPerksApiImpl implements AdvancedPerksApi {
 
     @Inject
     private PerkStateController perkStateController;
+
+    @Inject
+    private PerkRegistryImpl perkRegistry;
+
+    @Override
+    public PerkStateController getPerkStateController() {
+        return this.perkStateController;
+    }
+
+    @Override
+    public PerkRegistryImpl getPerkRegistry() {
+        return this.perkRegistry;
+    }
 
     @Override
     public PerkToggleResult enablePerk(Player player, Perk perk) {

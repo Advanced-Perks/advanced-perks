@@ -5,12 +5,12 @@ import com.google.inject.Injector;
 import de.fabilucius.advancedperks.command.PerksCommand;
 import de.fabilucius.advancedperks.data.PerkDataRepository;
 import de.fabilucius.advancedperks.exception.AdvancedPerksException;
-import de.fabilucius.advancedperks.registry.PerkRegistry;
+import de.fabilucius.advancedperks.registry.PerkRegistryImpl;
 
 public class AdvancedPerksBootstrap {
 
     @Inject
-    private PerkRegistry perkRegistry;
+    private PerkRegistryImpl perkRegistryImpl;
 
     @Inject
     private PerkDataRepository perkDataRepository;
@@ -19,7 +19,7 @@ public class AdvancedPerksBootstrap {
     private Injector injector;
 
     public void initializePlugin() throws AdvancedPerksException {
-        this.perkRegistry.loadAndRegisterDefaultPerks();
+        this.perkRegistryImpl.loadAndRegisterDefaultPerks();
         this.perkDataRepository.setupDatabase();
         this.injector.getInstance(PerksCommand.class);
     }

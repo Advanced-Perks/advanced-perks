@@ -8,7 +8,7 @@ import de.fabilucius.advancedperks.core.database.Database;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import de.fabilucius.advancedperks.data.state.PerkStateController;
 import de.fabilucius.advancedperks.perk.Perk;
-import de.fabilucius.advancedperks.registry.PerkRegistry;
+import de.fabilucius.advancedperks.registry.PerkRegistryImpl;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,7 +40,7 @@ public class PerkDataRepository implements Listener {
     private Database database;
 
     @Inject
-    private PerkRegistry perkRegistry;
+    private PerkRegistryImpl perkRegistryImpl;
 
     @Inject
     private PerkStateController perkStateController;
@@ -112,7 +112,7 @@ public class PerkDataRepository implements Listener {
                 if (resultSet.next()) {
                     /* Enabled perks */
                     List<Perk> enabledPerks = Arrays.stream(resultSet.getString("enabled_perks").split(","))
-                            .map(perkIdentifier -> this.perkRegistry.getPerkByIdentifier(perkIdentifier))
+                            .map(perkIdentifier -> this.perkRegistryImpl.getPerkByIdentifier(perkIdentifier))
                             .filter(Objects::nonNull)
                             .toList();
                     Bukkit.getScheduler().runTask(this.advancedPerks, () -> {

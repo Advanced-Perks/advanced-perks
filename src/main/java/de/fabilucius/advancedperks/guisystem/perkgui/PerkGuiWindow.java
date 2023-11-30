@@ -16,7 +16,7 @@ import de.fabilucius.advancedperks.guisystem.perkgui.elements.PerkGuiSetupElemen
 import de.fabilucius.advancedperks.guisystem.perkgui.elements.PerkIconElement;
 import de.fabilucius.advancedperks.guisystem.perkgui.elements.PerkToggleElement;
 import de.fabilucius.advancedperks.perk.Perk;
-import de.fabilucius.advancedperks.registry.PerkRegistry;
+import de.fabilucius.advancedperks.registry.PerkRegistryImpl;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -31,7 +31,7 @@ public class PerkGuiWindow extends AbstractPageGuiWindow {
     private final MessagesConfiguration messagesConfiguration;
 
     @Inject
-    private PerkRegistry perkRegistry;
+    private PerkRegistryImpl perkRegistryImpl;
 
     @Inject
     private PerkDataRepository perkDataRepository;
@@ -44,8 +44,8 @@ public class PerkGuiWindow extends AbstractPageGuiWindow {
 
     @Override
     public void initializeGui(int page) {
-        List<Perk> perks = this.perkRegistry.getPerks().stream().toList().subList(page * PERKS_PER_PAGE,
-                Math.min(perkRegistry.getPerks().size(), (page + 1) * PERKS_PER_PAGE));
+        List<Perk> perks = this.perkRegistryImpl.getPerks().stream().toList().subList(page * PERKS_PER_PAGE,
+                Math.min(perkRegistryImpl.getPerks().size(), (page + 1) * PERKS_PER_PAGE));
         AtomicInteger index = new AtomicInteger();
         PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(this.getPlayer());
         this.perkGuiConfiguration.getPerkIconLocations().forEach(perkIconLocation -> {
@@ -64,6 +64,6 @@ public class PerkGuiWindow extends AbstractPageGuiWindow {
             this.addGuiElement(new PerkGuiSetupElement(this), this.perkGuiConfiguration.getSetupGuiSlot());
         }
         this.addGuiElement(new PreviousPageElement(this, this.messagesConfiguration.getComputedString("gui.perk_gui.previous_page")), this.perkGuiConfiguration.getPreviousPageSlot());
-        this.addGuiElement(new NextPageElement(this, this.messagesConfiguration.getComputedString("gui.perk_gui.next_page"), this.perkRegistry.getPerks().size() / PERKS_PER_PAGE), this.perkGuiConfiguration.getNextPageSlot());
+        this.addGuiElement(new NextPageElement(this, this.messagesConfiguration.getComputedString("gui.perk_gui.next_page"), this.perkRegistryImpl.getPerks().size() / PERKS_PER_PAGE), this.perkGuiConfiguration.getNextPageSlot());
     }
 }

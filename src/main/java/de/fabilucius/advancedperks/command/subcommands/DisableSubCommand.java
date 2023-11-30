@@ -10,7 +10,7 @@ import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.Permission;
 import de.fabilucius.advancedperks.data.state.PerkStateController;
 import de.fabilucius.advancedperks.perk.Perk;
-import de.fabilucius.advancedperks.registry.PerkRegistry;
+import de.fabilucius.advancedperks.registry.PerkRegistryImpl;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -22,7 +22,7 @@ import java.util.List;
 public class DisableSubCommand extends AbstractSubCommand {
 
     @Inject
-    private PerkRegistry perkRegistry;
+    private PerkRegistryImpl perkRegistryImpl;
 
     @Inject
     private PerkStateController perkStateController;
@@ -37,7 +37,7 @@ public class DisableSubCommand extends AbstractSubCommand {
     public void executeCommand(CommandSender commandSender, String... arguments) {
         if (arguments.length == 1) {
             if (commandSender instanceof Player player) {
-                Perk perk = this.perkRegistry.getPerkByIdentifier(arguments[0]);
+                Perk perk = this.perkRegistryImpl.getPerkByIdentifier(arguments[0]);
                 if (perk != null) {
                     this.disablePerk(player, perk);
                     player.sendMessage(this.messagesConfiguration.getComputedString("command.perks.disable.success",
@@ -53,7 +53,7 @@ public class DisableSubCommand extends AbstractSubCommand {
                 return;
             }
         } else if (arguments.length == 2) {
-            Perk perk = this.perkRegistry.getPerkByIdentifier(arguments[0]);
+            Perk perk = this.perkRegistryImpl.getPerkByIdentifier(arguments[0]);
             if (perk == null) {
                 commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.disable.perk_doesnt_exist",
                         new ReplaceOptions("<perk>", arguments[0])));
@@ -83,7 +83,7 @@ public class DisableSubCommand extends AbstractSubCommand {
     @Override
     public List<String> tabComplete(CommandSender commandSender, String... arguments) {
         if (arguments.length == 1) {
-            return this.perkRegistry.getPerks().stream()
+            return this.perkRegistryImpl.getPerks().stream()
                     .map(Perk::getIdentifier)
                     .filter(identifier -> identifier.toLowerCase().startsWith(arguments[0].toLowerCase()))
                     .toList();

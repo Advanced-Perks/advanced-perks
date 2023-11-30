@@ -12,6 +12,15 @@ gui:
 command:
   perks:
     no_permission: '<prefix> &cYou don`t have permission to execute that command.'
+    buy:
+      syntax: '<prefix> &cIncorrect usage the syntax of the command is /perks buy <perk>.'
+      not_enough_money: '<prefix> &cUnable to buy the perk "<perk>" you do not have the required amount of money.'
+      already_bought: '<prefix> &cYou have already bought the perk "<perk>".'
+      success: '<prefix> &7You successfully bought the perk "&6<perk>&7".'
+      error: '<prefix> &cAn error occurred during the buy process check the server log for more information.'
+      no_price_set: '<prefix> &cUnable to buy the perk "<perk>" no price was set for it in the configuration.'
+      perk_not_found: '<prefix> &cUnable to buy the perk "<perk>" no perk with that identifier exist.'
+      not_set_up: '<prefix> &cUnable to buy the perk no compatible economy plugin was found running on the server, for a list of supported economy plugins please refer to the plugins download page.'
     enable:
       syntax: '<prefix> &cIncorrect usage the syntax of the command is /perks enable <perk> [player].'
       perk_doesnt_exist: '<prefix> &cThe perk <perk> doesnt exist.'

@@ -14,6 +14,7 @@ object Version {
     const val COMMONS_CODEC = "1.16.0"
     const val AUTHLIB = "1.5.25"
     const val PLACEHOLDER_API = "2.11.5"
+    const val VAULT = "1.7.1"
 }
 
 group = "de.fabilucius"
@@ -24,6 +25,7 @@ repositories {
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://libraries.minecraft.net/")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+    maven("https://jitpack.io")
 }
 
 dependencies {
@@ -38,6 +40,7 @@ dependencies {
     implementation("org.jetbrains", "annotations", Version.JETBRAINS_ANNOTATIONS)
     implementation("com.mojang", "authlib", Version.AUTHLIB)
     implementation("me.clip", "placeholderapi", Version.PLACEHOLDER_API)
+    implementation("com.github.MilkBowl", "VaultAPI", Version.VAULT)
 }
 
 tasks {

@@ -2,6 +2,7 @@ package de.fabilucius.advancedperks.core.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
+import com.google.inject.util.Providers;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.api.AdvancedPerksApi;
 import de.fabilucius.advancedperks.api.AdvancedPerksApiImpl;
@@ -10,6 +11,9 @@ import de.fabilucius.advancedperks.api.placeholderapi.AdvancedPerksUseExpansion;
 import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.core.database.Database;
 import de.fabilucius.advancedperks.core.database.DatabaseProvider;
+import de.fabilucius.advancedperks.core.economy.EconomyController;
+import de.fabilucius.advancedperks.core.economy.interfaces.EconomyInterface;
+import de.fabilucius.advancedperks.core.economy.interfaces.types.VaultEconomyInterface;
 import de.fabilucius.advancedperks.core.guisystem.GuiSystemManager;
 import de.fabilucius.advancedperks.core.guisystem.persistantdata.NamespacedKeyProvider;
 import de.fabilucius.advancedperks.core.logging.APLogger;
@@ -48,6 +52,12 @@ public class PrimaryModule extends AbstractModule {
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             bind(AdvancedPerksUseExpansion.class).asEagerSingleton();
             bind(AdvancedPerksEnabledExpansion.class).asEagerSingleton();
+        }
+        bind(EconomyController.class).asEagerSingleton();
+        if (Bukkit.getPluginManager().isPluginEnabled("Vault")) {
+            bind(EconomyInterface.class).to(VaultEconomyInterface.class);
+        } else {
+            bind(EconomyInterface.class).toProvider(Providers.of(null));
         }
     }
 

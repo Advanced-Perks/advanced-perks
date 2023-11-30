@@ -9,6 +9,7 @@ bat:
   description:
     - '&7&oActivating this perk will grant the potion effect'
     - '&7&oNight Vision to the player.'
+  icon: 'ENDER_EYE'
   flags:
     permission: 'advancedperks.use.bat'
 bird:
@@ -17,6 +18,7 @@ bird:
   description:
     - '&7&oActivating this perk will grant the player the ability'
     - '&7&oto fly even in gamemode survival.'
+  icon: 'FEATHER'
   flags:
     permission: 'advancedperks.use.bird'
 chicken:
@@ -25,6 +27,7 @@ chicken:
   description:
     - '&7&oActivating this perk will stop the player from'
     - '&7&otaking falldamage at all.'
+  icon: 'EGG'
   flags:
     permission: 'advancedperks.use.chicken'
 fire_resistance:
@@ -33,6 +36,7 @@ fire_resistance:
   description:
     - '&7&oActivating this perk will grant the potion effect'
     - '&7&oFire Resistance to the player.'
+  icon: 'LAVA_BUCKET'
   flags:
     permission: 'advancedperks.use.fire_resistance'
 frog:
@@ -41,6 +45,7 @@ frog:
   description:
     - '&7&oActivating this perk will grant the potion effect'
     - '&7&oJump Boost II to the player.'
+  icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjA0MTg0ZTc2OGVlMDcxOTI1MjY4MjY2YmUwNDIxMTNlMjA3ZTI2ZDkxMDgxNzQ4NDYxOGU3Y2ZjZmMwMDgwNSJ9fX0='
   flags:
     permission: 'advancedperks.use.frog'
 hulk:
@@ -49,6 +54,7 @@ hulk:
   description:
     - '&7&oActivating this perk will grant the potion effect'
     - '&7&oStrength to the player.'
+  icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2NkY2MyMzJjYTRiY2M0MjgyZWNjZDdlYzI1ODQ4ODE2ODFhNWZhNGRlZGJkNWU0YmEyYjhiNDdmMzY5ZGUifX19'
   flags:
     permission: 'advancedperks.use.hulk'
 no_hunger:
@@ -57,6 +63,7 @@ no_hunger:
   description:
     - '&7&oActivating this perk will grant the potion effect'
     - '&7&oSaturation to the player.'
+  icon: 'COOKED_BEEF'
   flags:
     permission: 'advancedperks.use.no_hunger'
 poseidon:
@@ -65,6 +72,7 @@ poseidon:
   description:
     - '&7&oActivating this perk will grant the potion effect'
     - '&7&oWater Breathing to the player.'
+  icon: 'TRIDENT'
   flags:
     permission: 'advancedperks.use.poseidon'
 speed:
@@ -73,6 +81,7 @@ speed:
   description:
     - '&7&oActivating this perk will grant the potion effect'
     - '&7&oSpeed to the player.'
+  icon: 'SUGAR'
   flags:
     permission: 'advancedperks.use.speed'
 turtle:
@@ -81,5 +90,6 @@ turtle:
   description:
     - '&7&oActivating this perk will grant the potion effect'
     - '&7&oResistance to the player.'
+  icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjliYWJhYjcyYjY4MjQzN2Y5ZGVhZTEzOTFhMzM3MDEzOThhOWIzY2M2NTQ2YjA2M2U5MzgwOGUwM2E0MDc0In19fQ=='
   flags:
     permission: 'advancedperks.use.turtle'

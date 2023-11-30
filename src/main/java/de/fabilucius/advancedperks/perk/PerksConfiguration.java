@@ -21,9 +21,8 @@ public class PerksConfiguration extends MessageConfiguration {
         return new PerkDescription(this.getComputedStringList(identifier + ".description"));
     }
 
-    //TODO ICON LOGIC
     public PerkGuiIcon getPerkGuiIcon(String identifier) {
-        return new PerkGuiIcon();
+        return new PerkGuiIcon(this.getString(identifier + ".icon"));
     }
 
     public boolean isEnabled(String identifier) {

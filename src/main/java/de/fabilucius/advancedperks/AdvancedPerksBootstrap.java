@@ -2,12 +2,14 @@ package de.fabilucius.advancedperks;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.Singleton;
 import de.fabilucius.advancedperks.command.PerksCommand;
 import de.fabilucius.advancedperks.compatabilities.CompatibilityController;
 import de.fabilucius.advancedperks.data.PerkDataRepository;
 import de.fabilucius.advancedperks.exception.AdvancedPerksException;
 import de.fabilucius.advancedperks.registry.PerkRegistryImpl;
 
+@Singleton
 public class AdvancedPerksBootstrap {
 
     @Inject
@@ -28,6 +30,10 @@ public class AdvancedPerksBootstrap {
         this.perkDataRepository.loadOnlinePlayer();
         this.injector.getInstance(PerksCommand.class);
         this.compatibilityController.registerCompatibilityClasses();
+    }
+
+    public void shutdownPlugin() {
+        this.perkDataRepository.handleShutdown();
     }
 
 }

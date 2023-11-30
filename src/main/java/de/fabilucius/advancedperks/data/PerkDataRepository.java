@@ -2,6 +2,7 @@ package de.fabilucius.advancedperks.data;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.core.database.Database;
@@ -97,9 +98,12 @@ public class PerkDataRepository implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        PerkData perkData = this.perkDataCache.getIfPresent(event.getPlayer().getUniqueId());
+        Player player = event.getPlayer();
+        PerkData perkData = this.perkDataCache.getIfPresent(player.getUniqueId());
         if (perkData != null) {
             this.savePerkDataAsync(perkData);
+            //TODO is bound to cause some issues/bugs later on needs refactoring
+            perkData.getEnabledPerks().forEach(perk -> perk.onPrePerkDisable(player));
             this.perkDataCache.invalidate(perkData.getUuid());
         }
     }
@@ -140,25 +144,34 @@ public class PerkDataRepository implements Listener {
 
     public void savePerkDataAsync(PerkData perkData) {
         Bukkit.getScheduler().runTaskAsynchronously(this.advancedPerks, () -> {
-            /* Small check to find out if perk data needs to be saved to the database */
-            if (!perkData.isLoaded() || Arrays.equals(perkData.getDataHash(), perkData.calculateDataHash())) {
-                return;
-            }
-            String saveQuery = "INSERT INTO ap_data(unique_id, enabled_perks, bought_perks, data_hash) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE enabled_perks = ?, bought_perks = ?, data_hash = ?";
-            try (PreparedStatement saveStatement = this.database.createPreparedStatement(saveQuery)) {
-                String enabledPerks = perkData.getEnabledPerks().stream().map(Perk::getIdentifier).collect(Collectors.joining(","));
-                String boughtPerks = String.join(",", perkData.getBoughtPerks());
-                saveStatement.setString(1, perkData.getUuid().toString());
-                saveStatement.setString(2, enabledPerks);
-                saveStatement.setString(3, boughtPerks);
-                saveStatement.setBytes(4, perkData.calculateDataHash());
-                saveStatement.setString(5, enabledPerks);
-                saveStatement.setString(6, boughtPerks);
-                saveStatement.setBytes(7, perkData.calculateDataHash());
-                saveStatement.execute();
-            } catch (SQLException exception) {
-                this.logger.log(Level.WARNING, "An error occurred while saving the PerkData for uniqueId %s.".formatted(perkData.getUuid().toString()), exception);
-            }
+            this.savePerkDataSync(perkData);
         });
+    }
+
+    private void savePerkDataSync(PerkData perkData) {
+        /* Small check to find out if perk data needs to be saved to the database */
+        if (!perkData.isLoaded() || Arrays.equals(perkData.getDataHash(), perkData.calculateDataHash())) {
+            return;
+        }
+        String saveQuery = "INSERT INTO ap_data(unique_id, enabled_perks, bought_perks, data_hash) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE enabled_perks = ?, bought_perks = ?, data_hash = ?";
+        try (PreparedStatement saveStatement = this.database.createPreparedStatement(saveQuery)) {
+            String enabledPerks = perkData.getEnabledPerks().stream().map(Perk::getIdentifier).collect(Collectors.joining(","));
+            String boughtPerks = String.join(",", perkData.getBoughtPerks());
+            saveStatement.setString(1, perkData.getUuid().toString());
+            saveStatement.setString(2, enabledPerks);
+            saveStatement.setString(3, boughtPerks);
+            saveStatement.setBytes(4, perkData.calculateDataHash());
+            saveStatement.setString(5, enabledPerks);
+            saveStatement.setString(6, boughtPerks);
+            saveStatement.setBytes(7, perkData.calculateDataHash());
+            saveStatement.execute();
+        } catch (SQLException exception) {
+            this.logger.log(Level.WARNING, "An error occurred while saving the PerkData for uniqueId %s.".formatted(perkData.getUuid().toString()), exception);
+        }
+
+    }
+
+    public void handleShutdown() {
+        this.perkDataCache.asMap().values().forEach(this::savePerkDataSync);
     }
 }

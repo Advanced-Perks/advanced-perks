@@ -30,4 +30,9 @@ public class AdvancedPerks extends JavaPlugin {
             this.logger.log(Level.SEVERE, "An unexpected error occurred during the bootstrap process of the plugin.", exception);
         }
     }
+
+    @Override
+    public void onDisable() {
+        this.injector.getInstance(AdvancedPerksBootstrap.class).shutdownPlugin();
+    }
 }

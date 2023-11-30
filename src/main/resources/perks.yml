@@ -11,6 +11,14 @@ bat:
     - '&7&oNight Vision to the player.'
   flags:
     permission: 'advancedperks.use.bat'
+bird:
+  enabled: true
+  display_name: '&3&lBird Perk'
+  description:
+    - '&7&oActivating this perk will grant the player the ability'
+    - '&7&oto fly even in gamemode survival.'
+  flags:
+    permission: 'advancedperks.use.bird'
 chicken:
   enabled: true
   display_name: '&d&lChicken Perk'

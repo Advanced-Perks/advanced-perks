@@ -1,9 +1,8 @@
 package de.fabilucius.advancedperks.registry;
 
 import com.google.common.base.Strings;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.reflect.ClassPath;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -19,10 +18,11 @@ import de.fabilucius.advancedperks.registry.exception.PerkNotFoundException;
 import de.fabilucius.advancedperks.registry.exception.PerkRegistryInitializationException;
 import de.fabilucius.advancedperks.registry.loader.PerkYmlLoader;
 import org.bukkit.Bukkit;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
-import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Singleton
@@ -41,15 +41,13 @@ public class PerkRegistryImpl implements PerkRegistry {
     private AdvancedPerks advancedPerks;
 
     //TODO create custom cache implementation to make dual keys possible
-    private final Cache<Class<? extends Perk>, Perk> perkCache = CacheBuilder.newBuilder()
-            .build();
+    private final LinkedHashMap<Class<? extends Perk>, Perk> perkCache = Maps.newLinkedHashMap();
 
-    private final Cache<String, Perk> perkIdentifierIndexCache = CacheBuilder.newBuilder()
-            .build();
+    private final LinkedHashMap<String, Perk> perkIdentifierIndexCache = Maps.newLinkedHashMap();
 
     @Nullable
     public <T extends Perk> T getPerk(Class<T> perkClass) {
-        return perkClass.cast(this.perkCache.getIfPresent(perkClass));
+        return perkClass.cast(this.perkCache.get(perkClass));
     }
 
     @Nullable
@@ -58,10 +56,18 @@ public class PerkRegistryImpl implements PerkRegistry {
             return null;
         }
         try {
-            return this.perkIdentifierIndexCache.get(identifier, () -> this.perkCache.asMap().values().stream()
-                    .filter(perk -> perk.getIdentifier().equalsIgnoreCase(identifier))
-                    .findFirst()
-                    .orElseThrow(() -> new PerkNotFoundException("No perk with the identifier '%s' could be found.".formatted(identifier))));
+            if (this.perkIdentifierIndexCache.containsKey(identifier)) {
+                return this.perkIdentifierIndexCache.get(identifier);
+            } else {
+                Perk perk = this.perkCache.values().stream().filter(perk1 -> perk1.getIdentifier().equalsIgnoreCase(identifier))
+                        .findFirst()
+                        .orElse(null);
+                if (perk == null) {
+                    throw new PerkNotFoundException("No perk with the identifier '%s' could be found.".formatted(identifier));
+                }
+                this.perkIdentifierIndexCache.put(identifier, perk);
+                return perk;
+            }
         } catch (Exception exception) {
             this.logger.warning(exception.getMessage());
             return null;
@@ -110,8 +116,9 @@ public class PerkRegistryImpl implements PerkRegistry {
         }
     }
 
-    public Collection<Perk> getPerks() {
-        return this.perkCache.asMap().values();
+    @NotNull
+    public List<Perk> getPerks() {
+        return this.perkCache.values().stream().toList();
     }
 
 }

@@ -4,7 +4,7 @@ import de.fabilucius.advancedperks.perk.Perk;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface PerkRegistry {
 
@@ -14,6 +14,6 @@ public interface PerkRegistry {
     Perk getPerkByIdentifier(String identifier);
 
     @NotNull
-    Collection<Perk> getPerks();
+    List<Perk> getPerks();
 
 }

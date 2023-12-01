@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 @FilePathInJar("perk_gui.yml")
 public class PerkGuiConfiguration extends Configuration {
 
-    //TODO completely change the saving spot
+    //TODO currently uneeded completely change the saving spot
     public PerkGuiSaveResult savePerkGuiLayout(SetupPerkGuiWindow guiWindow) {
         System.out.println(guiWindow.getGuiElements().size());
         if (guiWindow.getGuiElements().size() != 21 && guiWindow.getGuiElements().size() != 54) {

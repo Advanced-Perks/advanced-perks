@@ -41,7 +41,7 @@ public class GuiSystemManager implements Listener {
         if (!this.guiWindows.containsKey(event.getClickedInventory()) || event.getCurrentItem() == null) {
             return;
         }
-        //TODO check if shiftclick needs exception
+        //TODO currently unneeded check if shiftclick needs exception
         GuiWindow guiWindow = this.guiWindows.get(event.getClickedInventory());
         if (guiWindow == null) {
             return;

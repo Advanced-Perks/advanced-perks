@@ -23,7 +23,7 @@ public class SetupGuiPlaceholderElement extends AbstractGuiElement {
                 .build());
     }
 
-    //TODO make it impossible to drop it out of the inventory or move it into your own gui (for all placeholder elements)
+    //TODO currently unneeded make it impossible to drop it out of the inventory or move it into your own gui (for all placeholder elements)
     @Override
     public BiConsumer<GuiElement, InventoryClickEvent> handleInventoryClick() {
         return (guiElement, event) -> {

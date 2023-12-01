@@ -32,7 +32,7 @@ public class VaultEconomyInterface implements EconomyInterface {
     @Override
     public EconomyTransactionResult purchasePerk(Player player, Perk perk) {
         if (this.economy == null) {
-            //TODO maybe change it in a startup exception/error
+            //TODO currently unneeded maybe change it in a startup exception/error
             return EconomyTransactionResult.NO_ECONOMY_PROVIDER;
         }
         if (this.economy.getBalance(player) < perk.getPrice().get()) {

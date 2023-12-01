@@ -21,7 +21,6 @@ import java.util.OptionalInt;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
-//TODO offload stuff into a proper Interface "GuiWindow" (same for "GuiElement")
 public abstract class AbstractGuiWindow implements GuiWindow {
 
     @Inject

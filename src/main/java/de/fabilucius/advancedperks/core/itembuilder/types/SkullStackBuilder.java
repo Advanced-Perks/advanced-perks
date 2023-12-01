@@ -53,7 +53,7 @@ public class SkullStackBuilder extends ItemStackBuilder {
      * @param approximateMaterial the material to hopefully find :)
      * @return the itemStack if an appropriate material was found
      */
-    //TODO add Material approximation
+    //TODO currently unneeded add Material approximation
     /**public static SkullStackBuilder fromApproximateMaterial(String approximateMaterial) {
         Preconditions.checkNotNull(approximateMaterial, "approximateMaterial cannot be null");
         Optional<XMaterial> xMaterial = XMaterial.matchXMaterial(approximateMaterial);

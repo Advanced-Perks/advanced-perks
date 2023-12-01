@@ -28,7 +28,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
-//TODO handle perk data saving when the plugin shuts down
 public class PerkDataRepository implements Listener {
 
     private final AdvancedPerks advancedPerks;
@@ -101,13 +100,13 @@ public class PerkDataRepository implements Listener {
         PerkData perkData = this.perkDataCache.getIfPresent(player.getUniqueId());
         if (perkData != null) {
             this.savePerkDataAsync(perkData);
-            //TODO is bound to cause some issues/bugs later on needs refactoring
+            //TODO currently unneeded is bound to cause some issues/bugs later on needs refactoring
             perkData.getEnabledPerks().forEach(perk -> perk.onPrePerkDisable(player));
             this.perkDataCache.invalidate(perkData.getUuid());
         }
     }
 
-    //TODO looking into splitting it up into a separate task class again
+    //TODO currently unneeded looking into splitting it up into a separate task class again
     public CompletableFuture<PerkData> loadPerkDataAsync(UUID uniqueId) {
         return CompletableFuture.supplyAsync(() -> {
             PerkData perkData = new PerkData(uniqueId);

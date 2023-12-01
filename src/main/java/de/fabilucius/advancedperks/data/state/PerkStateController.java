@@ -31,7 +31,7 @@ public class PerkStateController {
     public PerkUseStatus canUsePerk(Player player, Perk perk) {
         PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
         int maxActivePerksAllowed = Math.max(this.globalMaxActivePerks, perkData.getMaxPerks());
-        //TODO implement sensible way to periodically refresh the permission based max active perks
+        //TODO currently unneeded implement sensible way to periodically refresh the permission based max active perks
         /* Max perk active check */
         if (perkData.getEnabledPerks().size() >= maxActivePerksAllowed && maxActivePerksAllowed >= 0) {
             return PerkUseStatus.TOO_MANY_ACTIVE;
@@ -117,7 +117,6 @@ public class PerkStateController {
         if (perkData.getEnabledPerks().remove(perk)) {
             perk.onPrePerkDisable(player);
         }
-        //TODO find out if this makes problems when i gets out of sync and if a PerkToggleResult.NOT_ACTIVATED/ALREADY_ACTIVATED are needed
         return PerkToggleResult.DISABLED;
     }
 

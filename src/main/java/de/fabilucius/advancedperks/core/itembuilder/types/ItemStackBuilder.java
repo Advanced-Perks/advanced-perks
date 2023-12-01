@@ -42,7 +42,7 @@ public class ItemStackBuilder implements ItemBuilder {
      * @param approximateMaterial the material to hopefully find :)
      * @return the itemStack if an appropriate material was found
      */
-    //TODO add Material approximation
+    //TODO currently unneeded add Material approximation
 
     /**
      * public static ItemStackBuilder fromApproximateMaterial(String approximateMaterial) {

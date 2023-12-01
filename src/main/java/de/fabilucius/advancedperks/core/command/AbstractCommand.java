@@ -35,7 +35,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     private final List<AbstractSubCommand> subCommands = Lists.newArrayList();
 
-    //TODO figure out a stable way for auto register without adding command to plugin.yml
+    //TODO currently unneeded figure out a stable way for auto register without adding command to plugin.yml
     @Inject
     public AbstractCommand(ConfigurationLoader configurationLoader, APLogger logger, Injector injector) throws ConfigurationInitializationException {
         this.messagesConfiguration = configurationLoader.getConfigurationAndLoad(MessagesConfiguration.class);

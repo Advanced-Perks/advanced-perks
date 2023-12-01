@@ -40,7 +40,7 @@ public class PerkRegistryImpl implements PerkRegistry {
     @Inject
     private AdvancedPerks advancedPerks;
 
-    //TODO create custom cache implementation to make dual keys possible
+    //TODO currently unneeded create custom cache implementation to make dual keys possible
     private final LinkedHashMap<Class<? extends Perk>, Perk> perkCache = Maps.newLinkedHashMap();
 
     private final LinkedHashMap<String, Perk> perkIdentifierIndexCache = Maps.newLinkedHashMap();

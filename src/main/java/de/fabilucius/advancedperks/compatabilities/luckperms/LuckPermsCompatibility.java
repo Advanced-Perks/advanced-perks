@@ -2,6 +2,7 @@ package de.fabilucius.advancedperks.compatabilities.luckperms;
 
 import com.google.inject.Inject;
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.compatabilities.exception.CompatibilityInitializationException;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.data.PerkDataRepository;
 import de.fabilucius.advancedperks.data.state.PerkStateController;
@@ -20,11 +21,10 @@ import java.util.List;
 public class LuckPermsCompatibility {
 
     @Inject
-    public LuckPermsCompatibility(AdvancedPerks advancedPerks, PerkDataRepository perkDataRepository, PerkStateController perkStateController) {
+    public LuckPermsCompatibility(AdvancedPerks advancedPerks, PerkDataRepository perkDataRepository, PerkStateController perkStateController) throws CompatibilityInitializationException {
         RegisteredServiceProvider<LuckPerms> luckPermsRegisteredServiceProvider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (luckPermsRegisteredServiceProvider == null) {
-            //TODO throw an error
-            return;
+            throw new CompatibilityInitializationException("Unable to initialize the LuckPerms compatability, LuckPerms seems to be running on the server but hasn't been registered to the services manager of bukkit.");
         }
         LuckPerms luckPerms = luckPermsRegisteredServiceProvider.getProvider();
         luckPerms.getEventBus().subscribe(advancedPerks, NodeRemoveEvent.class, nodeRemoveEvent -> {

@@ -1,6 +1,7 @@
 package de.fabilucius.advancedperks.guisystem.perkgui.elements;
 
 import com.google.inject.Inject;
+import de.fabilucius.advancedperks.core.guisystem.GuiSound;
 import de.fabilucius.advancedperks.core.guisystem.element.AbstractGuiElement;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
 import de.fabilucius.advancedperks.core.guisystem.window.GuiWindow;
@@ -29,6 +30,7 @@ public class DisableAllPerksElement extends AbstractGuiElement {
             event.setCancelled(true);
             event.getWhoClicked().closeInventory();
             this.perkStateController.disableAllPerks((Player) event.getWhoClicked());
+            this.playSound(GuiSound.SETUP_CLICK);
         };
     }
 }

@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
+import de.fabilucius.advancedperks.core.guisystem.GuiSound;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
 import de.fabilucius.advancedperks.core.guisystem.persistantdata.UuidPersistentDataType;
 import de.fabilucius.advancedperks.core.itembuilder.types.ItemStackBuilder;
@@ -33,10 +34,12 @@ public abstract class AbstractGuiWindow implements GuiWindow {
     private final Map<UUID, GuiElement> guiElements = Maps.newHashMap();
     private final Inventory inventory;
     private final Player player;
+    private final boolean sounds;
 
-    public AbstractGuiWindow(Inventory inventory, Player player) {
+    public AbstractGuiWindow(Inventory inventory, Player player, boolean sounds) {
         this.inventory = inventory;
         this.player = player;
+        this.sounds = sounds;
     }
 
     @Override
@@ -119,5 +122,13 @@ public abstract class AbstractGuiWindow implements GuiWindow {
     @Override
     public Player getPlayer() {
         return player;
+    }
+
+    @Override
+    public void playSound(GuiSound guiSound) {
+        if (this.sounds) {
+            Player player = this.getPlayer();
+            player.playSound(player.getLocation(), guiSound.getSound(), guiSound.getVolume(), guiSound.getPitch());
+        }
     }
 }

@@ -3,6 +3,7 @@ package de.fabilucius.advancedperks.guisystem.perkgui.elements;
 import com.google.inject.Inject;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.core.MessagesConfiguration;
+import de.fabilucius.advancedperks.core.guisystem.GuiSound;
 import de.fabilucius.advancedperks.core.guisystem.element.AbstractGuiElement;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
 import de.fabilucius.advancedperks.core.guisystem.window.GuiWindow;
@@ -48,13 +49,20 @@ public class PerkToggleElement extends AbstractGuiElement {
                 case EVENT_CANCELLED, DISALLOWED_WORLD, NO_PERMISSION, TOO_MANY_ACTIVE -> {
                     this.getGuiWindow().setTitle(this.messagesConfiguration.getComputedString("gui.perk_gui.toggle." + result.name().toLowerCase()));
                     Bukkit.getScheduler().runTaskLater(this.advancedPerks, () -> this.getGuiWindow().setTitle(this.messagesConfiguration.getComputedString("gui.perk_gui.title")), 20L);
+                    this.playSound(GuiSound.ERROR_CLICK);
                 }
-                case ENABLED -> this.setIconAndUpdate(ItemStackBuilder.fromMaterial(Material.LIME_DYE)
-                        .setDisplayName(this.enabledText)
-                        .build());
-                case DISABLED -> this.setIconAndUpdate(ItemStackBuilder.fromMaterial(Material.GRAY_DYE)
-                        .setDisplayName(this.disabledText)
-                        .build());
+                case ENABLED -> {
+                    this.setIconAndUpdate(ItemStackBuilder.fromMaterial(Material.LIME_DYE)
+                            .setDisplayName(this.enabledText)
+                            .build());
+                    this.playSound(GuiSound.ON_CLICK);
+                }
+                case DISABLED -> {
+                    this.setIconAndUpdate(ItemStackBuilder.fromMaterial(Material.GRAY_DYE)
+                            .setDisplayName(this.disabledText)
+                            .build());
+                    this.playSound(GuiSound.OFF_CLICK);
+                }
             }
         });
     }

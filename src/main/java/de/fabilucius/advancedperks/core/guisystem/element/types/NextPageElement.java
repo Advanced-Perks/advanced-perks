@@ -1,5 +1,6 @@
 package de.fabilucius.advancedperks.core.guisystem.element.types;
 
+import de.fabilucius.advancedperks.core.guisystem.GuiSound;
 import de.fabilucius.advancedperks.core.guisystem.HeadTexture;
 import de.fabilucius.advancedperks.core.guisystem.element.AbstractGuiElement;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
@@ -32,6 +33,7 @@ public class NextPageElement extends AbstractGuiElement {
                 return;
             }
             this.abstractPageGuiWindow.nextPage();
+            this.playSound(GuiSound.NORMAL_CLICK);
         };
     }
 }

@@ -1,3 +1,5 @@
+gui:
+  click_sounds: true
 global:
   # The global number of perks a player can have active at once (to disable set to -1)
   # This setting will be overwritten by the 'advancedperks.maxperks.<amount>' permission

@@ -3,6 +3,8 @@ package de.fabilucius.advancedperks.guisystem.perkgui.elements;
 import com.google.inject.Inject;
 import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
+import de.fabilucius.advancedperks.core.SettingsConfiguration;
+import de.fabilucius.advancedperks.core.guisystem.GuiSound;
 import de.fabilucius.advancedperks.core.guisystem.GuiSystemManager;
 import de.fabilucius.advancedperks.core.guisystem.element.AbstractGuiElement;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
@@ -42,7 +44,9 @@ public class PerkGuiSetupElement extends AbstractGuiElement {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
             try {
-                this.guiSystemManager.registerGuiWindowAnOpen(new SetupPerkGuiWindow(this.configurationLoader, player), player);
+                SettingsConfiguration settingsConfiguration = this.configurationLoader.getConfigurationAndLoad(SettingsConfiguration.class);
+                this.guiSystemManager.registerGuiWindowAnOpen(new SetupPerkGuiWindow(this.configurationLoader, player, settingsConfiguration.isGuiClickSoundsEnabled()), player);
+                this.playSound(GuiSound.SETUP_CLICK);
             } catch (ConfigurationInitializationException e) {
                 player.sendMessage("&cAn error occurred while loading a configuration needed for the setup gui check the console for additional information.");
                 this.logger.log(Level.SEVERE, "A configuration related error occurred during initialization of the SetupPerkGuiWindow.", e);

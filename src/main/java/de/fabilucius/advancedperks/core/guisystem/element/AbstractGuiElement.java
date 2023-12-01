@@ -1,5 +1,6 @@
 package de.fabilucius.advancedperks.core.guisystem.element;
 
+import de.fabilucius.advancedperks.core.guisystem.GuiSound;
 import de.fabilucius.advancedperks.core.guisystem.persistantdata.UuidPersistentDataType;
 import de.fabilucius.advancedperks.core.guisystem.window.GuiWindow;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -51,5 +52,11 @@ public abstract class AbstractGuiElement implements GuiElement {
         this.attachUuid(itemStack);
         this.icon = itemStack;
         this.guiWindow.getInventory().setItem(this.guiWindow.getSlot(this), itemStack);
+    }
+
+
+    @Override
+    public void playSound(GuiSound guiSound) {
+        this.guiWindow.playSound(guiSound);
     }
 }

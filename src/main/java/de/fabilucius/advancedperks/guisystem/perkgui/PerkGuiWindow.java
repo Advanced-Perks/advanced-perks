@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.MessagesConfiguration;
+import de.fabilucius.advancedperks.core.SettingsConfiguration;
 import de.fabilucius.advancedperks.core.guisystem.element.types.CloseGuiWindowElement;
 import de.fabilucius.advancedperks.core.guisystem.element.types.GuiBackgroundElement;
 import de.fabilucius.advancedperks.core.guisystem.element.types.NextPageElement;
@@ -37,8 +38,8 @@ public class PerkGuiWindow extends AbstractPageGuiWindow {
     @Inject
     private PerkDataRepository perkDataRepository;
 
-    public PerkGuiWindow(ConfigurationLoader configurationLoader, MessagesConfiguration messagesConfiguration, Player player) throws ConfigurationInitializationException {
-        super(Bukkit.createInventory(null, 54, messagesConfiguration.getComputedString("gui.perk_gui.title")), player);
+    public PerkGuiWindow(ConfigurationLoader configurationLoader, SettingsConfiguration settingsConfiguration, MessagesConfiguration messagesConfiguration, Player player) throws ConfigurationInitializationException {
+        super(Bukkit.createInventory(null, 54, messagesConfiguration.getComputedString("gui.perk_gui.title")), player, settingsConfiguration.isGuiClickSoundsEnabled());
         this.perkGuiConfiguration = configurationLoader.getConfigurationAndLoad(PerkGuiConfiguration.class);
         this.messagesConfiguration = messagesConfiguration;
     }

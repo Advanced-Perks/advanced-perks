@@ -22,8 +22,8 @@ public class SetupPerkGuiWindow extends AbstractGuiWindow {
     private boolean background;
 
     @Inject
-    public SetupPerkGuiWindow(ConfigurationLoader configurationLoader, Player player) throws ConfigurationInitializationException {
-        super(Bukkit.createInventory(null, 54, ChatColor.DARK_GRAY + "Click on Setup Icon to save."), player);
+    public SetupPerkGuiWindow(ConfigurationLoader configurationLoader, Player player, boolean sounds) throws ConfigurationInitializationException {
+        super(Bukkit.createInventory(null, 54, ChatColor.DARK_GRAY + "Click on Setup Icon to save."), player, sounds);
         this.perkGuiConfiguration = configurationLoader.getConfigurationAndLoad(PerkGuiConfiguration.class);
         this.background = perkGuiConfiguration.hasBackground();
     }

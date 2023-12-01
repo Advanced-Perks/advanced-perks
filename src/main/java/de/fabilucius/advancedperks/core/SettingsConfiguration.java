@@ -10,4 +10,8 @@ public class SettingsConfiguration extends Configuration {
         return this.getInt("global.max_active_perks", -1);
     }
 
+    public boolean isGuiClickSoundsEnabled() {
+        return this.getBoolean("gui.click_sounds", true);
+    }
+
 }

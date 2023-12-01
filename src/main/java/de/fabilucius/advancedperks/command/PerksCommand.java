@@ -10,6 +10,7 @@ import de.fabilucius.advancedperks.command.subcommands.InfoSubCommand;
 import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.MessagesConfiguration;
+import de.fabilucius.advancedperks.core.SettingsConfiguration;
 import de.fabilucius.advancedperks.core.command.AbstractCommand;
 import de.fabilucius.advancedperks.core.command.annotation.Aliases;
 import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
@@ -41,7 +42,7 @@ public class PerksCommand extends AbstractCommand {
     @Override
     public void executeCommand(CommandSender commandSender, String... arguments) {
         try {
-            this.guiSystemManager.registerGuiWindowAnOpen(new PerkGuiWindow(this.configurationLoader, this.configurationLoader.getConfigurationAndLoad(MessagesConfiguration.class), (Player) commandSender), (Player) commandSender);
+            this.guiSystemManager.registerGuiWindowAnOpen(new PerkGuiWindow(this.configurationLoader, this.configurationLoader.getConfigurationAndLoad(SettingsConfiguration.class), this.configurationLoader.getConfigurationAndLoad(MessagesConfiguration.class), (Player) commandSender), (Player) commandSender);
         } catch (ConfigurationInitializationException e) {
             throw new RuntimeException(e);
         }

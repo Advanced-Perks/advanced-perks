@@ -1,5 +1,6 @@
 package de.fabilucius.advancedperks.guisystem.setupperkgui.elements;
 
+import de.fabilucius.advancedperks.core.guisystem.GuiSound;
 import de.fabilucius.advancedperks.core.guisystem.element.AbstractGuiElement;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
 import de.fabilucius.advancedperks.core.guisystem.window.GuiWindow;
@@ -31,13 +32,16 @@ public class SetupGuiPlaceholderElement extends AbstractGuiElement {
             if (event.getClick().equals(ClickType.DROP)) {
                 guiWindow.toggleHasBackground();
                 event.setCancelled(true);
+                this.playSound(GuiSound.NORMAL_CLICK);
             } else if (event.getClick().equals(ClickType.CONTROL_DROP)) {
                 event.setCancelled(true);
                 PerkGuiSaveResult result = guiWindow.save();
                 if (result.equals(PerkGuiSaveResult.SUCCESS)) {
                     event.getWhoClicked().closeInventory();
+                    this.playSound(GuiSound.SETUP_CLICK);
                 } else {
                     this.getGuiWindow().setTitle(result.getMessage());
+                    this.playSound(GuiSound.ERROR_CLICK);
                 }
             }
         };

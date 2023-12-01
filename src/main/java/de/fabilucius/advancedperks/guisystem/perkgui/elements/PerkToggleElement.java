@@ -43,7 +43,6 @@ public class PerkToggleElement extends AbstractGuiElement {
     public BiConsumer<GuiElement, InventoryClickEvent> handleInventoryClick() {
         return ((guiElement, event) -> {
             event.setCancelled(true);
-            //TODO add messages for why a perk wasnt toggled
             PerkToggleResult result = this.perkStateController.togglePerk(this.getGuiWindow().getPlayer(), this.perk);
             switch (result) {
                 case EVENT_CANCELLED, DISALLOWED_WORLD, NO_PERMISSION, TOO_MANY_ACTIVE -> {

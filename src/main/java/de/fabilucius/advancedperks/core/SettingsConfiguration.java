@@ -14,4 +14,7 @@ public class SettingsConfiguration extends Configuration {
         return this.getBoolean("gui.click_sounds", true);
     }
 
+    public boolean isMetricsCollectionEnabled() {
+        return this.getBoolean("collecting_metrics", true);
+    }
 }

@@ -1,3 +1,4 @@
+collecting_metrics: true
 gui:
   click_sounds: true
 global:

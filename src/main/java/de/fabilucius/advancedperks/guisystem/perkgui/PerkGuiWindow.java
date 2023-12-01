@@ -5,6 +5,7 @@ import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.MessagesConfiguration;
 import de.fabilucius.advancedperks.core.guisystem.element.types.CloseGuiWindowElement;
+import de.fabilucius.advancedperks.core.guisystem.element.types.GuiBackgroundElement;
 import de.fabilucius.advancedperks.core.guisystem.element.types.NextPageElement;
 import de.fabilucius.advancedperks.core.guisystem.element.types.PreviousPageElement;
 import de.fabilucius.advancedperks.core.guisystem.window.types.AbstractPageGuiWindow;
@@ -44,6 +45,11 @@ public class PerkGuiWindow extends AbstractPageGuiWindow {
 
     @Override
     public void initializeGui(int page) {
+        if (this.perkGuiConfiguration.hasBackground()) {
+            for (int i = 0; i < this.getInventory().getSize(); i++) {
+                this.addGuiElement(new GuiBackgroundElement(this), i);
+            }
+        }
         List<Perk> perks = this.perkRegistryImpl.getPerks().stream().toList().subList(page * PERKS_PER_PAGE,
                 Math.min(perkRegistryImpl.getPerks().size(), (page + 1) * PERKS_PER_PAGE));
         AtomicInteger index = new AtomicInteger();

@@ -18,7 +18,11 @@ public interface GuiWindow {
 
     void initializeGui();
 
+    void clearGui();
+
     void addGuiElement(GuiElement guiElement, int slot);
+
+    void removeGuiElement(GuiElement guiElement);
 
     Optional<GuiElement> getGuiElementByItemStack(ItemStack itemStack);
 

@@ -12,3 +12,4 @@ disable_all_perks: 48
 setup_gui: 49
 previous_page: 50
 next_page: 52
+background: true

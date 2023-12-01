@@ -6,7 +6,9 @@ import com.google.inject.Injector;
 import com.google.inject.name.Named;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
 import de.fabilucius.advancedperks.core.guisystem.persistantdata.UuidPersistentDataType;
+import de.fabilucius.advancedperks.core.itembuilder.types.ItemStackBuilder;
 import de.fabilucius.advancedperks.external.InventoryUpdate;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -41,8 +43,19 @@ public abstract class AbstractGuiWindow implements GuiWindow {
     @Override
     public void addGuiElement(GuiElement guiElement, int slot) {
         this.injector.injectMembers(guiElement);
+        this.guiElements.entrySet().removeIf(uuidGuiElementEntry ->
+                slot == this.getSlot(uuidGuiElementEntry.getValue()));
         this.guiElements.put(guiElement.getUniqueId(), guiElement);
         this.inventory.setItem(slot, guiElement.getIcon());
+    }
+
+    @Override
+    public void removeGuiElement(GuiElement guiElement) {
+        int slot = this.getSlot(guiElement);
+        if (slot != -1) {
+            this.getInventory().setItem(slot, ItemStackBuilder.fromMaterial(Material.AIR).build());
+        }
+        this.guiElements.remove(guiElement.getUniqueId());
     }
 
     @Override
@@ -53,6 +66,12 @@ public abstract class AbstractGuiWindow implements GuiWindow {
     @Override
     public Inventory getInventory() {
         return this.inventory;
+    }
+
+    @Override
+    public void clearGui() {
+        this.getGuiElements().clear();
+        this.getInventory().clear();
     }
 
     @Override

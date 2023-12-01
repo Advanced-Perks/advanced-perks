@@ -8,6 +8,7 @@ import de.fabilucius.advancedperks.guisystem.configuration.PerkGuiSaveResult;
 import de.fabilucius.advancedperks.guisystem.setupperkgui.SetupPerkGuiWindow;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.function.BiConsumer;
@@ -17,7 +18,8 @@ public class SetupGuiPlaceholderElement extends AbstractGuiElement {
         super(guiWindow, ItemStackBuilder.fromMaterial(Material.CHAIN_COMMAND_BLOCK)
                 .setDisplayName(ChatColor.DARK_GRAY + "Setup Gui Slot")
                 .setDescription(ChatColor.GRAY + "Choose a slot where this element should be in the gui.",
-                        ChatColor.GRAY + "Press " + ChatColor.AQUA + "Q " + ChatColor.GRAY + "to save the changes done to the layout.")
+                        ChatColor.GRAY + "Press " + ChatColor.AQUA + "Control + Q " + ChatColor.GRAY + "to save the changes done to the layout.",
+                        ChatColor.GRAY + "Press " + ChatColor.AQUA + "Q " + ChatColor.GRAY + "to enable/disable a background for the gui.")
                 .build());
     }
 
@@ -25,9 +27,12 @@ public class SetupGuiPlaceholderElement extends AbstractGuiElement {
     @Override
     public BiConsumer<GuiElement, InventoryClickEvent> handleInventoryClick() {
         return (guiElement, event) -> {
-            if (event.getClick().name().contains("DROP")) {
+            SetupPerkGuiWindow guiWindow = (SetupPerkGuiWindow) this.getGuiWindow();
+            if (event.getClick().equals(ClickType.DROP)) {
+                guiWindow.toggleHasBackground();
                 event.setCancelled(true);
-                SetupPerkGuiWindow guiWindow = (SetupPerkGuiWindow) this.getGuiWindow();
+            } else if (event.getClick().equals(ClickType.CONTROL_DROP)) {
+                event.setCancelled(true);
                 PerkGuiSaveResult result = guiWindow.save();
                 if (result.equals(PerkGuiSaveResult.SUCCESS)) {
                     event.getWhoClicked().closeInventory();

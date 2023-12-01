@@ -5,6 +5,7 @@ import de.fabilucius.advancedperks.configuration.Configuration;
 import de.fabilucius.advancedperks.configuration.annotation.FilePathInJar;
 import de.fabilucius.advancedperks.guisystem.setupperkgui.SetupPerkGuiWindow;
 import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.*;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -14,7 +15,8 @@ public class PerkGuiConfiguration extends Configuration {
 
     //TODO completely change the saving spot
     public PerkGuiSaveResult savePerkGuiLayout(SetupPerkGuiWindow guiWindow) {
-        if (guiWindow.getGuiElements().size() != 21) {
+        System.out.println(guiWindow.getGuiElements().size());
+        if (guiWindow.getGuiElements().size() != 21 && guiWindow.getGuiElements().size() != 54) {
             return PerkGuiSaveResult.MISSING_ELEMENTS;
         }
         try {
@@ -49,6 +51,7 @@ public class PerkGuiConfiguration extends Configuration {
                 return PerkGuiSaveResult.MISSING_ELEMENTS;
             }
             this.set("perk_icon_locations", IntStream.range(0, iconSlots.size()).mapToObj(value -> iconSlots.get(value) + ":" + toggleSlots.get(value)).toList());
+            this.set("background", guiWindow.hasBackground());
             this.saveConfiguration();
             return PerkGuiSaveResult.SUCCESS;
         } catch (Exception exception) {
@@ -98,6 +101,10 @@ public class PerkGuiConfiguration extends Configuration {
 
     public int getNextPageSlot() {
         return this.getInt("next_page", 52);
+    }
+
+    public boolean hasBackground() {
+        return this.getBoolean("background", true);
     }
 
 }

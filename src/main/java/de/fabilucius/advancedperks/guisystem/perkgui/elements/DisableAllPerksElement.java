@@ -30,7 +30,7 @@ public class DisableAllPerksElement extends AbstractGuiElement {
             event.setCancelled(true);
             event.getWhoClicked().closeInventory();
             this.perkStateController.disableAllPerks((Player) event.getWhoClicked());
-            this.playSound(GuiSound.SETUP_CLICK);
+            this.playSound(GuiSound.OFF_CLICK);
         };
     }
 }

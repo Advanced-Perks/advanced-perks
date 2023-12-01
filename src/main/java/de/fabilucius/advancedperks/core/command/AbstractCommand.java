@@ -92,12 +92,12 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
             if (potentialSubCommand.isPresent()) {
                 return potentialSubCommand.get().tabComplete(sender, Arrays.copyOfRange(args, 1, args.length));
             }
-            return this.subCommands.stream()
+            return args.length == 1 ? this.subCommands.stream()
                     .filter(subCommand -> subCommand.getPermission().isEmpty() ||
                             sender.hasPermission(subCommand.getPermission().get()))
                     .map(AbstractSubCommand::getIdentifier)
                     .filter(subCommand -> subCommand.toLowerCase().startsWith(args[0].toLowerCase()))
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toList()) : Lists.newArrayList();
         }
         return this.tabComplete(sender, args);
     }

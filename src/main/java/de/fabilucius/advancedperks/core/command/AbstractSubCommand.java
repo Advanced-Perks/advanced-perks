@@ -7,8 +7,10 @@ import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitiali
 import de.fabilucius.advancedperks.core.MessagesConfiguration;
 import de.fabilucius.advancedperks.core.command.annotation.Aliases;
 import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
+import de.fabilucius.advancedperks.core.command.annotation.Permission;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +19,8 @@ public abstract class AbstractSubCommand {
 
     protected final MessagesConfiguration messagesConfiguration;
     private final String identifier;
+    @Nullable
+    private String permission;
 
     @Inject
     public AbstractSubCommand(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
@@ -26,6 +30,7 @@ public abstract class AbstractSubCommand {
             throw new IllegalStateException("The sub command class %s is missing a @Identifier annotation.");
         }
         this.identifier = commandIdentifierAnnotation.value();
+        this.permission = this.getClass().isAnnotationPresent(Permission.class) ? this.getClass().getAnnotation(Permission.class).value() : null;
     }
 
     public String getIdentifier() {
@@ -41,7 +46,7 @@ public abstract class AbstractSubCommand {
     }
 
     public Optional<String> getPermission() {
-        return Optional.empty();
+        return Optional.ofNullable(this.permission);
     }
 
     public abstract void executeCommand(CommandSender commandSender, String... arguments);

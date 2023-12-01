@@ -1,5 +1,6 @@
 package de.fabilucius.advancedperks.command.subcommands;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
@@ -72,6 +73,12 @@ public class BuySubCommand extends AbstractSubCommand {
 
     @Override
     public List<String> tabComplete(CommandSender commandSender, String... arguments) {
-        return null;
+        if (arguments.length == 1) {
+            return this.perkRegistry.getPerks().stream()
+                    .map(Perk::getIdentifier)
+                    .filter(identifier -> identifier.toLowerCase().startsWith(arguments[0].toLowerCase()))
+                    .toList();
+        }
+        return Lists.newArrayList();
     }
 }

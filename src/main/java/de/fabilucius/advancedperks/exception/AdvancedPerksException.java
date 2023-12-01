@@ -1,6 +1,6 @@
 package de.fabilucius.advancedperks.exception;
 
-public class AdvancedPerksException extends Exception {
+public abstract class AdvancedPerksException extends Exception {
 
     public AdvancedPerksException(String message) {
         super(message);

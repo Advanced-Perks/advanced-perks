@@ -1,0 +1,15 @@
+perk_icon_locations:
+  - '1:10'
+  - '3:12'
+  - '5:14'
+  - '7:16'
+  - '19:28'
+  - '21:30'
+  - '23:32'
+  - '25:34'
+close_gui: 46
+disable_all_perks: 48
+setup_gui: 49
+previous_page: 50
+next_page: 52
+background: true

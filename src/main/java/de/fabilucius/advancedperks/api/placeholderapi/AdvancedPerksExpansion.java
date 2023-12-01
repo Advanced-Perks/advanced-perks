@@ -1,44 +1,28 @@
 package de.fabilucius.advancedperks.api.placeholderapi;
 
+import com.google.inject.Inject;
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.data.PerkData;
-import de.fabilucius.advancedperks.perks.Perk;
+import de.fabilucius.advancedperks.core.logging.APLogger;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+public abstract class AdvancedPerksExpansion extends PlaceholderExpansion {
 
-public class AdvancedPerksExpansion extends PlaceholderExpansion {
+    private final AdvancedPerks advancedPerks;
 
-    private static final Logger LOGGER = AdvancedPerks.getInstance().getLogger();
-
-    @Override
-    public String onPlaceholderRequest(Player player, @NotNull String params) {
-        if (player != null) {
-            Perk perk = AdvancedPerks.getInstance().getPerkRegistry().getPerkByIdentifier(params);
-            if (perk != null) {
-                PerkData perkData = AdvancedPerks.getInstance().getPerkDataRepository().getPerkData(player);
-                return String.valueOf(perkData.isPerkActivated(perk));
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public @NotNull String getIdentifier() {
-        return "advancedperks";
+    @Inject
+    public AdvancedPerksExpansion(APLogger logger, AdvancedPerks advancedPerks) {
+        this.advancedPerks = advancedPerks;
+        this.register();
     }
 
     @Override
     public @NotNull String getAuthor() {
-        return String.join(",", AdvancedPerks.getInstance().getDescription().getAuthors());
+        return String.join(",", this.advancedPerks.getDescription().getAuthors());
     }
 
     @Override
     public @NotNull String getVersion() {
-        return AdvancedPerks.getInstance().getDescription().getVersion();
+        return this.advancedPerks.getDescription().getVersion();
     }
 }

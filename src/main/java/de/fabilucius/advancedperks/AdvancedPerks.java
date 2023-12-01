@@ -1,122 +1,38 @@
 package de.fabilucius.advancedperks;
 
-import de.fabilucius.advancedperks.api.placeholderapi.AdvancedPerksExpansion;
-import de.fabilucius.advancedperks.commands.PerksCommand;
-import de.fabilucius.advancedperks.commons.Metrics;
-import de.fabilucius.advancedperks.commons.guisystem.management.GuiManager;
-import de.fabilucius.advancedperks.compatability.CompatabilityController;
-import de.fabilucius.advancedperks.data.PerkDataRepository;
-import de.fabilucius.advancedperks.economy.EconomyController;
-import de.fabilucius.advancedperks.perks.PerkListCache;
-import de.fabilucius.advancedperks.perks.PerkStateController;
-import de.fabilucius.advancedperks.perks.PerksConfiguration;
-import de.fabilucius.advancedperks.settings.MessageConfiguration;
-import de.fabilucius.advancedperks.settings.SettingsConfiguration;
-import de.fabilucius.advancedperks.utilities.update.UpdateChecker;
-import de.fabilucius.advancedperks.commons.configuration.factory.ConfigSingletonFactory;
-import org.bukkit.Bukkit;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import de.fabilucius.advancedperks.core.logging.APLogger;
+import de.fabilucius.advancedperks.core.module.PrimaryModule;
+import de.fabilucius.advancedperks.exception.AdvancedPerksException;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class AdvancedPerks extends JavaPlugin {
 
-    public static final Logger LOGGER = Bukkit.getLogger();
+    @Inject
+    private APLogger logger;
 
-    private static AdvancedPerks instance;
-
-    /* All configuration instances */
-    private SettingsConfiguration settingsConfiguration;
-    private MessageConfiguration messageConfiguration;
-    private PerksConfiguration perksConfiguration;
-
-    /* Perk related repositories and controller's */
-    private PerkDataRepository perkDataRepository;
-    private PerkStateController perkStateController;
-    private PerkListCache perkRegistry;
-
-    /* Telemetry related controller and manager */
-    @Nullable
-    private EconomyController economyController;
-    private GuiManager guiManager;
+    @Inject
+    private Injector injector;
 
     @Override
     public void onEnable() {
-        instance = this;
-
-        /* Initialize the configurations first because they don't have any dependencies*/
-        settingsConfiguration = ConfigSingletonFactory.createConfiguration(SettingsConfiguration.class);
-        perksConfiguration = ConfigSingletonFactory.createConfiguration(PerksConfiguration.class);
-        messageConfiguration = ConfigSingletonFactory.createConfiguration(MessageConfiguration.class);
-
-        perkDataRepository = PerkDataRepository.getSingleton();
-        perkRegistry = PerkListCache.getSingleton();
-        perkStateController = PerkStateController.getSingleton(this);
-
-        guiManager = GuiManager.getSingleton();
-        economyController = EconomyController.getSingleton();
-        CompatabilityController.getSingleton();
-
-        new PerksCommand();
-        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            AdvancedPerksExpansion expansion = new AdvancedPerksExpansion();
-            expansion.register();
-            LOGGER.log(Level.INFO, "PlaceholderAPI was found and thus the expansion for it was loaded and enabled successfully.");
+        Injector injector = Guice.createInjector(new PrimaryModule(this));
+        injector.injectMembers(this);
+        try {
+            this.logger.info("Beginning the bootstrap process of the plugin.");
+            this.injector.getInstance(AdvancedPerksBootstrap.class).initializePlugin();
+            this.logger.info("Successfully finished the bootstrap process of the plugin.");
+        } catch (AdvancedPerksException exception) {
+            this.logger.log(Level.SEVERE, "An unexpected error occurred during the bootstrap process of the plugin.", exception);
         }
-        Metrics.load();
-        UpdateChecker.getSingleton();
     }
 
     @Override
     public void onDisable() {
-        perkStateController.handleShutdown();
-        guiManager.handleShutdown();
-    }
-
-    public void reloadPlugin() {
-        settingsConfiguration = ConfigSingletonFactory.reloadConfiguration(SettingsConfiguration.class);
-        perksConfiguration = ConfigSingletonFactory.reloadConfiguration(PerksConfiguration.class);
-        messageConfiguration = ConfigSingletonFactory.reloadConfiguration(MessageConfiguration.class);
-    }
-
-    /* the getter and setter of this class */
-
-    public static AdvancedPerks getInstance() {
-        return instance;
-    }
-
-    public SettingsConfiguration getSettingsConfiguration() {
-        return settingsConfiguration;
-    }
-
-    public PerksConfiguration getPerksConfiguration() {
-        return perksConfiguration;
-    }
-
-    public Optional<EconomyController> getEconomyController() {
-        return economyController == null ? Optional.empty() : Optional.of(economyController);
-    }
-
-    public PerkDataRepository getPerkDataRepository() {
-        return perkDataRepository;
-    }
-
-    public GuiManager getGuiManager() {
-        return guiManager;
-    }
-
-    public MessageConfiguration getMessageConfiguration() {
-        return messageConfiguration;
-    }
-
-    public PerkListCache getPerkRegistry() {
-        return perkRegistry;
-    }
-
-    public PerkStateController getPerkStateController() {
-        return perkStateController;
+        this.injector.getInstance(AdvancedPerksBootstrap.class).shutdownPlugin();
     }
 }

@@ -1,0 +1,14 @@
+# Choose where the plugin should store its data available options: 'FILE' or 'DATABASE'
+save_type: 'FILE'
+
+file:
+  # The path to the data file the plugin should use to store the data in
+  file_location: 'data.db'
+
+database:
+  # The url the plugin will use to try to make a connection when save_type is set to 'DATABASE'
+  sql_url: 'jdbc:mysql://127.0.0.1:3306/perks?useSSL=false'
+  # If authentication is required you can set the username and password if not leave it empty
+  credentials:
+    username: 'example'
+    password: 'example'

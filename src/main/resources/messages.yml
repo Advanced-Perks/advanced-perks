@@ -1,0 +1,47 @@
+prefix: '&7[&6ap&7]'
+gui:
+  perk_gui:
+    title: '&8&lChoose a perk...'
+    close_gui: '&cClose gui'
+    disable_all_perks: '&cDisable all perks'
+    previous_page: '&7Previous Page'
+    next_page: '&7Next Page'
+    toggle:
+      event_cancelled: '&cThe toggle event was cancelled.'
+      too_many_active: '&cToo many active perks already.'
+      no_permission: '&cNo permission to use that perk.'
+      disallowed_world: '&cNot allowed in this world.'
+      enabled: '&7Perk is &aenabled'
+      disabled: '&7Perk is &cdisabled'
+command:
+  perks:
+    no_permission: '<prefix> &cYou don`t have permission to execute that command.'
+    buy:
+      syntax: '<prefix> &cIncorrect usage the syntax of the command is /perks buy <perk>.'
+      not_enough_money: '<prefix> &cUnable to buy the perk "<perk>" you do not have the required amount of money.'
+      already_bought: '<prefix> &cYou have already bought the perk "<perk>".'
+      success: '<prefix> &7You successfully bought the perk "&6<perk>&7".'
+      error: '<prefix> &cAn error occurred during the buy process check the server log for more information.'
+      no_price_set: '<prefix> &cUnable to buy the perk "<perk>" no price was set for it in the configuration.'
+      perk_not_found: '<prefix> &cUnable to buy the perk "<perk>" no perk with that identifier exist.'
+      not_set_up: '<prefix> &cUnable to buy the perk no compatible economy plugin was found running on the server, for a list of supported economy plugins please refer to the plugins download page.'
+    enable:
+      syntax: '<prefix> &cIncorrect usage the syntax of the command is /perks enable <perk> [player].'
+      perk_doesnt_exist: '<prefix> &cThe perk <perk> doesnt exist.'
+      player_not_online: '<prefix> &cThe player <player> doesnt seem to be online.'
+      success: '<prefix> &7You enabled the perk &6<perk> &7for the player &6<player>&7.'
+    disable:
+      syntax: '<prefix> &cIncorrect usage the syntax of the command is /perks disable <perk> [player].'
+      perk_doesnt_exist: '<prefix> &cThe perk <perk> doesnt exist.'
+      player_not_online: '<prefix> &cThe player <player> doesnt seem to be online.'
+      success: '<prefix> &7You disabled the perk &6<perk> &7for the player &6<player>&7.'
+    info:
+      player_not_found: '<prefix> &cIt seems theres no data for a player with the name <player>.'
+      still_loading: '<prefix> &cThe perk data for <player> is still loading...'
+      text:
+        - '<prefix>'
+        - '<prefix> &8Perk information`s for &6&l<player>'
+        - '<prefix> &7Enabled perks &e<enabled_perks>'
+        - '<prefix> &7Bought perks &e<bought_perks>'
+        - '<prefix> &7Data hash &8&o<data_hash>'
+        - '<prefix>'

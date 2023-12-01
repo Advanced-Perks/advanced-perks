@@ -1,36 +1,7 @@
-Global:
-
-  # If Luckperms runs on the server and a player looses a permission for a perk he has enabled it will be disabled automatically.
-  Enable-LuckPerms-Support: true
-
-  #I would highly suggest leaving this enabled as it helps me to get a clear picture on
-  #which environments my plugin is used the most (cpu count, mc version etc)
-  #Note the submitted data is completely anonymous.
-  Enable-Metrics: true
-
-  # This value controls how many perks a player can have enabled at the same time.
-  # This value is static and can be overridden by giving the player the permission advancedperks.maxperks.{amount} where
-  # {amount} is an int of how many perks the player should be able to activated at once.
-  # Setting this value to -1 will remove a max perk cap.
-  Max-Perks-Enabled: -1
-
-# This section can be used to change the way how the plugin will store the information on which perks a player
-# has enabled to ensure the right on off states of the perks even after a server restart or a player reconnect.
-Perk-Data-Save:
-
-  # Which method should the plugin choose to save the information.
-  # There are two to choose from:
-  # 'FILE' will create a file and no configuration is further needed but this will
-  # limit the plugin to access the perk data only from the file and thus cannot ensure cross server (f.E. bungeecord)
-  # synchronization.
-  # 'DATABASE' will connect to an external database and thus can synchronize the data between multiple server.
-  # If the database has additional auth you will need to input your credentials below (note if no auth is required you will
-  # need to set Sql-Username and Sql-Password to ''.
-  Save-Method: 'FILE'
-
-  # The url the plugin will need to try to connect to a database when the Save-Method is set to 'DATABASE'
-  Sql-Url: 'jdbc:mysql://127.0.0.1:3306/perks?useSSL=false'
-
-  # The credentials when the Save-Method is set to 'DATABASE' and the database requests auth.
-  Sql-UserName: 'example-username'
-  Sql-Password: 'example-password'
+collecting_metrics: true
+gui:
+  click_sounds: true
+global:
+  # The global number of perks a player can have active at once (to disable set to -1)
+  # This setting will be overwritten by the 'advancedperks.maxperks.<amount>' permission
+  max_active_perks: -1

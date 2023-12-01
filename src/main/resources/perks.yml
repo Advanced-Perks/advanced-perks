@@ -1,202 +1,166 @@
-# Display-Name: The name that is used in ingame guis f.E.
-# Description: The text that is used in ingame guis f.E. (!!Note Every Element of the List is a new Line!!)
-# Permission: The permission that is needed to be able to enable the perk (if blank then theres no permission needed to use the perk)
-# Disabled-Worlds: A List of World Names in which the specific perk is not allowed to be used
-# Enabled: A boolean which simply controls whether the perk is enabled or not
-# Icon: The name of a Material that should represent the perk inside guis
-# Price: If theres an economy plugin and vault on this server this is the price the perk will cost (a negative price means the item cannot be bought while 0 means its free)
+# Here is an example which properties can be set for a perk
+#example_perk:
+#  display_name: 'The name of the perk icon in the gui'
+#  description:
+#    - 'The lore of the perk icon on the gui'
+#    - 'The second line of it'
+#  icon: 'DIRT' <- either a material or a base64 encoded texture value to set a custom head as icon
+#  flags: <- flags are optional and supply additional data to a perk
+#    permission: 'example.permission: <- the permission needed to activate the perk
+#    disallowed_worlds: <- a list of worlds in which the specific perk shouldn't be allowed to be enabled
+#      - 'world_1'
+#      - 'world_2'
 
-Telekinesis:
-  Display-Name: '&5&lTelekinesis Perk'
-  Description:
-    - '&7&oActivating this perk will grant the player the ability'
-    - '&7&oto teleport mined items directly into the players inventory.'
-  Permission: 'advancedperks.use.telekinesis'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Icon: 'ENDER_PEARL'
-  Price: -1.0
-
-Smelter:
-  Display-Name: '&c&lSmelter Perk'
-  Description:
-    - '&7&oActivating this perk will grant the player the ability'
-    - '&7&oto convert ores directly into their smelted equivalent.'
-  Permission: 'advancedperks.use.smelter'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Icon: 'MAGMA_CREAM'
-  Price: -1.0
-
-Bat:
-  Display-Name: '&8&lBat Perk'
-  Description:
+bat:
+  enabled: true
+  display_name: '&8&lBat Perk'
+  description:
     - '&7&oActivating this perk will grant the potion effect'
     - '&7&oNight Vision to the player.'
-  Permission: 'advancedperks.use.bat'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Icon: 'ENDER_EYE'
-  Price: -1.0
-
-FireResistance:
-  Display-Name: '&c&lFire Resistance Perk'
-  Description:
-    - '&7&oActivating this perk will grant the potion effect'
-    - '&7&oFire Resistance to the player.'
-  Permission: 'advancedperks.use.fireresistance'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Icon: 'LAVA_BUCKET'
-  Price: -1.0
-
-Frog:
-  Display-Name: '&a&lFrog Perk'
-  Description:
-    - '&7&oActivating this perk will grant the potion effect'
-    - '&7&oJump Boost II to the player.'
-  Permission: 'advancedperks.use.frog'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Icon: 'WATER_BUCKET'
-  Price: -1.0
-
-Glowing:
-  Display-Name: '&e&lGlowing Perk'
-  Description:
-    - '&7&oActivating this perk will grant the potion effect'
-    - '&7&oGlowing to the player.'
-  Permission: 'advancedperks.use.glowing'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Icon: 'GLOWSTONE_DUST'
-  Price: -1.0
-
-Hulk:
-  Display-Name: '&a&lHulk Perk'
-  Description:
-    - '&7&oActivating this perk will grant the potion effect'
-    - '&7&oStrength to the player.'
-  Permission: 'advancedperks.use.hulk'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Price: -1.0
-
-NoHunger:
-  Display-Name: '&f&lNo Hunger Perk'
-  Description:
-    - '&7&oActivating this perk will grant the potion effect'
-    - '&7&oSaturation to the player.'
-  Permission: 'advancedperks.use.nohunger'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Icon: 'COOKED_BEEF'
-  Price: -1.0
-
-Poseidon:
-  Display-Name: '&9&lPoseidon Perk'
-  Description:
-    - '&7&oActivating this perk will grant the potion effect'
-    - '&7&oWater Breathing to the player.'
-  Permission: 'advancedperks.use.poseidon'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Price: -1.0
-
-Speed:
-  Display-Name: '&e&lSpeed Perk'
-  Description:
-    - '&7&oActivating this perk will grant the potion effect'
-    - '&7&oSpeed to the player.'
-  Permission: 'advancedperks.use.speed'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Icon: 'SUGAR'
-  Price: -1.0
-
-Turtle:
-  Display-Name: '&2&lTurtle Perk'
-  Description:
-    - '&7&oActivating this perk will grant the potion effect'
-    - '&7&oResistance to the player.'
-  Permission: 'advancedperks.use.turtle'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Price: -1.0
-
-Chicken:
-  Display-Name: '&d&lChicken Perk'
-  Description:
-    - '&7&oActivating this perk will stop the player from'
-    - '&7&otaking falldamage at all.'
-  Permission: 'advancedperks.use.chicken'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Icon: 'EGG'
-  Price: -1.0
-
-Dolphin:
-  Display-Name: '&b&lDolphin Perk'
-  Description:
-    - '&7&oActivating this perk will grant the player the ability'
-    - '&7&oto get a small boost everytime the sneak in the water.'
-  Permission: 'advancedperks.use.dolphin'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Price: -1.0
-
-KeepInventory:
-  Display-Name: '&e&lKeep Inventory Perk'
-  Description:
-    - '&7&oActivating this perk will as the name suggests'
-    - '&7&oenable the player to keep all items after death.'
-  Permission: 'advancedperks.use.keepinventory'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Icon: 'CHEST'
-  Price: -1.0
-
-Wiser:
-  Display-Name: '&e&lWiser Perk'
-  Description:
-    - '&7&oActivating this perk will grant the player the ability'
-    - '&7&oto keep its experience when dying.'
-  Permission: 'advancedperks.use.wiser'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Icon: 'ENCHANTED_BOOK'
-  Price: -1.0
-
-Bird:
-  Display-Name: '&e&lBird Perk'
-  Description:
+  icon: 'ENDER_EYE'
+  flags:
+    permission: 'advancedperks.use.bat'
+bird:
+  enabled: true
+  display_name: '&3&lBird Perk'
+  description:
     - '&7&oActivating this perk will grant the player the ability'
     - '&7&oto fly even in gamemode survival.'
-  Permission: 'advancedperks.use.bird'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Icon: 'FEATHER'
-  Price: -1.0
-  Disable-In-Lava: false
-
-Insomnia:
-  Display-Name: '&9&lInsomnia Perk'
-  Description:
+  icon: 'FEATHER'
+  flags:
+    permission: 'advancedperks.use.bird'
+chicken:
+  enabled: true
+  display_name: '&d&lChicken Perk'
+  description:
+    - '&7&oActivating this perk will stop the player from'
+    - '&7&otaking falldamage at all.'
+  icon: 'EGG'
+  flags:
+    permission: 'advancedperks.use.chicken'
+dolphin:
+  enabled: true
+  display_name: '&b&lDolphin Perk'
+  description:
     - '&7&oActivating this perk will grant the player the ability'
-    - '&7&oto not trigger phantom spawning when not sleeping.'
-  Permission: 'advancedperks.use.insomnia'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Icon: 'CLOCK'
-  Price: -1.0
-
-Farmer:
-  Display-Name: '&a&lFarmer Perk'
-  Description:
+    - '&7&oto get a small boost everytime the sneak in the water.'
+  icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGU5Njg4Yjk1MGQ4ODBiNTViN2FhMmNmY2Q3NmU1YTBmYTk0YWFjNmQxNmY3OGU4MzNmNzQ0M2VhMjlmZWQzIn19fQ=='
+  flags:
+    permission: 'advancedperks.use.dolphin'
+farmer:
+  enabled: true
+  display_name: '&a&lFarmer Perk'
+  description:
     - '&7&oActivating this perk will ensure that farmed crops will'
     - '&7&obe automatically replanted.'
-  Permission: 'advancedperks.use.farmer'
-  Disabled-Worlds: [ ]
-  Enabled: true
-  Icon: 'WHEAT'
-  Price: -1.0
+  icon: 'WHEAT'
+  flags:
+    permission: 'advancedperks.use.farmer'
+fire_resistance:
+  enabled: true
+  display_name: '&c&lFire Resistance Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oFire Resistance to the player.'
+  icon: 'LAVA_BUCKET'
+  flags:
+    permission: 'advancedperks.use.fire_resistance'
+frog:
+  enabled: true
+  display_name: '&a&lFrog Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oJump Boost II to the player.'
+  icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjA0MTg0ZTc2OGVlMDcxOTI1MjY4MjY2YmUwNDIxMTNlMjA3ZTI2ZDkxMDgxNzQ4NDYxOGU3Y2ZjZmMwMDgwNSJ9fX0='
+  flags:
+    permission: 'advancedperks.use.frog'
+glowing:
+  enabled: true
+  display_name: '&e&lGlowing Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oGlowing to the player.'
+  icon: 'GLOWSTONE_DUST'
+  flags:
+    permission: 'advancedperks.use.glowing'
+hulk:
+  enabled: true
+  display_name: '&a&lHulk Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oStrength to the player.'
+  icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2NkY2MyMzJjYTRiY2M0MjgyZWNjZDdlYzI1ODQ4ODE2ODFhNWZhNGRlZGJkNWU0YmEyYjhiNDdmMzY5ZGUifX19'
+  flags:
+    permission: 'advancedperks.use.hulk'
+keep_inventory:
+  enabled: true
+  display_name: '&e&lKeep Inventory Perk'
+  description:
+    - '&7&oActivating this perk will as the name suggests'
+    - '&7&oenable the player to keep all items after death.'
+  icon: 'CHEST'
+  flags:
+    permission: 'advancedperks.use.keep_inventory'
+no_hunger:
+  enabled: true
+  display_name: '&f&lNo Hunger Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oSaturation to the player.'
+  icon: 'COOKED_BEEF'
+  flags:
+    permission: 'advancedperks.use.no_hunger'
+poseidon:
+  enabled: true
+  display_name: '&9&lPoseidon Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oWater Breathing to the player.'
+  icon: 'TRIDENT'
+  flags:
+    permission: 'advancedperks.use.poseidon'
+smelter:
+  enabled: true
+  display_name: '&c&lSmelter Perk'
+  description:
+    - '&7&oActivating this perk will grant the player the ability'
+    - '&7&oto convert ores directly into their smelted equivalent.'
+  icon: 'MAGMA_CREAM'
+  flags:
+    permission: 'advancedperks.use.smelter'
+speed:
+  enabled: true
+  display_name: '&e&lSpeed Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oSpeed to the player.'
+  icon: 'SUGAR'
+  flags:
+    permission: 'advancedperks.use.speed'
+telekinesis:
+  enabled: true
+  display_name: '&5&lTelekinesis Perk'
+  description:
+    - '&7&oActivating this perk will grant the player the ability'
+    - '&7&oto teleport mined items directly into the players inventory.'
+  icon: 'ENDER_PEARL'
+  flags:
+    permission: 'advancedperks.use.telekinesis'
+turtle:
+  enabled: true
+  display_name: '&2&lTurtle Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oResistance to the player.'
+  icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjliYWJhYjcyYjY4MjQzN2Y5ZGVhZTEzOTFhMzM3MDEzOThhOWIzY2M2NTQ2YjA2M2U5MzgwOGUwM2E0MDc0In19fQ=='
+  flags:
+    permission: 'advancedperks.use.turtle'
+wiser:
+  enabled: true
+  display_name: '&e&lWiser Perk'
+  description:
+    - '&7&oActivating this perk will grant the player the ability'
+    - '&7&oto keep its experience when dying.'
+  icon: 'ENCHANTED_BOOK'
+  flags:
+    permission: 'advancedperks.use.wiser'

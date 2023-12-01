@@ -8,6 +8,7 @@ import de.fabilucius.advancedperks.core.guisystem.element.AbstractGuiElement;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
 import de.fabilucius.advancedperks.core.guisystem.window.GuiWindow;
 import de.fabilucius.advancedperks.core.itembuilder.types.ItemStackBuilder;
+import de.fabilucius.advancedperks.core.logging.APLogger;
 import de.fabilucius.advancedperks.guisystem.setupperkgui.SetupPerkGuiWindow;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.function.BiConsumer;
+import java.util.logging.Level;
 
 public class PerkGuiSetupElement extends AbstractGuiElement {
 
@@ -24,6 +26,9 @@ public class PerkGuiSetupElement extends AbstractGuiElement {
     @Inject
     private ConfigurationLoader configurationLoader;
 
+    @Inject
+    private APLogger logger;
+
     public PerkGuiSetupElement(GuiWindow guiWindow) {
         super(guiWindow, ItemStackBuilder.fromMaterial(Material.COMMAND_BLOCK)
                 .setDisplayName(ChatColor.DARK_GRAY + "Setup layout of the Perk Gui")
@@ -31,7 +36,6 @@ public class PerkGuiSetupElement extends AbstractGuiElement {
                 .build());
     }
 
-    //TODO cleanup and tidy code
     @Override
     public BiConsumer<GuiElement, InventoryClickEvent> handleInventoryClick() {
         return (guiElement, event) -> {
@@ -40,7 +44,8 @@ public class PerkGuiSetupElement extends AbstractGuiElement {
             try {
                 this.guiSystemManager.registerGuiWindowAnOpen(new SetupPerkGuiWindow(this.configurationLoader, player), player);
             } catch (ConfigurationInitializationException e) {
-                throw new RuntimeException(e);
+                player.sendMessage("&cAn error occurred while loading a configuration needed for the setup gui check the console for additional information.");
+                this.logger.log(Level.SEVERE, "A configuration related error occurred during initialization of the SetupPerkGuiWindow.", e);
             }
         };
     }

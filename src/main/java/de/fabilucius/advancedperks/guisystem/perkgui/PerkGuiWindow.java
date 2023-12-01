@@ -60,7 +60,7 @@ public class PerkGuiWindow extends AbstractPageGuiWindow {
                 Perk perk = perks.get(currentIndex);
                 if (perk != null) {
                     this.addGuiElement(new PerkIconElement(this, perk), perkIconLocation.iconSlot());
-                    this.addGuiElement(new PerkToggleElement(this, perk, perkData.getEnabledPerks().contains(perk), this.messagesConfiguration.getComputedString("gui.perk_gui.toggle.enabled"), this.messagesConfiguration.getComputedString("gui.perk_gui.toggle.disabled")), perkIconLocation.toggleSlot());
+                    this.addGuiElement(new PerkToggleElement(this, this.messagesConfiguration, perk, perkData.getEnabledPerks().contains(perk), this.messagesConfiguration.getComputedString("gui.perk_gui.toggle.enabled"), this.messagesConfiguration.getComputedString("gui.perk_gui.toggle.disabled")), perkIconLocation.toggleSlot());
                 }
             }
         });

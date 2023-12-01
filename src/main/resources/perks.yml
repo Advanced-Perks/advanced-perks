@@ -1,8 +1,16 @@
-test:
-  display_name: '&4Test Perk'
-  description:
-    - 'First &2Line'
-    - 'Second LINE'
+# Here is an example which properties can be set for a perk
+#example_perk:
+#  display_name: 'The name of the perk icon in the gui'
+#  description:
+#    - 'The lore of the perk icon on the gui'
+#    - 'The second line of it'
+#  icon: 'DIRT' <- either a material or a base64 encoded texture value to set a custom head as icon
+#  flags: <- flags are optional and supply additional data to a perk
+#    permission: 'example.permission: <- the permission needed to activate the perk
+#    disallowed_worlds: <- a list of worlds in which the specific perk shouldn't be allowed to be enabled
+#      - 'world_1'
+#      - 'world_2'
+
 bat:
   enabled: true
   display_name: '&8&lBat Perk'

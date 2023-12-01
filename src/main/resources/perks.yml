@@ -30,6 +30,24 @@ chicken:
   icon: 'EGG'
   flags:
     permission: 'advancedperks.use.chicken'
+dolphin:
+  enabled: true
+  display_name: '&b&lDolphin Perk'
+  description:
+    - '&7&oActivating this perk will grant the player the ability'
+    - '&7&oto get a small boost everytime the sneak in the water.'
+  icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGU5Njg4Yjk1MGQ4ODBiNTViN2FhMmNmY2Q3NmU1YTBmYTk0YWFjNmQxNmY3OGU4MzNmNzQ0M2VhMjlmZWQzIn19fQ=='
+  flags:
+    permission: 'advancedperks.use.dolphin'
+farmer:
+  enabled: true
+  display_name: '&a&lFarmer Perk'
+  description:
+    - '&7&oActivating this perk will ensure that farmed crops will'
+    - '&7&obe automatically replanted.'
+  icon: 'WHEAT'
+  flags:
+    permission: 'advancedperks.use.farmer'
 fire_resistance:
   enabled: true
   display_name: '&c&lFire Resistance Perk'
@@ -48,6 +66,15 @@ frog:
   icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjA0MTg0ZTc2OGVlMDcxOTI1MjY4MjY2YmUwNDIxMTNlMjA3ZTI2ZDkxMDgxNzQ4NDYxOGU3Y2ZjZmMwMDgwNSJ9fX0='
   flags:
     permission: 'advancedperks.use.frog'
+glowing:
+  enabled: true
+  display_name: '&e&lGlowing Perk'
+  description:
+    - '&7&oActivating this perk will grant the potion effect'
+    - '&7&oGlowing to the player.'
+  icon: 'GLOWSTONE_DUST'
+  flags:
+    permission: 'advancedperks.use.glowing'
 hulk:
   enabled: true
   display_name: '&a&lHulk Perk'
@@ -57,6 +84,15 @@ hulk:
   icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2NkY2MyMzJjYTRiY2M0MjgyZWNjZDdlYzI1ODQ4ODE2ODFhNWZhNGRlZGJkNWU0YmEyYjhiNDdmMzY5ZGUifX19'
   flags:
     permission: 'advancedperks.use.hulk'
+keep_inventory:
+  enabled: true
+  display_name: '&e&lKeep Inventory Perk'
+  description:
+    - '&7&oActivating this perk will as the name suggests'
+    - '&7&oenable the player to keep all items after death.'
+  icon: 'CHEST'
+  flags:
+    permission: 'advancedperks.use.keep_inventory'
 no_hunger:
   enabled: true
   display_name: '&f&lNo Hunger Perk'
@@ -75,6 +111,15 @@ poseidon:
   icon: 'TRIDENT'
   flags:
     permission: 'advancedperks.use.poseidon'
+smelter:
+  enabled: true
+  display_name: '&c&lSmelter Perk'
+  description:
+    - '&7&oActivating this perk will grant the player the ability'
+    - '&7&oto convert ores directly into their smelted equivalent.'
+  icon: 'MAGMA_CREAM'
+  flags:
+    permission: 'advancedperks.use.smelter'
 speed:
   enabled: true
   display_name: '&e&lSpeed Perk'
@@ -84,6 +129,15 @@ speed:
   icon: 'SUGAR'
   flags:
     permission: 'advancedperks.use.speed'
+telekinesis:
+  enabled: true
+  display_name: '&5&lTelekinesis Perk'
+  description:
+    - '&7&oActivating this perk will grant the player the ability'
+    - '&7&oto teleport mined items directly into the players inventory.'
+  icon: 'ENDER_PEARL'
+  flags:
+    permission: 'advancedperks.use.telekinesis'
 turtle:
   enabled: true
   display_name: '&2&lTurtle Perk'
@@ -93,3 +147,12 @@ turtle:
   icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjliYWJhYjcyYjY4MjQzN2Y5ZGVhZTEzOTFhMzM3MDEzOThhOWIzY2M2NTQ2YjA2M2U5MzgwOGUwM2E0MDc0In19fQ=='
   flags:
     permission: 'advancedperks.use.turtle'
+wiser:
+  enabled: true
+  display_name: '&e&lWiser Perk'
+  description:
+    - '&7&oActivating this perk will grant the player the ability'
+    - '&7&oto keep its experience when dying.'
+  icon: 'ENCHANTED_BOOK'
+  flags:
+    permission: 'advancedperks.use.wiser'

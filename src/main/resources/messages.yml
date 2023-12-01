@@ -1,7 +1,7 @@
 prefix: '&7[&6ap&7]'
 gui:
   perk_gui:
-    title: '&5&lChoose a perk...'
+    title: '&8&lChoose a perk...'
     close_gui: '&cClose gui'
     disable_all_perks: '&cDisable all perks'
     previous_page: '&7Previous Page'

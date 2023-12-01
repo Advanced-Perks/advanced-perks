@@ -1,3 +1,6 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow").version("7.1.2")
@@ -65,5 +68,11 @@ tasks {
             include(dependency("aopalliance:aopalliance"))
             include(dependency("com.github.cryptomorin:XSeries"))
         }
+        val externalPackage = "de.fabilucius.external"
+        relocate("com.cryptomorin.xseries", "$externalPackage.com.cryptomorin.xseries")
+        relocate("com.google.inject", "$externalPackage.com.google.inject")
+        relocate("jakarta.inject", "$externalPackage.jakarta.inject")
+        relocate("org.aopalliance", "$externalPackage.org.aopalliance")
+        archiveFileName.set("${project.name}-$version.jar")
     }
 }

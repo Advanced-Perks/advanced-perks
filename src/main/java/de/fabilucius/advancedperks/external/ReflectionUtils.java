@@ -228,7 +228,7 @@ public final class ReflectionUtils {
                 /* 17 */ 1,//            \_!_/
                 /* 18 */ 2,
                 /* 19 */ 4,
-                /* 20 */ 2,
+                /* 20 */ 2
         };
 
         if (minorVersion > patches.length) {

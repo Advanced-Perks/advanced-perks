@@ -7,7 +7,6 @@
     <module name="TreeWalker">
         <module name="AbstractClassName"/>
         <module name="AnonInnerLength"/>
-        <module name="ArrayTrailingComma"/>
         <module name="AvoidDoubleBraceInitialization"/>
         <module name="AvoidNestedBlocks"/>
         <module name="AvoidStarImport"/>
@@ -60,6 +59,15 @@
         <module name="MultipleVariableDeclarations"/>
         <module name="MutableException"/>
         <module name="NeedBraces"/>
+        <module name="NestedIfDepth">
+            <property name="max" value="3"/>
+        </module>
+        <module name="NestedTryDepth"/>
+        <module name="NoArrayTrailingComma"/>
+        <module name="NoClone"/>
+        <module name="NoFinalizer"/>
+        <module name="NoEnumTrailingComma"/>
+        <module name="NoWhitespaceAfter"/>
         <module name="UnusedImports"/>
     </module>
 </module>

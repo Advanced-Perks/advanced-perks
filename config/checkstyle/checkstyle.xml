@@ -19,6 +19,9 @@
         <module name="ConstantName"/>
         <!-- Looking into enabling it in the future as it can help make code easier to test <module name="CyclomaticComplexity"/> -->
         <module name="DeclarationOrder"/>
+        <module name="DefaultComesLast"/>
+        <module name="EmptyBlock"/>
+        <module name="EmptyCatchBlock"/>
         <module name="UnusedImports"/>
     </module>
 </module>

@@ -73,6 +73,7 @@ public class Metrics {
             try {
                 config.save(configFile);
             } catch (IOException ignored) {
+                ignored.printStackTrace();
             }
         }
         // Load the data

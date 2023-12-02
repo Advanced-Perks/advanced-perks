@@ -68,6 +68,7 @@
         <module name="NoFinalizer"/>
         <module name="NoEnumTrailingComma"/>
         <module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceBefore"/>
         <module name="UnusedImports"/>
     </module>
 </module>

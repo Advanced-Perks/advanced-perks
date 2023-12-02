@@ -40,8 +40,8 @@ public class BuySubCommand extends AbstractSubCommand {
             if (arguments.length == 1) {
                 Perk perk = this.perkRegistry.getPerkByIdentifier(arguments[0]);
                 if (perk == null) {
-                    player.sendMessage(this.messagesConfiguration.getComputedString("command.perks.buy.perk_not_found"
-                            , new ReplaceOptions("<perk>", arguments[0])));
+                    player.sendMessage(this.messagesConfiguration.getComputedString("command.perks.buy.perk_not_found",
+                            new ReplaceOptions("<perk>", arguments[0])));
                     return;
                 }
                 PerkBuyResult result = this.economyController.buyPerk(player, perk);

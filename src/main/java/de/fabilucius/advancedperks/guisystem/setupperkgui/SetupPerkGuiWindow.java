@@ -8,7 +8,13 @@ import de.fabilucius.advancedperks.core.guisystem.element.types.GuiBackgroundEle
 import de.fabilucius.advancedperks.core.guisystem.window.AbstractGuiWindow;
 import de.fabilucius.advancedperks.guisystem.configuration.PerkGuiConfiguration;
 import de.fabilucius.advancedperks.guisystem.configuration.PerkGuiSaveResult;
-import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.*;
+import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.CloseGuiPlaceholderElement;
+import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.DisableAllPerksPlaceholderElement;
+import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.NextPagePlaceholderElement;
+import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.PerkIconPlaceholderElement;
+import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.PerkTogglePlaceholderElement;
+import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.PreviousPagePlaceholderElement;
+import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.SetupGuiPlaceholderElement;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

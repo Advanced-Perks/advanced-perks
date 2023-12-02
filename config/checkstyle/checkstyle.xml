@@ -6,6 +6,11 @@
 <module name="Checker">
     <module name="TreeWalker">
         <module name="AbstractClassName"/>
+        <module name="AnonInnerLength"/>
+        <module name="ArrayTrailingComma"/>
+        <module name="AvoidDoubleBraceInitialization"/>
+        <module name="AvoidNestedBlocks"/>
+        <module name="AvoidStarImport"/>
         <module name="UnusedImports"/>
     </module>
 </module>

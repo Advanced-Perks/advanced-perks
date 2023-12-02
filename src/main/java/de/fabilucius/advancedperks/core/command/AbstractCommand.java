@@ -12,7 +12,11 @@ import de.fabilucius.advancedperks.core.command.annotation.Permission;
 import de.fabilucius.advancedperks.core.command.annotation.SubCommands;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import org.bukkit.Bukkit;
-import org.bukkit.command.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

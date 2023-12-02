@@ -4,7 +4,13 @@ import com.google.common.collect.Lists;
 import de.fabilucius.advancedperks.configuration.Configuration;
 import de.fabilucius.advancedperks.configuration.annotation.FilePathInJar;
 import de.fabilucius.advancedperks.guisystem.setupperkgui.SetupPerkGuiWindow;
-import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.*;
+import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.CloseGuiPlaceholderElement;
+import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.DisableAllPerksPlaceholderElement;
+import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.NextPagePlaceholderElement;
+import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.PerkIconPlaceholderElement;
+import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.PerkTogglePlaceholderElement;
+import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.PreviousPagePlaceholderElement;
+import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.SetupGuiPlaceholderElement;
 
 import java.util.Comparator;
 import java.util.List;

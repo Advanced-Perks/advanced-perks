@@ -9,11 +9,14 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.UUID;
 
-public class MojangProfileFetcher {
+public final class MojangProfileFetcher {
 
     private static final String MOJANG_API_URL = "https://api.mojang.com/users/profiles/minecraft/";
     private static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
     private static final JsonParser JSON_PARSER = new JsonParser();
+
+    private MojangProfileFetcher(){
+    }
 
     public static MojangProfileData fetchPlayerProfile(String name) {
         try {

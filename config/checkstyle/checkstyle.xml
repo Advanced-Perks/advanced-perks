@@ -26,6 +26,10 @@
         <module name="EqualsAvoidNull"/>
         <module name="FallThrough"/>
         <module name="FinalClass"/>
+        <module name="GenericWhitespace"/>
+        <module name="HideUtilityClassConstructor"/>
+        <!-- Looking into enabling it in the future <module name="Header"/> -->
+
         <module name="UnusedImports"/>
     </module>
 </module>

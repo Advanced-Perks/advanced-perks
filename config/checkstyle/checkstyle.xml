@@ -58,6 +58,8 @@
         <module name="ModifierOrder"/>
         <!-- Looking into enabling it in the future <module name="MultipleStringLiterals"/> -->
         <module name="MultipleVariableDeclarations"/>
+        <module name="MutableException"/>
+        <module name="NeedBraces"/>
         <module name="UnusedImports"/>
     </module>
 </module>

@@ -106,7 +106,7 @@ public final class InventoryUpdate {
         WINDOW_ID = getField(CONTAINER, int.class, "windowId", "j", "containerId");
     }
 
-    private InventoryUpdate(){
+    private InventoryUpdate() {
     }
 
     /**
@@ -126,7 +126,9 @@ public final class InventoryUpdate {
 
             if (ReflectionUtils.supports(20)) {
                 InventoryView open = player.getOpenInventory();
-                if (UNOPENABLES.contains(open.getType().name())) return;
+                if (UNOPENABLES.contains(open.getType().name())) {
+                    return;
+                }
                 Method method = open.getClass().getMethod("setTitle", String.class);
                 if (!method.canAccess(open)) {
                     method.setAccessible(true);
@@ -155,22 +157,30 @@ public final class InventoryUpdate {
 
             // Get InventoryView from activeContainer.
             Object bukkitView = GET_BUKKIT_VIEW.invoke(activeContainer);
-            if (!(bukkitView instanceof InventoryView view)) return;
+            if (!(bukkitView instanceof InventoryView view)) {
+                return;
+            }
 
             // Avoiding pattern variable, since some people may be using an older version of java.
             InventoryType type = view.getTopInventory().getType();
 
             // Workbenchs and anvils can change their title since 1.14.
-            if ((type == InventoryType.WORKBENCH || type == InventoryType.ANVIL) && !useContainers()) return;
+            if ((type == InventoryType.WORKBENCH || type == InventoryType.ANVIL) && !useContainers()) {
+                return;
+            }
 
             // You can't reopen crafting, creative and player inventory.
-            if (UNOPENABLES.contains(type.name())) return;
+            if (UNOPENABLES.contains(type.name())) {
+                return;
+            }
 
             int size = view.getTopInventory().getSize();
 
             // Get container, check is not null.
             Containers container = Containers.getType(type, size);
-            if (container == null) return;
+            if (container == null) {
+                return;
+            }
 
             // If the container was added in a newer version than the current, return.
             if (container.getContainerVersion() > ReflectionUtils.MINOR_NUMBER && useContainers()) {
@@ -203,10 +213,14 @@ public final class InventoryUpdate {
 
     private static @Nullable MethodHandle getField(Class<?> refc, Class<?> instc, String name, String... extraNames) {
         MethodHandle handle = getFieldHandle(refc, instc, name);
-        if (handle != null) return handle;
+        if (handle != null) {
+            return handle;
+        }
 
         if (extraNames != null && extraNames.length > 0) {
-            if (extraNames.length == 1) return getField(refc, instc, extraNames[0]);
+            if (extraNames.length == 1) {
+                return getField(refc, instc, extraNames[0]);
+            }
             return getField(refc, instc, extraNames[0], removeFirst(extraNames));
         }
 
@@ -227,7 +241,9 @@ public final class InventoryUpdate {
             for (Field field : refc.getFields()) {
                 field.setAccessible(true);
 
-                if (!field.getName().equalsIgnoreCase(name)) continue;
+                if (!field.getName().equalsIgnoreCase(name)) {
+                    continue;
+                }
 
                 if (field.getType().isInstance(inscofc) || field.getType().isAssignableFrom(inscofc)) {
                     return LOOKUP.unreflectGetter(field);
@@ -256,7 +272,9 @@ public final class InventoryUpdate {
 
     private static @Nullable MethodHandle getMethod(Class<?> refc, String name, MethodType type, boolean isStatic) {
         try {
-            if (isStatic) return LOOKUP.findStatic(refc, name, type);
+            if (isStatic) {
+                return LOOKUP.findStatic(refc, name, type);
+            }
             return LOOKUP.findVirtual(refc, name, type);
         } catch (ReflectiveOperationException exception) {
             exception.printStackTrace();
@@ -348,11 +366,15 @@ public final class InventoryUpdate {
          */
         public @Nullable Object getObject() {
             try {
-                if (!useContainers()) return getMinecraftName();
+                if (!useContainers()) {
+                    return getMinecraftName();
+                }
                 int version = ReflectionUtils.MINOR_NUMBER;
                 String name = (version == 14 && this == CARTOGRAPHY_TABLE) ? "CARTOGRAPHY" : name();
                 // Since 1.17, containers go from "a" to "x".
-                if (version > 16) name = String.valueOf(ALPHABET[ordinal()]);
+                if (version > 16) {
+                    name = String.valueOf(ALPHABET[ordinal()]);
+                }
                 Field field = CONTAINERS.getField(name);
                 return field.get(null);
             } catch (ReflectiveOperationException exception) {

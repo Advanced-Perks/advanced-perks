@@ -114,8 +114,9 @@ public final class ReflectionUtils {
                 }
             }
         }
-        if (found == null)
+        if (found == null) {
             throw new IllegalArgumentException("Failed to parse server version. Could not find any package starting with name: 'org.bukkit.craftbukkit.v'");
+        }
         NMS_VERSION = found;
     }
 
@@ -154,8 +155,9 @@ public final class ReflectionUtils {
         String minorVer = split[1];
         try {
             MINOR_NUMBER = Integer.parseInt(minorVer);
-            if (MINOR_NUMBER < 0)
+            if (MINOR_NUMBER < 0) {
                 throw new IllegalStateException("Negative minor number? " + minorVer + ' ' + getVersionInformation());
+            }
         } catch (Throwable ex) {
             throw new RuntimeException("Failed to parse minor number: " + minorVer + ' ' + getVersionInformation(), ex);
         }
@@ -199,7 +201,9 @@ public final class ReflectionUtils {
      * @since 7.0.0
      */
     public static Integer getLatestPatchNumberOf(int minorVersion) {
-        if (minorVersion <= 0) throw new IllegalArgumentException("Minor version must be positive: " + minorVersion);
+        if (minorVersion <= 0) {
+            throw new IllegalArgumentException("Minor version must be positive: " + minorVersion);
+        }
 
         // https://minecraft.wiki/w/Java_Edition_version_history
         // There are many ways to do this, but this is more visually appealing.
@@ -227,7 +231,9 @@ public final class ReflectionUtils {
                 /* 20 */ 2,
         };
 
-        if (minorVersion > patches.length) return null;
+        if (minorVersion > patches.length) {
+            return null;
+        }
         return patches[minorVersion - 1];
     }
 
@@ -337,7 +343,9 @@ public final class ReflectionUtils {
      */
     @Nullable
     public static Class<?> getNMSClass(@Nullable String packageName, @Nonnull String name) {
-        if (packageName != null && supports(17)) name = packageName + '.' + name;
+        if (packageName != null && supports(17)) {
+            name = packageName + '.' + name;
+        }
 
         try {
             return Class.forName(NMS_PACKAGE + name);
@@ -392,7 +400,9 @@ public final class ReflectionUtils {
 
             // Checking if the connection is not null is enough. There is no need to check if the player is online.
             if (connection != null) {
-                for (Object packet : packets) SEND_PACKET.invoke(connection, packet);
+                for (Object packet : packets) {
+                    SEND_PACKET.invoke(connection, packet);
+                }
             }
         } catch (Throwable throwable) {
             throwable.printStackTrace();
@@ -492,8 +502,9 @@ public final class ReflectionUtils {
         }
 
         public VersionHandler<T> v(int version, int patch, T handle) {
-            if (version == this.version && patch == this.patch)
+            if (version == this.version && patch == this.patch) {
                 throw new IllegalArgumentException("Cannot have duplicate version handles for version: " + version + '.' + patch);
+            }
             if (version > this.version && supports(version) && patch >= this.patch && supportsPatch(patch)) {
                 this.version = version;
                 this.patch = patch;
@@ -522,8 +533,9 @@ public final class ReflectionUtils {
         }
 
         public CallableVersionHandler<T> v(int version, Callable<T> handle) {
-            if (version == this.version)
+            if (version == this.version) {
                 throw new IllegalArgumentException("Cannot have duplicate version handles for version: " + version);
+            }
             if (version > this.version && supports(version)) {
                 this.version = version;
                 this.handle = handle;

@@ -61,6 +61,10 @@ tasks {
         }
     }
 
+    build {
+        dependsOn(shadowJar)
+    }
+
     shadowJar {
         dependencies {
             include(dependency("com.google.inject:guice"))

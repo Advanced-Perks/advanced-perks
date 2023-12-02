@@ -12,6 +12,8 @@ import de.fabilucius.advancedperks.core.guisystem.element.types.PreviousPageElem
 import de.fabilucius.advancedperks.core.guisystem.window.types.AbstractPageGuiWindow;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.data.PerkDataRepository;
+import de.fabilucius.advancedperks.data.state.PerkStateController;
+import de.fabilucius.advancedperks.data.state.PerkUseStatus;
 import de.fabilucius.advancedperks.guisystem.configuration.PerkGuiConfiguration;
 import de.fabilucius.advancedperks.guisystem.perkgui.elements.DisableAllPerksElement;
 import de.fabilucius.advancedperks.guisystem.perkgui.elements.PerkGuiSetupElement;
@@ -38,6 +40,9 @@ public class PerkGuiWindow extends AbstractPageGuiWindow {
     @Inject
     private PerkDataRepository perkDataRepository;
 
+    @Inject
+    private PerkStateController perkStateController;
+
     public PerkGuiWindow(ConfigurationLoader configurationLoader, SettingsConfiguration settingsConfiguration, MessagesConfiguration messagesConfiguration, Player player) throws ConfigurationInitializationException {
         super(Bukkit.createInventory(null, 54, messagesConfiguration.getComputedString("gui.perk_gui.title")), player, settingsConfiguration.isGuiClickSoundsEnabled());
         this.perkGuiConfiguration = configurationLoader.getConfigurationAndLoad(PerkGuiConfiguration.class);
@@ -61,7 +66,7 @@ public class PerkGuiWindow extends AbstractPageGuiWindow {
                 Perk perk = perks.get(currentIndex);
                 if (perk != null) {
                     this.addGuiElement(new PerkIconElement(this, perk), perkIconLocation.iconSlot());
-                    this.addGuiElement(new PerkToggleElement(this, this.messagesConfiguration, perk, perkData.getEnabledPerks().contains(perk), this.messagesConfiguration.getComputedString("gui.perk_gui.toggle.enabled"), this.messagesConfiguration.getComputedString("gui.perk_gui.toggle.disabled")), perkIconLocation.toggleSlot());
+                    this.addGuiElement(new PerkToggleElement(this, this.messagesConfiguration, perk, perkData.getEnabledPerks().contains(perk), !this.perkStateController.canUsePerk(this.getPlayer(), perk).equals(PerkUseStatus.NO_PERMISSION),this.messagesConfiguration.getComputedString("gui.perk_gui.toggle.not_unlocked"), this.messagesConfiguration.getComputedString("gui.perk_gui.toggle.enabled"), this.messagesConfiguration.getComputedString("gui.perk_gui.toggle.disabled")), perkIconLocation.toggleSlot());
                 }
             }
         });

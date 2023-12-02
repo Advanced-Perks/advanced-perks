@@ -30,16 +30,16 @@ public class PerkStateController {
 
     public PerkUseStatus canUsePerk(Player player, Perk perk) {
         PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
+        /* Permission check */
+        if (perk.getPermission().isPresent() && !player.hasPermission(perk.getPermission().get()) &&
+                perkData.getBoughtPerks().stream().noneMatch(boughtPerk -> boughtPerk.equalsIgnoreCase(perk.getIdentifier()))) {
+            return PerkUseStatus.NO_PERMISSION;
+        }
         int maxActivePerksAllowed = Math.max(this.globalMaxActivePerks, perkData.getMaxPerks());
         //TODO currently unneeded implement sensible way to periodically refresh the permission based max active perks
         /* Max perk active check */
         if (perkData.getEnabledPerks().size() >= maxActivePerksAllowed && maxActivePerksAllowed >= 0) {
             return PerkUseStatus.TOO_MANY_ACTIVE;
-        }
-        /* Permission check */
-        if (perk.getPermission().isPresent() && !player.hasPermission(perk.getPermission().get()) &&
-                perkData.getBoughtPerks().stream().noneMatch(boughtPerk -> boughtPerk.equalsIgnoreCase(perk.getIdentifier()))) {
-            return PerkUseStatus.NO_PERMISSION;
         }
         /* Disallowed world check */
         if (perk.getDisallowedWorlds().isPresent() && perk.getDisallowedWorlds().get().stream().anyMatch(world -> world.equalsIgnoreCase(player.getWorld().getName()))) {

@@ -849,7 +849,7 @@ public class Metrics {
          * allow a raw string inputs for methods like {@link JsonObjectBuilder#appendField(String,
          * JsonObject)}.
          */
-        public static class JsonObject {
+        public final static class JsonObject {
 
             private final String value;
 

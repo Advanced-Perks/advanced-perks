@@ -22,6 +22,10 @@
         <module name="DefaultComesLast"/>
         <module name="EmptyBlock"/>
         <module name="EmptyCatchBlock"/>
+        <module name="EmptyStatement"/>
+        <module name="EqualsAvoidNull"/>
+        <module name="FallThrough"/>
+        <module name="FinalClass"/>
         <module name="UnusedImports"/>
     </module>
 </module>

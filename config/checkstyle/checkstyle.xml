@@ -34,6 +34,13 @@
         <module name="IllegalInstantiation"/>
         <module name="IllegalThrows"/>
         <module name="IllegalType"/>
+        <!-- Looking into enabling it in the future <module name="ImportOrder"/> -->
+        <module name="Indentation"/>
+        <module name="InnerAssignment"/>
+        <module name="InnerTypeLast"/>
+        <module name="InterfaceIsType"/>
+        <module name="InterfaceTypeParameterName"/>
+        <module name="InvalidJavadocPosition"/>
         <module name="UnusedImports"/>
     </module>
 </module>

@@ -103,7 +103,7 @@ public class Metrics {
      *
      * @param chart The chart to add.
      */
-    public void addCustomChart(CustomChart chart) {
+    public void addCustomChart(AbstractCustomChart chart) {
         metricsBase.addCustomChart(chart);
     }
 
@@ -174,7 +174,7 @@ public class Metrics {
 
         private final boolean logResponseStatusText;
 
-        private final Set<CustomChart> customCharts = new HashSet<>();
+        private final Set<AbstractCustomChart> abstractCustomCharts = new HashSet<>();
 
         private final boolean enabled;
 
@@ -232,8 +232,8 @@ public class Metrics {
             }
         }
 
-        public void addCustomChart(CustomChart chart) {
-            this.customCharts.add(chart);
+        public void addCustomChart(AbstractCustomChart chart) {
+            this.abstractCustomCharts.add(chart);
         }
 
         private void startSubmitting() {
@@ -270,8 +270,8 @@ public class Metrics {
             final JsonObjectBuilder serviceJsonBuilder = new JsonObjectBuilder();
             appendServiceDataConsumer.accept(serviceJsonBuilder);
             JsonObjectBuilder.JsonObject[] chartData =
-                    customCharts.stream()
-                            .map(customChart -> customChart.getRequestJsonObject(errorLogger, logErrors))
+                    abstractCustomCharts.stream()
+                            .map(abstractCustomChart -> abstractCustomChart.getRequestJsonObject(errorLogger, logErrors))
                             .filter(Objects::nonNull)
                             .toArray(JsonObjectBuilder.JsonObject[]::new);
             serviceJsonBuilder.appendField("id", serviceId);
@@ -366,7 +366,7 @@ public class Metrics {
         }
     }
 
-    public static class AdvancedBarChart extends CustomChart {
+    public static class AdvancedBarChartAbstract extends AbstractCustomChart {
 
         private final Callable<Map<String, int[]>> callable;
 
@@ -376,7 +376,7 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-        public AdvancedBarChart(String chartId, Callable<Map<String, int[]>> callable) {
+        public AdvancedBarChartAbstract(String chartId, Callable<Map<String, int[]>> callable) {
             super(chartId);
             this.callable = callable;
         }
@@ -406,7 +406,7 @@ public class Metrics {
         }
     }
 
-    public static class SimpleBarChart extends CustomChart {
+    public static class SimpleBarChartAbstract extends AbstractCustomChart {
 
         private final Callable<Map<String, Integer>> callable;
 
@@ -416,7 +416,7 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-        public SimpleBarChart(String chartId, Callable<Map<String, Integer>> callable) {
+        public SimpleBarChartAbstract(String chartId, Callable<Map<String, Integer>> callable) {
             super(chartId);
             this.callable = callable;
         }
@@ -436,7 +436,7 @@ public class Metrics {
         }
     }
 
-    public static class MultiLineChart extends CustomChart {
+    public static class MultiLineChartAbstract extends AbstractCustomChart {
 
         private final Callable<Map<String, Integer>> callable;
 
@@ -446,7 +446,7 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-        public MultiLineChart(String chartId, Callable<Map<String, Integer>> callable) {
+        public MultiLineChartAbstract(String chartId, Callable<Map<String, Integer>> callable) {
             super(chartId);
             this.callable = callable;
         }
@@ -476,7 +476,7 @@ public class Metrics {
         }
     }
 
-    public static class AdvancedPie extends CustomChart {
+    public static class AdvancedPie extends AbstractCustomChart {
 
         private final Callable<Map<String, Integer>> callable;
 
@@ -516,11 +516,11 @@ public class Metrics {
         }
     }
 
-    public abstract static class CustomChart {
+    public abstract static class AbstractCustomChart {
 
         private final String chartId;
 
-        protected CustomChart(String chartId) {
+        protected AbstractCustomChart(String chartId) {
             if (chartId == null) {
                 throw new IllegalArgumentException("chartId must not be null");
             }
@@ -550,7 +550,7 @@ public class Metrics {
         protected abstract JsonObjectBuilder.JsonObject getChartData() throws Exception;
     }
 
-    public static class SingleLineChart extends CustomChart {
+    public static class SingleLineChartAbstract extends AbstractCustomChart {
 
         private final Callable<Integer> callable;
 
@@ -560,7 +560,7 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-        public SingleLineChart(String chartId, Callable<Integer> callable) {
+        public SingleLineChartAbstract(String chartId, Callable<Integer> callable) {
             super(chartId);
             this.callable = callable;
         }
@@ -576,7 +576,7 @@ public class Metrics {
         }
     }
 
-    public static class SimplePie extends CustomChart {
+    public static class SimplePie extends AbstractCustomChart {
 
         private final Callable<String> callable;
 
@@ -602,7 +602,7 @@ public class Metrics {
         }
     }
 
-    public static class DrilldownPie extends CustomChart {
+    public static class DrilldownPie extends AbstractCustomChart {
 
         private final Callable<Map<String, Map<String, Integer>>> callable;
 

@@ -56,17 +56,17 @@ public final class InventoryUpdate {
     private static final Class<?> I_CHAT_MUTABLE_COMPONENT;
 
     // Methods.
-    private static final MethodHandle getHandle;
-    private static final MethodHandle getBukkitView;
-    private static final MethodHandle literal;
+    private static final MethodHandle GET_HANDLE;
+    private static final MethodHandle GET_BUKKIT_VIEW;
+    private static final MethodHandle LITERAL;
 
     // Constructors.
-    private static final MethodHandle chatMessage;
-    private static final MethodHandle packetPlayOutOpenWindow;
+    private static final MethodHandle CHAT_MESSAGE_METHOD;
+    private static final MethodHandle PACKET_PLAY_OUT_OPEN_WINDOW_METHOD;
 
     // Fields.
-    private static final MethodHandle activeContainer;
-    private static final MethodHandle windowId;
+    private static final MethodHandle ACTIVE_CONTAINER;
+    private static final MethodHandle WINDOW_ID;
 
     // Methods factory.
     private static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
@@ -89,21 +89,21 @@ public final class InventoryUpdate {
         I_CHAT_MUTABLE_COMPONENT = SUPPORTS_19 ? ReflectionUtils.getNMSClass("network.chat", "IChatMutableComponent") : null;
 
         // Initialize methods.
-        getHandle = getMethod(CRAFT_PLAYER, "getHandle", MethodType.methodType(ENTITY_PLAYER));
-        getBukkitView = getMethod(CONTAINER, "getBukkitView", MethodType.methodType(InventoryView.class));
-        literal = SUPPORTS_19 ? getMethod(I_CHAT_BASE_COMPONENT, "b", MethodType.methodType(I_CHAT_MUTABLE_COMPONENT, String.class), true) : null;
+        GET_HANDLE = getMethod(CRAFT_PLAYER, "getHandle", MethodType.methodType(ENTITY_PLAYER));
+        GET_BUKKIT_VIEW = getMethod(CONTAINER, "getBukkitView", MethodType.methodType(InventoryView.class));
+        LITERAL = SUPPORTS_19 ? getMethod(I_CHAT_BASE_COMPONENT, "b", MethodType.methodType(I_CHAT_MUTABLE_COMPONENT, String.class), true) : null;
 
         // Initialize constructors.
-        chatMessage = SUPPORTS_19 ? null : getConstructor(CHAT_MESSAGE, String.class, Object[].class);
-        packetPlayOutOpenWindow =
+        CHAT_MESSAGE_METHOD = SUPPORTS_19 ? null : getConstructor(CHAT_MESSAGE, String.class, Object[].class);
+        PACKET_PLAY_OUT_OPEN_WINDOW_METHOD =
                 (useContainers()) ?
                         getConstructor(PACKET_PLAY_OUT_OPEN_WINDOW, int.class, CONTAINERS, I_CHAT_BASE_COMPONENT) :
                         // Older versions use String instead of Containers, and require an int for the inventory size.
                         getConstructor(PACKET_PLAY_OUT_OPEN_WINDOW, int.class, String.class, I_CHAT_BASE_COMPONENT, int.class);
 
         // Initialize fields.
-        activeContainer = getField(ENTITY_PLAYER, CONTAINER, "activeContainer", "bV", "bW", "bU", "bP", "containerMenu");
-        windowId = getField(CONTAINER, int.class, "windowId", "j", "containerId");
+        ACTIVE_CONTAINER = getField(ENTITY_PLAYER, CONTAINER, "activeContainer", "bV", "bW", "bU", "bP", "containerMenu");
+        WINDOW_ID = getField(CONTAINER, int.class, "windowId", "j", "containerId");
     }
 
     /**
@@ -134,24 +134,24 @@ public final class InventoryUpdate {
 
             // Get EntityPlayer from CraftPlayer.
             Object craftPlayer = CRAFT_PLAYER.cast(player);
-            Object entityPlayer = getHandle.invoke(craftPlayer);
+            Object entityPlayer = GET_HANDLE.invoke(craftPlayer);
 
             // Create new title.
             Object title;
             if (ReflectionUtils.supports(19)) {
-                title = literal.invoke(newTitle);
+                title = LITERAL.invoke(newTitle);
             } else {
-                title = chatMessage.invoke(newTitle, DUMMY_COLOR_MODIFIERS);
+                title = CHAT_MESSAGE_METHOD.invoke(newTitle, DUMMY_COLOR_MODIFIERS);
             }
 
             // Get activeContainer from EntityPlayer.
-            Object activeContainer = InventoryUpdate.activeContainer.invoke(entityPlayer);
+            Object activeContainer = InventoryUpdate.ACTIVE_CONTAINER.invoke(entityPlayer);
 
             // Get windowId from activeContainer.
-            Integer windowId = (Integer) InventoryUpdate.windowId.invoke(activeContainer);
+            Integer windowId = (Integer) InventoryUpdate.WINDOW_ID.invoke(activeContainer);
 
             // Get InventoryView from activeContainer.
-            Object bukkitView = getBukkitView.invoke(activeContainer);
+            Object bukkitView = GET_BUKKIT_VIEW.invoke(activeContainer);
             if (!(bukkitView instanceof InventoryView view)) return;
 
             // Avoiding pattern variable, since some people may be using an older version of java.
@@ -185,8 +185,8 @@ public final class InventoryUpdate {
 
             // Create packet.
             Object packet = useContainers() ?
-                    packetPlayOutOpenWindow.invoke(windowId, object, title) :
-                    packetPlayOutOpenWindow.invoke(windowId, object, title, size);
+                    PACKET_PLAY_OUT_OPEN_WINDOW_METHOD.invoke(windowId, object, title) :
+                    PACKET_PLAY_OUT_OPEN_WINDOW_METHOD.invoke(windowId, object, title, size);
 
             // Send packet sync.
             ReflectionUtils.sendPacketSync(player, packet);
@@ -309,7 +309,7 @@ public final class InventoryUpdate {
         private final String minecraftName;
         private final String[] inventoryTypesNames;
 
-        private static final char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        private static final char[] ALPHABET = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 
         Containers(int containerVersion, String minecraftName, String... inventoryTypesNames) {
             this.containerVersion = containerVersion;
@@ -348,7 +348,7 @@ public final class InventoryUpdate {
                 int version = ReflectionUtils.MINOR_NUMBER;
                 String name = (version == 14 && this == CARTOGRAPHY_TABLE) ? "CARTOGRAPHY" : name();
                 // Since 1.17, containers go from "a" to "x".
-                if (version > 16) name = String.valueOf(alphabet[ordinal()]);
+                if (version > 16) name = String.valueOf(ALPHABET[ordinal()]);
                 Field field = CONTAINERS.getField(name);
                 return field.get(null);
             } catch (ReflectiveOperationException exception) {

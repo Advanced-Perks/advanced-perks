@@ -11,6 +11,12 @@
         <module name="AvoidDoubleBraceInitialization"/>
         <module name="AvoidNestedBlocks"/>
         <module name="AvoidStarImport"/>
+        <module name="AvoidStaticImport"/>
+        <module name="BooleanExpressionComplexity"/>
+        <module name="CatchParameterName"/>
+        <module name="ClassTypeParameterName"/>
+        <module name="CommentsIndentation"/>
+        <module name="ConstantName"/>
         <module name="UnusedImports"/>
     </module>
 </module>

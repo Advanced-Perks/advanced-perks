@@ -123,9 +123,8 @@ public final class ReflectionUtils {
     /**
      * Mojang remapped their NMS in 1.17: <a href="https://www.spigotmc.org/threads/spigot-bungeecord-1-17.510208/#post-4184317">Spigot Thread</a>
      */
-    public static final String
-            CRAFTBUKKIT_PACKAGE = "org.bukkit.craftbukkit." + NMS_VERSION + '.',
-            NMS_PACKAGE = v(17, "net.minecraft.").orElse("net.minecraft.server." + NMS_VERSION + '.');
+    public static final String CRAFTBUKKIT_PACKAGE = "org.bukkit.craftbukkit." + NMS_VERSION + '.';
+    public static final String NMS_PACKAGE = v(17, "net.minecraft.").orElse("net.minecraft.server." + NMS_VERSION + '.');
 
     /**
      * A nullable public accessible field only available in {@code EntityPlayer}.
@@ -245,7 +244,9 @@ public final class ReflectionUtils {
         }
 
         MethodHandles.Lookup lookup = MethodHandles.lookup();
-        MethodHandle sendPacket = null, getHandle = null, connection = null;
+        MethodHandle sendPacket = null;
+        MethodHandle getHandle = null;
+        MethodHandle connection = null;
 
         try {
             connection = lookup.findGetter(entityPlayer,
@@ -470,7 +471,8 @@ public final class ReflectionUtils {
     }
 
     public static final class VersionHandler<T> {
-        private int version, patch;
+        private int version;
+        private int patch;
         private T handle;
 
         private VersionHandler(int version, T handle) {

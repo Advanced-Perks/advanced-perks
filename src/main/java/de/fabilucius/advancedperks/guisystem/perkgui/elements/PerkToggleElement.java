@@ -30,9 +30,10 @@ public class PerkToggleElement extends AbstractGuiElement {
     private final String enabledText;
     private final String disabledText;
 
-    public PerkToggleElement(GuiWindow guiWindow, MessagesConfiguration messagesConfiguration, Perk perk, boolean enabled, String enabledText, String disabledText) {
-        super(guiWindow, ItemStackBuilder.fromMaterial(enabled ? Material.LIME_DYE : Material.GRAY_DYE)
-                .setDisplayName(enabled ? enabledText : disabledText)
+    //TODO currently unneeded tidy this mess up a bit
+    public PerkToggleElement(GuiWindow guiWindow, MessagesConfiguration messagesConfiguration, Perk perk, boolean enabled, boolean unlocked, String notUnlockedText, String enabledText, String disabledText) {
+        super(guiWindow, ItemStackBuilder.fromMaterial(!unlocked ? Material.IRON_BARS : enabled ? Material.LIME_DYE : Material.GRAY_DYE)
+                .setDisplayName(!unlocked ? notUnlockedText : enabled ? enabledText : disabledText)
                 .build());
         this.messagesConfiguration = messagesConfiguration;
         this.perk = perk;

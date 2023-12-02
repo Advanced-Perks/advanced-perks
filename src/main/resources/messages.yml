@@ -13,6 +13,7 @@ gui:
       disallowed_world: '&cNot allowed in this world.'
       enabled: '&7Perk is &aenabled'
       disabled: '&7Perk is &cdisabled'
+      not_unlocked: '&7Perk is not &cunlocked'
 command:
   perks:
     no_permission: '<prefix> &cYou don`t have permission to execute that command.'

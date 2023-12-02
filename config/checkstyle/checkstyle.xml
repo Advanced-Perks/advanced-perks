@@ -41,6 +41,21 @@
         <module name="InterfaceIsType"/>
         <module name="InterfaceTypeParameterName"/>
         <module name="InvalidJavadocPosition"/>
+        <module name="JavaNCSS">
+            <property name="methodMaximum" value="70"/>
+        </module>
+        <module name="LambdaParameterName"/>
+        <module name="LeftCurly"/>
+        <module name="LocalVariableName"/>
+        <!-- Looking into enabling it in the future <module name="MagicNumber"/> -->
+        <module name="MemberName"/>
+        <module name="MethodName"/>
+        <module name="MethodParamPad"/>
+        <module name="MethodTypeParameterName"/>
+        <module name="MissingDeprecated"/>
+        <module name="MissingOverride"/>
+        <module name="ModifiedControlVariable"/>
+        <module name="ModifierOrder"/>
         <module name="UnusedImports"/>
     </module>
 </module>

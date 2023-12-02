@@ -19,8 +19,8 @@ public class APLogger extends Logger {
     }
 
     @Override
-    public void log(LogRecord record) {
-        record.setMessage("[ap] " + record.getMessage());
-        super.log(record);
+    public void log(LogRecord logRecord) {
+        logRecord.setMessage("[ap] " + logRecord.getMessage());
+        super.log(logRecord);
     }
 }

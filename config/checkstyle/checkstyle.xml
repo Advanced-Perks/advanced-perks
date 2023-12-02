@@ -31,6 +31,9 @@
         <!-- Looking into enabling it in the future <module name="Header"/> -->
         <!-- Looking into enabling it in the future <module name="IllegalCatch"/> -->
         <module name="IllegalIdentifierName"/>
+        <module name="IllegalInstantiation"/>
+        <module name="IllegalThrows"/>
+        <module name="IllegalType"/>
         <module name="UnusedImports"/>
     </module>
 </module>

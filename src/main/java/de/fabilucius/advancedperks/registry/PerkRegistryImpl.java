@@ -22,8 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Singleton
 public class PerkRegistryImpl implements PerkRegistry {
@@ -41,9 +41,9 @@ public class PerkRegistryImpl implements PerkRegistry {
     private AdvancedPerks advancedPerks;
 
     //TODO currently unneeded create custom cache implementation to make dual keys possible
-    private final LinkedHashMap<Class<? extends Perk>, Perk> perkCache = Maps.newLinkedHashMap();
+    private final Map<Class<? extends Perk>, Perk> perkCache = Maps.newLinkedHashMap();
 
-    private final LinkedHashMap<String, Perk> perkIdentifierIndexCache = Maps.newLinkedHashMap();
+    private final Map<String, Perk> perkIdentifierIndexCache = Maps.newLinkedHashMap();
 
     @Nullable
     public <T extends Perk> T getPerk(Class<T> perkClass) {

@@ -13,7 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class GuiSystemManager implements Listener {
@@ -21,7 +21,7 @@ public class GuiSystemManager implements Listener {
     @Inject
     private Injector injector;
 
-    private final HashMap<Inventory, GuiWindow> guiWindows = Maps.newHashMap();
+    private final Map<Inventory, GuiWindow> guiWindows = Maps.newHashMap();
 
     @Inject
     public GuiSystemManager(AdvancedPerks advancedPerks) {

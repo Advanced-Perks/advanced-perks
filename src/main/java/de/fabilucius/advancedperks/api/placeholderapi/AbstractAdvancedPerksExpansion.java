@@ -6,12 +6,12 @@ import de.fabilucius.advancedperks.core.logging.APLogger;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class AdvancedPerksExpansion extends PlaceholderExpansion {
+public abstract class AbstractAdvancedPerksExpansion extends PlaceholderExpansion {
 
     private final AdvancedPerks advancedPerks;
 
     @Inject
-    public AdvancedPerksExpansion(APLogger logger, AdvancedPerks advancedPerks) {
+    public AbstractAdvancedPerksExpansion(APLogger logger, AdvancedPerks advancedPerks) {
         this.advancedPerks = advancedPerks;
         this.register();
     }

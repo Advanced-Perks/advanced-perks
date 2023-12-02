@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class AdvancedPerksUseExpansion extends AdvancedPerksExpansion {
+public class AdvancedPerksUseExpansion extends AbstractAdvancedPerksExpansion {
 
     @Inject
     private PerkRegistryImpl perkRegistryImpl;

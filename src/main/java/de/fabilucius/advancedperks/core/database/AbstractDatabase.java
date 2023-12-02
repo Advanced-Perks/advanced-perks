@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 
-public class AbstractDatabase implements Database {
+public abstract class AbstractDatabase implements Database {
 
     @Inject
     private APLogger logger;

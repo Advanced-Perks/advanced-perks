@@ -37,17 +37,6 @@ import java.util.zip.GZIPOutputStream;
 
 public class Metrics {
 
-    public static void load(APLogger logger, SettingsConfiguration settingsConfiguration, AdvancedPerks advancedPerks) {
-        if (settingsConfiguration.isMetricsCollectionEnabled()) {
-            logger.info("Metrics collection has started, thanks for providing useful and anonymous metrics " +
-                    "data to improve my software.");
-            new Metrics(advancedPerks, 12771);
-        } else {
-            logger.info("Collecting of metrics was disabled in the config, please consider enabling it " +
-                    "as it would help me improve my software with no additional cost for you.");
-        }
-    }
-
     private final Plugin plugin;
 
     private final MetricsBase metricsBase;
@@ -107,6 +96,17 @@ public class Metrics {
                         logErrors,
                         logSentData,
                         logResponseStatusText);
+    }
+
+    public static void load(APLogger logger, SettingsConfiguration settingsConfiguration, AdvancedPerks advancedPerks) {
+        if (settingsConfiguration.isMetricsCollectionEnabled()) {
+            logger.info("Metrics collection has started, thanks for providing useful and anonymous metrics " +
+                    "data to improve my software.");
+            new Metrics(advancedPerks, 12771);
+        } else {
+            logger.info("Collecting of metrics was disabled in the config, please consider enabling it " +
+                    "as it would help me improve my software with no additional cost for you.");
+        }
     }
 
     /**

@@ -305,11 +305,12 @@ public final class InventoryUpdate {
         // Added in 1.14, functional since 1.16.
         SMITHING(16, null, "SMITHING");
 
+
+        private static final char[] ALPHABET = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+
         private final int containerVersion;
         private final String minecraftName;
         private final String[] inventoryTypesNames;
-
-        private static final char[] ALPHABET = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 
         Containers(int containerVersion, String minecraftName, String... inventoryTypesNames) {
             this.containerVersion = containerVersion;

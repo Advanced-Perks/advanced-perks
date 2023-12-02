@@ -53,6 +53,29 @@ import java.util.regex.Pattern;
  * @version 7.1.0
  */
 public final class ReflectionUtils {
+
+    /**
+     * The raw minor version number.
+     * E.g. {@code v1_17_R1} to {@code 17}
+     *
+     * @see #supports(int)
+     * @since 4.0.0
+     */
+    public static final int MINOR_NUMBER;
+    /**
+     * The raw patch version number.
+     * E.g. {@code v1_17_R1} to {@code 1}
+     * <p>
+     * I'd not recommend developers to support individual patches at all. You should always support the latest patch.
+     * For example, between v1.14.0, v1.14.1, v1.14.2, v1.14.3 and v1.14.4 you should only support v1.14.4
+     * <p>
+     * This can be used to warn server owners when your plugin will break on older patches.
+     *
+     * @see #supportsPatch(int)
+     * @since 7.0.0
+     */
+    public static final int PATCH_NUMBER;
+
     /**
      * We use reflection mainly to avoid writing a new class for version barrier.
      * The version barrier is for NMS that uses the Minecraft version as the main package name.
@@ -96,27 +119,32 @@ public final class ReflectionUtils {
         NMS_VERSION = found;
     }
 
+
     /**
-     * The raw minor version number.
-     * E.g. {@code v1_17_R1} to {@code 17}
-     *
-     * @see #supports(int)
-     * @since 4.0.0
+     * Mojang remapped their NMS in 1.17: <a href="https://www.spigotmc.org/threads/spigot-bungeecord-1-17.510208/#post-4184317">Spigot Thread</a>
      */
-    public static final int MINOR_NUMBER;
+    public static final String
+            CRAFTBUKKIT_PACKAGE = "org.bukkit.craftbukkit." + NMS_VERSION + '.',
+            NMS_PACKAGE = v(17, "net.minecraft.").orElse("net.minecraft.server." + NMS_VERSION + '.');
+
     /**
-     * The raw patch version number.
-     * E.g. {@code v1_17_R1} to {@code 1}
-     * <p>
-     * I'd not recommend developers to support individual patches at all. You should always support the latest patch.
-     * For example, between v1.14.0, v1.14.1, v1.14.2, v1.14.3 and v1.14.4 you should only support v1.14.4
-     * <p>
-     * This can be used to warn server owners when your plugin will break on older patches.
-     *
-     * @see #supportsPatch(int)
-     * @since 7.0.0
+     * A nullable public accessible field only available in {@code EntityPlayer}.
+     * This can be null if the player is offline.
      */
-    public static final int PATCH_NUMBER;
+    private static final MethodHandle PLAYER_CONNECTION;
+    /**
+     * Responsible for getting the NMS handler {@code EntityPlayer} object for the player.
+     * {@code CraftPlayer} is simply a wrapper for {@code EntityPlayer}.
+     * Used mainly for handling packet related operations.
+     * <p>
+     * This is also where the famous player {@code ping} field comes from!
+     */
+    private static final MethodHandle GET_HANDLE;
+    /**
+     * Sends a packet to the player's client through a {@code NetworkManager} which
+     * is where {@code ProtocolLib} controls packets by injecting channels!
+     */
+    private static final MethodHandle SEND_PACKET;
 
     static {
         String[] split = NMS_VERSION.substring(1).split("_");
@@ -146,6 +174,9 @@ public final class ReflectionUtils {
             // 1.8-R0.1-SNAPSHOT
             PATCH_NUMBER = 0;
         }
+    }
+
+    private ReflectionUtils() {
     }
 
     /**
@@ -201,31 +232,6 @@ public final class ReflectionUtils {
         return patches[minorVersion - 1];
     }
 
-    /**
-     * Mojang remapped their NMS in 1.17: <a href="https://www.spigotmc.org/threads/spigot-bungeecord-1-17.510208/#post-4184317">Spigot Thread</a>
-     */
-    public static final String
-            CRAFTBUKKIT_PACKAGE = "org.bukkit.craftbukkit." + NMS_VERSION + '.',
-            NMS_PACKAGE = v(17, "net.minecraft.").orElse("net.minecraft.server." + NMS_VERSION + '.');
-    /**
-     * A nullable public accessible field only available in {@code EntityPlayer}.
-     * This can be null if the player is offline.
-     */
-    private static final MethodHandle PLAYER_CONNECTION;
-    /**
-     * Responsible for getting the NMS handler {@code EntityPlayer} object for the player.
-     * {@code CraftPlayer} is simply a wrapper for {@code EntityPlayer}.
-     * Used mainly for handling packet related operations.
-     * <p>
-     * This is also where the famous player {@code ping} field comes from!
-     */
-    private static final MethodHandle GET_HANDLE;
-    /**
-     * Sends a packet to the player's client through a {@code NetworkManager} which
-     * is where {@code ProtocolLib} controls packets by injecting channels!
-     */
-    private static final MethodHandle SEND_PACKET;
-
     static {
         Class<?> entityPlayer = getNMSClass("server.level", "EntityPlayer");
         Class<?> craftPlayer = getCraftClass("entity.CraftPlayer");
@@ -255,9 +261,6 @@ public final class ReflectionUtils {
         PLAYER_CONNECTION = connection;
         SEND_PACKET = sendPacket;
         GET_HANDLE = getHandle;
-    }
-
-    private ReflectionUtils() {
     }
 
     /**

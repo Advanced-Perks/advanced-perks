@@ -17,6 +17,8 @@
         <module name="ClassTypeParameterName"/>
         <module name="CommentsIndentation"/>
         <module name="ConstantName"/>
+        <!-- Looking into enabling it in the future as it can help make code easier to test <module name="CyclomaticComplexity"/> -->
+        <module name="DeclarationOrder"/>
         <module name="UnusedImports"/>
     </module>
 </module>

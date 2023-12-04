@@ -89,6 +89,7 @@
         <module name="StringLiteralEquality"/>
         <module name="TypeName"/>
         <module name="UnnecessaryParentheses"/>
+        <module name="UnnecessarySemicolonInEnumeration"/>
         <module name="UnusedImports"/>
     </module>
 </module>

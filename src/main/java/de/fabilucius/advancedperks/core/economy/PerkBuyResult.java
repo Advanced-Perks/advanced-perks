@@ -7,6 +7,6 @@ public enum PerkBuyResult {
     NO_ECONOMY_INTERFACE,
     NO_PRICE_SET,
     ERROR,
-    SUCCESS;
+    SUCCESS
 
 }

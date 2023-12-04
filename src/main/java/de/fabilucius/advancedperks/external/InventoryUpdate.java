@@ -152,8 +152,6 @@ public final class InventoryUpdate {
             // Get activeContainer from EntityPlayer.
             Object activeContainer = InventoryUpdate.ACTIVE_CONTAINER.invoke(entityPlayer);
 
-            // Get windowId from activeContainer.
-            Integer windowId = (Integer) InventoryUpdate.WINDOW_ID.invoke(activeContainer);
 
             // Get InventoryView from activeContainer.
             Object bukkitView = GET_BUKKIT_VIEW.invoke(activeContainer);
@@ -195,6 +193,9 @@ public final class InventoryUpdate {
             } else {
                 object = container.getObject();
             }
+
+            // Get windowId from activeContainer.
+            Integer windowId = (Integer) InventoryUpdate.WINDOW_ID.invoke(activeContainer);
 
             // Create packet.
             Object packet = useContainers() ?

@@ -90,6 +90,12 @@
         <module name="TypeName"/>
         <module name="UnnecessaryParentheses"/>
         <module name="UnnecessarySemicolonInEnumeration"/>
+        <module name="UnnecessarySemicolonInTryWithResources"/>
+        <module name="UnnecessarySemicolonAfterOuterTypeDeclaration"/>
+        <module name="UnnecessarySemicolonAfterTypeMemberDeclaration"/>
         <module name="UnusedImports"/>
+        <module name="UpperEll"/>
+        <module name="UnusedLocalVariable"/>
+        <module name="VariableDeclarationUsageDistance"/>
     </module>
 </module>

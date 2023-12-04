@@ -69,6 +69,26 @@
         <module name="NoEnumTrailingComma"/>
         <module name="NoWhitespaceAfter"/>
         <module name="NoWhitespaceBefore"/>
+        <module name="NoWhitespaceBeforeCaseDefaultColon"/>
+        <module name="OneStatementPerLine"/>
+        <module name="OuterTypeFilename"/>
+        <module name="OverloadMethodsDeclarationOrder"/>
+        <module name="ParameterName"/>
+        <module name="ParenPad"/>
+        <module name="PatternVariableName"/>
+        <module name="RecordComponentName"/>
+        <module name="RecordTypeParameterName"/>
+        <module name="RightCurly"/>
+        <module name="SimplifyBooleanExpression"/>
+        <module name="SimplifyBooleanReturn"/>
+        <module name="RequireEmptyLineBeforeBlockTagGroup"/>
+        <module name="SingleSpaceSeparator"/>
+        <module name="StaticVariableName"/>
+        <module name="StringLiteralEquality"/>
+        <module name="StaticVariableName"/>
+        <module name="StringLiteralEquality"/>
+        <module name="TypeName"/>
+        <module name="UnnecessaryParentheses"/>
         <module name="UnusedImports"/>
     </module>
 </module>

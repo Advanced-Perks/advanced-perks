@@ -113,7 +113,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
             Arrays.stream(this.getClass().getAnnotation(SubCommands.class).value()).forEach(subCommandClass -> {
                 try {
                     AbstractSubCommand abstractSubCommand = this.injector.getInstance(subCommandClass);//subCommandClass.getConstructor().newInstance();
-                    if (aliases.contains(abstractSubCommand.getIdentifier()) || (abstractSubCommand.getAliases().isPresent() && !Collections.disjoint(aliases, abstractSubCommand.getAliases().get()))) {
+                    if (aliases.contains(abstractSubCommand.getIdentifier()) || abstractSubCommand.getAliases().isPresent() && !Collections.disjoint(aliases, abstractSubCommand.getAliases().get())) {
                         throw new IllegalStateException(String.format("Cannot load sub command %s in command %s, the sub command contains an " +
                                 "identifier or alias that another sub command already contains.", subCommandClass.getName(), this.getClass().getName()));
                     }
@@ -129,7 +129,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     public Optional<AbstractSubCommand> getSubCommand(String alias) {
         return this.subCommands.stream().filter(abstractSubCommand -> abstractSubCommand.getIdentifier().equalsIgnoreCase(alias) ||
-                        (abstractSubCommand.getAliases().isPresent() && abstractSubCommand.getAliases().get().stream().anyMatch(s -> s.equalsIgnoreCase(alias))))
+                        abstractSubCommand.getAliases().isPresent() && abstractSubCommand.getAliases().get().stream().anyMatch(s -> s.equalsIgnoreCase(alias)))
                 .findFirst();
     }
 

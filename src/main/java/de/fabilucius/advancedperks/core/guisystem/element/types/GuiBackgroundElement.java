@@ -20,6 +20,6 @@ public class GuiBackgroundElement extends AbstractGuiElement {
 
     @Override
     public BiConsumer<GuiElement, InventoryClickEvent> handleInventoryClick() {
-        return ((guiElement, event) -> event.setCancelled(!this.getGuiWindow().getClass().equals(SetupPerkGuiWindow.class)));
+        return (guiElement, event) -> event.setCancelled(!this.getGuiWindow().getClass().equals(SetupPerkGuiWindow.class));
     }
 }

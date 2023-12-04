@@ -112,7 +112,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
             List<String> aliases = Lists.newArrayList();
             Arrays.stream(this.getClass().getAnnotation(SubCommands.class).value()).forEach(subCommandClass -> {
                 try {
-                    AbstractSubCommand abstractSubCommand = this.injector.getInstance(subCommandClass);//subCommandClass.getConstructor().newInstance();
+                    AbstractSubCommand abstractSubCommand = this.injector.getInstance(subCommandClass); //subCommandClass.getConstructor().newInstance();
                     if (aliases.contains(abstractSubCommand.getIdentifier()) || abstractSubCommand.getAliases().isPresent() && !Collections.disjoint(aliases, abstractSubCommand.getAliases().get())) {
                         throw new IllegalStateException(String.format("Cannot load sub command %s in command %s, the sub command contains an " +
                                 "identifier or alias that another sub command already contains.", subCommandClass.getName(), this.getClass().getName()));

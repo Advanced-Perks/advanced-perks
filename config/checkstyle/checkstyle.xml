@@ -97,5 +97,7 @@
         <module name="UpperEll"/>
         <module name="UnusedLocalVariable"/>
         <module name="VariableDeclarationUsageDistance"/>
+        <!-- Looking into enabling it in the future <module name="VisibilityModifier"/> -->
+        <module name="WhitespaceAfter"/>
     </module>
 </module>

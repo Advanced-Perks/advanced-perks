@@ -14,6 +14,7 @@ import de.fabilucius.advancedperks.perk.AbstractDefaultPerk;
 import de.fabilucius.advancedperks.perk.Perk;
 import de.fabilucius.advancedperks.perk.PerksConfiguration;
 import de.fabilucius.advancedperks.perk.types.ListenerPerk;
+import de.fabilucius.advancedperks.perk.types.TaskPerk;
 import de.fabilucius.advancedperks.registry.exception.PerkNotFoundException;
 import de.fabilucius.advancedperks.registry.exception.PerkRegistryInitializationException;
 import de.fabilucius.advancedperks.registry.loader.PerkYmlLoader;
@@ -85,6 +86,9 @@ public class PerkRegistryImpl implements PerkRegistry {
                     this.perkIdentifierIndexCache.put(perk.getIdentifier(), perk);
                     if (perk instanceof ListenerPerk listenerPerk) {
                         Bukkit.getPluginManager().registerEvents(listenerPerk, this.advancedPerks);
+                    }
+                    if (perk instanceof TaskPerk taskPerk) {
+                        taskPerk.registerTasks(this.advancedPerks);
                     }
                 } else {
                     this.logger.info("The perk wasn't loaded into the cache because its set to disabled in the perks.yml file.");

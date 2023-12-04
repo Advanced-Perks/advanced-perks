@@ -87,7 +87,7 @@ public class PerkRegistryImpl implements PerkRegistry {
                     if (perk instanceof ListenerPerk listenerPerk) {
                         Bukkit.getPluginManager().registerEvents(listenerPerk, this.advancedPerks);
                     }
-                    if (this instanceof TaskPerk taskPerk) {
+                    if (perk instanceof TaskPerk taskPerk) {
                         taskPerk.registerTasks(this.advancedPerks);
                     }
                 } else {

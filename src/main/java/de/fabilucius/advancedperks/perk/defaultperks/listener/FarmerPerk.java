@@ -32,8 +32,8 @@ public class FarmerPerk extends AbstractDefaultPerk implements ListenerPerk {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        if (!(event.getBlock().getBlockData() instanceof Ageable) ||
-                ((Ageable) event.getBlock().getBlockData()).getAge() != ((Ageable) event.getBlock().getBlockData()).getMaximumAge()) {
+        if (!(event.getBlock().getBlockData() instanceof Ageable ageable) ||
+                ageable.getAge() != ageable.getMaximumAge()) {
             return;
         }
         PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(event.getPlayer());

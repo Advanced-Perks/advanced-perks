@@ -21,7 +21,6 @@ public class PerkGuiConfiguration extends Configuration {
 
     //TODO currently uneeded completely change the saving spot
     public PerkGuiSaveResult savePerkGuiLayout(SetupPerkGuiWindow guiWindow) {
-        System.out.println(guiWindow.getGuiElements().size());
         if (guiWindow.getGuiElements().size() != 21 && guiWindow.getGuiElements().size() != 54) {
             return PerkGuiSaveResult.MISSING_ELEMENTS;
         }
@@ -42,14 +41,14 @@ public class PerkGuiConfiguration extends Configuration {
                         }
                     });
             List<Integer> iconSlots = guiWindow.getGuiElements().values().stream()
-                    .filter(guiElement -> guiElement instanceof PerkIconPlaceholderElement)
-                    .map(guiElement -> (PerkIconPlaceholderElement) guiElement)
+                    .filter(PerkIconPlaceholderElement.class::isInstance)
+                    .map(PerkIconPlaceholderElement.class::cast)
                     .sorted(Comparator.comparingInt(PerkIconPlaceholderElement::getIndex))
                     .map(guiWindow::getSlot)
                     .toList();
             List<Integer> toggleSlots = guiWindow.getGuiElements().values().stream()
-                    .filter(guiElement -> guiElement instanceof PerkTogglePlaceholderElement)
-                    .map(guiElement -> (PerkTogglePlaceholderElement) guiElement)
+                    .filter(PerkTogglePlaceholderElement.class::isInstance)
+                    .map(PerkTogglePlaceholderElement.class::cast)
                     .sorted(Comparator.comparingInt(PerkTogglePlaceholderElement::getIndex))
                     .map(guiWindow::getSlot)
                     .toList();

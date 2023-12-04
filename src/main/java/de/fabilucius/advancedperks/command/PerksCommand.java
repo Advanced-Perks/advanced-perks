@@ -18,10 +18,12 @@ import de.fabilucius.advancedperks.core.command.annotation.SubCommands;
 import de.fabilucius.advancedperks.core.guisystem.GuiSystemManager;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import de.fabilucius.advancedperks.guisystem.perkgui.PerkGuiWindow;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.logging.Level;
 
 @CommandIdentifier("perks")
 @Aliases({"perk", "advancedperks"})
@@ -30,6 +32,9 @@ public class PerksCommand extends AbstractCommand {
 
     @Inject
     private GuiSystemManager guiSystemManager;
+
+    @Inject
+    private APLogger logger;
 
     private final ConfigurationLoader configurationLoader;
 
@@ -44,7 +49,8 @@ public class PerksCommand extends AbstractCommand {
         try {
             this.guiSystemManager.registerGuiWindowAnOpen(new PerkGuiWindow(this.configurationLoader, this.configurationLoader.getConfigurationAndLoad(SettingsConfiguration.class), this.configurationLoader.getConfigurationAndLoad(MessagesConfiguration.class), (Player) commandSender), (Player) commandSender);
         } catch (ConfigurationInitializationException e) {
-            throw new RuntimeException(e);
+            commandSender.sendMessage(ChatColor.RED + "An error occurred while using this command contact the server administrator.");
+            this.logger.log(Level.SEVERE, "An error occurred while opening the perks gui for %s.".formatted(commandSender.getName()), e);
         }
     }
 

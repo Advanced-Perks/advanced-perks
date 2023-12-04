@@ -90,14 +90,6 @@ public abstract class AbstractDatabase implements Database {
 
     /* the getter and setter of the class */
 
-    private String getConnectionUrl() {
-        return connectionUrl;
-    }
-
-    private Credentials getCredentials() {
-        return credentials;
-    }
-
     public Connection getConnection() {
         return connection;
     }

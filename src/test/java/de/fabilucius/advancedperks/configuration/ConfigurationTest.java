@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-public class ConfigurationTest extends AbstractConfigurationTest {
+class ConfigurationTest extends AbstractConfigurationTest {
 
     @Inject
     private Injector injector;
@@ -35,9 +35,9 @@ public class ConfigurationTest extends AbstractConfigurationTest {
         configuration.extractConfigurationFileFromJar();
         configuration.loadConfigurationFile();
 
-        Assertions.assertEquals(configuration.getString("test_string"), "test");
-        Assertions.assertEquals(configuration.getDouble("test_double"), 2.0);
-        Assertions.assertEquals(configuration.getInt("test_int"), 2);
+        Assertions.assertEquals("test", configuration.getString("test_string"));
+        Assertions.assertEquals(2.0, configuration.getDouble("test_double"));
+        Assertions.assertEquals(2, configuration.getInt("test_int"));
         Assertions.assertTrue(configuration.getBoolean("test_boolean"));
     }
 
@@ -55,7 +55,7 @@ public class ConfigurationTest extends AbstractConfigurationTest {
         configuration.extractConfigurationFileFromJar();
         configuration.loadConfigurationFile();
 
-        Assertions.assertEquals(configuration.getString("test_string"), "test");
+        Assertions.assertEquals("test", configuration.getString("test_string"));
 
         configuration.set("test_string", "another_string");
         configuration.saveConfiguration();
@@ -63,7 +63,7 @@ public class ConfigurationTest extends AbstractConfigurationTest {
         configuration = Mockito.spy(this.injector.getInstance(TestConfiguration.class));
         configuration.loadConfigurationFile();
 
-        Assertions.assertEquals(configuration.getString("test_string"), "another_string");
+        Assertions.assertEquals("another_string", configuration.getString("test_string"));
     }
 
     @Test

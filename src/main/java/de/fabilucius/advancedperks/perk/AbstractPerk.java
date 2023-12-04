@@ -18,7 +18,7 @@ public abstract class AbstractPerk implements Perk {
     private final boolean enabled;
     private final Map<String, Object> flags;
 
-    public AbstractPerk(String identifier, String displayName, PerkDescription perkDescription, PerkGuiIcon perkGuiIcon, boolean enabled, Map<String, Object> flags) {
+    protected AbstractPerk(String identifier, String displayName, PerkDescription perkDescription, PerkGuiIcon perkGuiIcon, boolean enabled, Map<String, Object> flags) {
         this.identifier = identifier;
         this.displayName = displayName;
         this.perkDescription = perkDescription;

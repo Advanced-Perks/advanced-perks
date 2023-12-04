@@ -40,42 +40,31 @@ public class SmelterPerk extends AbstractDefaultPerk implements ListenerPerk {
             for (Item item : event.getItems()) {
                 Material material = item.getItemStack().getType();
                 switch (material.name()) {
-                    case "COAL_ORE":
-                    case "DEEPSLATE_COAL_ORE":
+                    case "COAL_ORE", "DEEPSLATE_COAL_ORE":
                         item.getItemStack().setType(Material.COAL);
                         break;
-                    case "IRON_ORE":
-                    case "DEEPSLATE_IRON_ORE":
-                    case "RAW_IRON":
+                    case "IRON_ORE", "DEEPSLATE_IRON_ORE", "RAW_IRON":
                         item.getItemStack().setType(Material.IRON_INGOT);
                         break;
-                    case "GOLD_ORE":
-                    case "DEEPSLATE_GOLD_ORE":
-                    case "RAW_GOLD":
+                    case "GOLD_ORE", "DEEPSLATE_GOLD_ORE", "RAW_GOLD":
                         item.getItemStack().setType(Material.GOLD_INGOT);
                         break;
-                    case "COPPER_ORE":
-                    case "DEEPSLATE_COPPER_ORE":
-                    case "RAW_COPPER":
-                        item.getItemStack().setType(Material.getMaterial("COPPER_INGOT"));
+                    case "COPPER_ORE", "DEEPSLATE_COPPER_ORE", "RAW_COPPER":
+                        item.getItemStack().setType(Material.valueOf("COPPER_INGOT"));
                         break;
-                    case "DIAMOND_ORE":
-                    case "DEEPSLATE_DIAMOND_ORE":
+                    case "DIAMOND_ORE", "DEEPSLATE_DIAMOND_ORE":
                         item.getItemStack().setType(Material.DIAMOND);
                         break;
-                    case "EMERALD_ORE":
-                    case "DEEPSLATE_EMERALD_ORE":
+                    case "EMERALD_ORE", "DEEPSLATE_EMERALD_ORE":
                         item.getItemStack().setType(Material.EMERALD);
                         break;
-                    case "LAPIS_ORE":
-                    case "DEEPSLATE_LAPIS_ORE":
+                    case "LAPIS_ORE", "DEEPSLATE_LAPIS_ORE":
                         item.getItemStack().setType(Material.LAPIS_LAZULI);
                         break;
                     case "NETHER_QUARTZ_ORE":
                         item.getItemStack().setType(Material.QUARTZ);
                         break;
-                    case "REDSTONE_ORE":
-                    case "DEEPSLATE_REDSTONE_ORE":
+                    case "REDSTONE_ORE", "DEEPSLATE_REDSTONE_ORE":
                         item.getItemStack().setType(Material.REDSTONE);
                         break;
                     case "NETHER_GOLD_ORE":
@@ -83,6 +72,8 @@ public class SmelterPerk extends AbstractDefaultPerk implements ListenerPerk {
                         break;
                     case "ANCIENT_DEBRIS":
                         item.getItemStack().setType(Material.NETHERITE_SCRAP);
+                        break;
+                    default:
                         break;
                 }
             }

@@ -25,7 +25,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
@@ -41,7 +40,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     //TODO currently unneeded figure out a stable way for auto register without adding command to plugin.yml
     @Inject
-    public AbstractCommand(ConfigurationLoader configurationLoader, APLogger logger, Injector injector) throws ConfigurationInitializationException {
+    protected AbstractCommand(ConfigurationLoader configurationLoader, APLogger logger, Injector injector) throws ConfigurationInitializationException {
         this.messagesConfiguration = configurationLoader.getConfigurationAndLoad(MessagesConfiguration.class);
         this.logger = logger;
         this.injector = injector;
@@ -101,7 +100,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
                             sender.hasPermission(subCommand.getPermission().get()))
                     .map(AbstractSubCommand::getIdentifier)
                     .filter(subCommand -> subCommand.toLowerCase().startsWith(args[0].toLowerCase()))
-                    .collect(Collectors.toList()) : Lists.newArrayList();
+                    .toList() : Lists.newArrayList();
         }
         return this.tabComplete(sender, args);
     }
@@ -112,7 +111,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
             List<String> aliases = Lists.newArrayList();
             Arrays.stream(this.getClass().getAnnotation(SubCommands.class).value()).forEach(subCommandClass -> {
                 try {
-                    AbstractSubCommand abstractSubCommand = this.injector.getInstance(subCommandClass); //subCommandClass.getConstructor().newInstance();
+                    AbstractSubCommand abstractSubCommand = this.injector.getInstance(subCommandClass);
                     if (aliases.contains(abstractSubCommand.getIdentifier()) || abstractSubCommand.getAliases().isPresent() && !Collections.disjoint(aliases, abstractSubCommand.getAliases().get())) {
                         throw new IllegalStateException(String.format("Cannot load sub command %s in command %s, the sub command contains an " +
                                 "identifier or alias that another sub command already contains.", subCommandClass.getName(), this.getClass().getName()));

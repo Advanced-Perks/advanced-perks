@@ -58,7 +58,7 @@ public class SkullStackBuilder extends ItemStackBuilder {
     public static SkullStackBuilder fromApproximateMaterial(String approximateMaterial) {
         Preconditions.checkNotNull(approximateMaterial, "approximateMaterial cannot be null");
         Optional<XMaterial> xMaterial = XMaterial.matchXMaterial(approximateMaterial);
-        Preconditions.checkState(xMaterial.isPresent(), approximateMaterial + " cannot be mapped to a potential material");
+        Preconditions.checkState(xMaterial.isPresent(), "%s cannot be mapped to a potential material".formatted(approximateMaterial));
         ItemStack itemStack = xMaterial.get().parseItem();
         Preconditions.checkNotNull(itemStack, "itemStack cannot be null");
         Material material = itemStack.getType();

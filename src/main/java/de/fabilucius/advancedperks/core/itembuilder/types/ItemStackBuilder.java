@@ -6,7 +6,6 @@ import com.google.common.collect.Lists;
 import de.fabilucius.advancedperks.core.itembuilder.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -47,7 +46,7 @@ public class ItemStackBuilder implements ItemBuilder {
     public static ItemStackBuilder fromApproximateMaterial(String approximateMaterial) {
         Preconditions.checkNotNull(approximateMaterial, "approximateMaterial cannot be null");
         Optional<XMaterial> xMaterial = XMaterial.matchXMaterial(approximateMaterial);
-        Preconditions.checkState(xMaterial.isPresent(), approximateMaterial + " cannot be mapped to a potential material");
+        Preconditions.checkState(xMaterial.isPresent(), "%s cannot be mapped to a potential material".formatted(approximateMaterial));
         ItemStack itemStack = xMaterial.get().parseItem();
         Preconditions.checkNotNull(itemStack, "itemStack cannot be null");
         return new ItemStackBuilder(itemStack);
@@ -94,12 +93,6 @@ public class ItemStackBuilder implements ItemBuilder {
 
     public <T, Z> ItemStackBuilder addPersistentData(NamespacedKey key, PersistentDataType<T, Z> persistentDataType, Z value) {
         this.getItemMeta().getPersistentDataContainer().set(key, persistentDataType, value);
-        return this;
-    }
-
-    public ItemStackBuilder addGlowing() {
-        this.itemStack.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 1);
-        // this.itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         return this;
     }
 

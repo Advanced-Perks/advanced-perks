@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 public abstract class AbstractPerkCompatability implements Listener {
 
     @Inject
-    public AbstractPerkCompatability(AdvancedPerks advancedPerks) {
+    protected AbstractPerkCompatability(AdvancedPerks advancedPerks) {
         Bukkit.getPluginManager().registerEvents(this, advancedPerks);
     }
 

@@ -23,7 +23,7 @@ public abstract class AbstractSubCommand {
     private String permission;
 
     @Inject
-    public AbstractSubCommand(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
+    protected AbstractSubCommand(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
         this.messagesConfiguration = configurationLoader.getConfigurationAndLoad(MessagesConfiguration.class);
         CommandIdentifier commandIdentifierAnnotation = this.getClass().getAnnotation(CommandIdentifier.class);
         if (commandIdentifierAnnotation == null) {

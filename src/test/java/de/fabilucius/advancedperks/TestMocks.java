@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public final class TestMocks {
 
-    private TestMocks(){
+    private TestMocks() {
     }
 
     public static AdvancedPerks getAdvancedPerksMock() {

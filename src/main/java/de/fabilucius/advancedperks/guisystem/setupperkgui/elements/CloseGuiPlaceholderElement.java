@@ -21,6 +21,6 @@ public class CloseGuiPlaceholderElement extends AbstractGuiElement {
 
     @Override
     public BiConsumer<GuiElement, InventoryClickEvent> handleInventoryClick() {
-        return (guiElement, event) -> {};
+        return (guiElement, event) -> { };
     }
 }

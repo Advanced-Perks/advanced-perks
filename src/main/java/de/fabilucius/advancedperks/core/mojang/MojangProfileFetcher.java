@@ -15,7 +15,7 @@ public final class MojangProfileFetcher {
     private static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
     private static final JsonParser JSON_PARSER = new JsonParser();
 
-    private MojangProfileFetcher(){
+    private MojangProfileFetcher() {
     }
 
     public static MojangProfileData fetchPlayerProfile(String name) {

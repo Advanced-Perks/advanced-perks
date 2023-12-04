@@ -8,11 +8,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import javax.net.ssl.HttpsURLConnection;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -25,17 +36,6 @@ import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
 
 public class Metrics {
-
-    public static void load(APLogger logger, SettingsConfiguration settingsConfiguration, AdvancedPerks advancedPerks) {
-        if (settingsConfiguration.isMetricsCollectionEnabled()) {
-            logger.info("Metrics collection has started, thanks for providing useful and anonymous metrics " +
-                    "data to improve my software.");
-            new Metrics(advancedPerks, 12771);
-        } else {
-            logger.info("Collecting of metrics was disabled in the config, please consider enabling it " +
-                    "as it would help me improve my software with no additional cost for you.");
-        }
-    }
 
     private final Plugin plugin;
 
@@ -73,6 +73,7 @@ public class Metrics {
             try {
                 config.save(configFile);
             } catch (IOException ignored) {
+                ignored.printStackTrace();
             }
         }
         // Load the data
@@ -92,10 +93,21 @@ public class Metrics {
                         submitDataTask -> Bukkit.getScheduler().runTask(plugin, submitDataTask),
                         plugin::isEnabled,
                         (message, error) -> this.plugin.getLogger().log(Level.WARNING, message, error),
-                        (message) -> this.plugin.getLogger().log(Level.INFO, message),
+                        message -> this.plugin.getLogger().log(Level.INFO, message),
                         logErrors,
                         logSentData,
                         logResponseStatusText);
+    }
+
+    public static void load(APLogger logger, SettingsConfiguration settingsConfiguration, AdvancedPerks advancedPerks) {
+        if (settingsConfiguration.isMetricsCollectionEnabled()) {
+            logger.info("Metrics collection has started, thanks for providing useful and anonymous metrics " +
+                    "data to improve my software.");
+            new Metrics(advancedPerks, 12771);
+        } else {
+            logger.info("Collecting of metrics was disabled in the config, please consider enabling it " +
+                    "as it would help me improve my software with no additional cost for you.");
+        }
     }
 
     /**
@@ -145,7 +157,7 @@ public class Metrics {
          */
         public static final String METRICS_VERSION = "2.2.1";
 
-        private static final ScheduledExecutorService scheduler =
+        private static final ScheduledExecutorService SCHEDULER =
                 Executors.newScheduledThreadPool(1, task -> new Thread(task, "bStats-Metrics"));
 
         private static final String REPORT_URL = "https://bStats.org/api/v2/data/%s";
@@ -241,7 +253,7 @@ public class Metrics {
                     () -> {
                         if (!enabled || !checkServiceEnabledSupplier.get()) {
                             // Submitting data or service is disabled
-                            scheduler.shutdown();
+                            SCHEDULER.shutdown();
                             return;
                         }
                         if (submitTaskConsumer != null) {
@@ -259,8 +271,8 @@ public class Metrics {
             // WARNING: Modifying this code will get your plugin banned on bStats. Just don't do it!
             long initialDelay = (long) (1000 * 60 * (3 + Math.random() * 3));
             long secondDelay = (long) (1000 * 60 * (Math.random() * 30));
-            scheduler.schedule(submitTask, initialDelay, TimeUnit.MILLISECONDS);
-            scheduler.scheduleAtFixedRate(
+            SCHEDULER.schedule(submitTask, initialDelay, TimeUnit.MILLISECONDS);
+            SCHEDULER.scheduleAtFixedRate(
                     submitTask, initialDelay + secondDelay, 1000 * 60 * 30, TimeUnit.MILLISECONDS);
         }
 
@@ -280,7 +292,7 @@ public class Metrics {
             baseJsonBuilder.appendField("serverUUID", serverUuid);
             baseJsonBuilder.appendField("metricsVersion", METRICS_VERSION);
             JsonObjectBuilder.JsonObject data = baseJsonBuilder.build();
-            scheduler.execute(
+            SCHEDULER.execute(
                     () -> {
                         try {
                             // Send the data
@@ -837,7 +849,7 @@ public class Metrics {
          * allow a raw string inputs for methods like {@link JsonObjectBuilder#appendField(String,
          * JsonObject)}.
          */
-        public static class JsonObject {
+        public static final class JsonObject {
 
             private final String value;
 

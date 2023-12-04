@@ -1,5 +1,6 @@
 package de.fabilucius.advancedperks.core.itembuilder.types;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import de.fabilucius.advancedperks.core.itembuilder.ItemBuilder;
@@ -11,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ItemStackBuilder implements ItemBuilder {
 
@@ -42,18 +44,15 @@ public class ItemStackBuilder implements ItemBuilder {
      * @param approximateMaterial the material to hopefully find :)
      * @return the itemStack if an appropriate material was found
      */
-    //TODO currently unneeded add Material approximation
+    public static ItemStackBuilder fromApproximateMaterial(String approximateMaterial) {
+        Preconditions.checkNotNull(approximateMaterial, "approximateMaterial cannot be null");
+        Optional<XMaterial> xMaterial = XMaterial.matchXMaterial(approximateMaterial);
+        Preconditions.checkState(xMaterial.isPresent(), approximateMaterial + " cannot be mapped to a potential material");
+        ItemStack itemStack = xMaterial.get().parseItem();
+        Preconditions.checkNotNull(itemStack, "itemStack cannot be null");
+        return new ItemStackBuilder(itemStack);
+    }
 
-    /**
-     * public static ItemStackBuilder fromApproximateMaterial(String approximateMaterial) {
-     * Preconditions.checkNotNull(approximateMaterial, "approximateMaterial cannot be null");
-     * Optional<XMaterial> xMaterial = XMaterial.matchXMaterial(approximateMaterial);
-     * Preconditions.checkState(xMaterial.isPresent(), approximateMaterial + " cannot be mapped to a potential material");
-     * ItemStack itemStack = xMaterial.get().parseItem();
-     * Preconditions.checkNotNull(itemStack, "itemStack cannot be null");
-     * return new ItemStackBuilder(itemStack);
-     * }
-     */
 
     public ItemStackBuilder setMaterial(Material material) {
         this.itemStack.setType(material);

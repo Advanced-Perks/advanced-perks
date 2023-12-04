@@ -12,11 +12,17 @@ import org.bukkit.entity.Player;
 @Singleton
 public class AdvancedPerksApiImpl implements AdvancedPerksApi {
 
+    private static AdvancedPerksApiImpl instance;
+
     @Inject
     private PerkStateController perkStateController;
 
     @Inject
     private PerkRegistryImpl perkRegistry;
+
+    public AdvancedPerksApiImpl() {
+        instance = this;
+    }
 
     @Override
     public PerkStateController getPerkStateController() {
@@ -50,13 +56,6 @@ public class AdvancedPerksApiImpl implements AdvancedPerksApi {
     }
 
     /* Singleton stuff */
-
-    private static AdvancedPerksApiImpl instance;
-
-    public AdvancedPerksApiImpl() {
-        instance = this;
-    }
-
     public static AdvancedPerksApiImpl getInstance() {
         return instance;
     }

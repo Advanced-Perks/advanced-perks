@@ -53,6 +53,29 @@ import java.util.regex.Pattern;
  * @version 7.1.0
  */
 public final class ReflectionUtils {
+
+    /**
+     * The raw minor version number.
+     * E.g. {@code v1_17_R1} to {@code 17}
+     *
+     * @see #supports(int)
+     * @since 4.0.0
+     */
+    public static final int MINOR_NUMBER;
+    /**
+     * The raw patch version number.
+     * E.g. {@code v1_17_R1} to {@code 1}
+     * <p>
+     * I'd not recommend developers to support individual patches at all. You should always support the latest patch.
+     * For example, between v1.14.0, v1.14.1, v1.14.2, v1.14.3 and v1.14.4 you should only support v1.14.4
+     * <p>
+     * This can be used to warn server owners when your plugin will break on older patches.
+     *
+     * @see #supportsPatch(int)
+     * @since 7.0.0
+     */
+    public static final int PATCH_NUMBER;
+
     /**
      * We use reflection mainly to avoid writing a new class for version barrier.
      * The version barrier is for NMS that uses the Minecraft version as the main package name.
@@ -91,32 +114,37 @@ public final class ReflectionUtils {
                 }
             }
         }
-        if (found == null)
+        if (found == null) {
             throw new IllegalArgumentException("Failed to parse server version. Could not find any package starting with name: 'org.bukkit.craftbukkit.v'");
+        }
         NMS_VERSION = found;
     }
 
+
     /**
-     * The raw minor version number.
-     * E.g. {@code v1_17_R1} to {@code 17}
-     *
-     * @see #supports(int)
-     * @since 4.0.0
+     * Mojang remapped their NMS in 1.17: <a href="https://www.spigotmc.org/threads/spigot-bungeecord-1-17.510208/#post-4184317">Spigot Thread</a>
      */
-    public static final int MINOR_NUMBER;
+    public static final String CRAFTBUKKIT_PACKAGE = "org.bukkit.craftbukkit." + NMS_VERSION + '.';
+    public static final String NMS_PACKAGE = v(17, "net.minecraft.").orElse("net.minecraft.server." + NMS_VERSION + '.');
+
     /**
-     * The raw patch version number.
-     * E.g. {@code v1_17_R1} to {@code 1}
-     * <p>
-     * I'd not recommend developers to support individual patches at all. You should always support the latest patch.
-     * For example, between v1.14.0, v1.14.1, v1.14.2, v1.14.3 and v1.14.4 you should only support v1.14.4
-     * <p>
-     * This can be used to warn server owners when your plugin will break on older patches.
-     *
-     * @see #supportsPatch(int)
-     * @since 7.0.0
+     * A nullable public accessible field only available in {@code EntityPlayer}.
+     * This can be null if the player is offline.
      */
-    public static final int PATCH_NUMBER;
+    private static final MethodHandle PLAYER_CONNECTION;
+    /**
+     * Responsible for getting the NMS handler {@code EntityPlayer} object for the player.
+     * {@code CraftPlayer} is simply a wrapper for {@code EntityPlayer}.
+     * Used mainly for handling packet related operations.
+     * <p>
+     * This is also where the famous player {@code ping} field comes from!
+     */
+    private static final MethodHandle GET_HANDLE;
+    /**
+     * Sends a packet to the player's client through a {@code NetworkManager} which
+     * is where {@code ProtocolLib} controls packets by injecting channels!
+     */
+    private static final MethodHandle SEND_PACKET;
 
     static {
         String[] split = NMS_VERSION.substring(1).split("_");
@@ -127,8 +155,9 @@ public final class ReflectionUtils {
         String minorVer = split[1];
         try {
             MINOR_NUMBER = Integer.parseInt(minorVer);
-            if (MINOR_NUMBER < 0)
+            if (MINOR_NUMBER < 0) {
                 throw new IllegalStateException("Negative minor number? " + minorVer + ' ' + getVersionInformation());
+            }
         } catch (Throwable ex) {
             throw new RuntimeException("Failed to parse minor number: " + minorVer + ' ' + getVersionInformation(), ex);
         }
@@ -146,6 +175,9 @@ public final class ReflectionUtils {
             // 1.8-R0.1-SNAPSHOT
             PATCH_NUMBER = 0;
         }
+    }
+
+    private ReflectionUtils() {
     }
 
     /**
@@ -169,7 +201,9 @@ public final class ReflectionUtils {
      * @since 7.0.0
      */
     public static Integer getLatestPatchNumberOf(int minorVersion) {
-        if (minorVersion <= 0) throw new IllegalArgumentException("Minor version must be positive: " + minorVersion);
+        if (minorVersion <= 0) {
+            throw new IllegalArgumentException("Minor version must be positive: " + minorVersion);
+        }
 
         // https://minecraft.wiki/w/Java_Edition_version_history
         // There are many ways to do this, but this is more visually appealing.
@@ -184,47 +218,24 @@ public final class ReflectionUtils {
                 /* 8 */ 8, // I don't think they released a server version for 1.8.9
                 /* 9 */ 4,
 
-                /* 10 */ 2,//          ,_  _  _,
-                /* 11 */ 2,//            \o-o/
-                /* 12 */ 2,//           ,(.-.),
-                /* 13 */ 2,//         _/ |) (| \_
-                /* 14 */ 4,//           /\=-=/\
-                /* 15 */ 2,//          ,| \=/ |,
-                /* 16 */ 5,//        _/ \  |  / \_
-                /* 17 */ 1,//            \_!_/
+                /* 10 */ 2, //          ,_  _  _,
+                /* 11 */ 2, //            \o-o/
+                /* 12 */ 2, //           ,(.-.),
+                /* 13 */ 2, //         _/ |) (| \_
+                /* 14 */ 4, //           /\=-=/\
+                /* 15 */ 2, //          ,| \=/ |,
+                /* 16 */ 5, //        _/ \  |  / \_
+                /* 17 */ 1, //            \_!_/
                 /* 18 */ 2,
                 /* 19 */ 4,
-                /* 20 */ 2,
+                /* 20 */ 2
         };
 
-        if (minorVersion > patches.length) return null;
+        if (minorVersion > patches.length) {
+            return null;
+        }
         return patches[minorVersion - 1];
     }
-
-    /**
-     * Mojang remapped their NMS in 1.17: <a href="https://www.spigotmc.org/threads/spigot-bungeecord-1-17.510208/#post-4184317">Spigot Thread</a>
-     */
-    public static final String
-            CRAFTBUKKIT_PACKAGE = "org.bukkit.craftbukkit." + NMS_VERSION + '.',
-            NMS_PACKAGE = v(17, "net.minecraft.").orElse("net.minecraft.server." + NMS_VERSION + '.');
-    /**
-     * A nullable public accessible field only available in {@code EntityPlayer}.
-     * This can be null if the player is offline.
-     */
-    private static final MethodHandle PLAYER_CONNECTION;
-    /**
-     * Responsible for getting the NMS handler {@code EntityPlayer} object for the player.
-     * {@code CraftPlayer} is simply a wrapper for {@code EntityPlayer}.
-     * Used mainly for handling packet related operations.
-     * <p>
-     * This is also where the famous player {@code ping} field comes from!
-     */
-    private static final MethodHandle GET_HANDLE;
-    /**
-     * Sends a packet to the player's client through a {@code NetworkManager} which
-     * is where {@code ProtocolLib} controls packets by injecting channels!
-     */
-    private static final MethodHandle SEND_PACKET;
 
     static {
         Class<?> entityPlayer = getNMSClass("server.level", "EntityPlayer");
@@ -239,7 +250,9 @@ public final class ReflectionUtils {
         }
 
         MethodHandles.Lookup lookup = MethodHandles.lookup();
-        MethodHandle sendPacket = null, getHandle = null, connection = null;
+        MethodHandle sendPacket = null;
+        MethodHandle getHandle = null;
+        MethodHandle connection = null;
 
         try {
             connection = lookup.findGetter(entityPlayer,
@@ -255,9 +268,6 @@ public final class ReflectionUtils {
         PLAYER_CONNECTION = connection;
         SEND_PACKET = sendPacket;
         GET_HANDLE = getHandle;
-    }
-
-    private ReflectionUtils() {
     }
 
     /**
@@ -333,7 +343,9 @@ public final class ReflectionUtils {
      */
     @Nullable
     public static Class<?> getNMSClass(@Nullable String packageName, @Nonnull String name) {
-        if (packageName != null && supports(17)) name = packageName + '.' + name;
+        if (packageName != null && supports(17)) {
+            name = packageName + '.' + name;
+        }
 
         try {
             return Class.forName(NMS_PACKAGE + name);
@@ -388,7 +400,9 @@ public final class ReflectionUtils {
 
             // Checking if the connection is not null is enough. There is no need to check if the player is online.
             if (connection != null) {
-                for (Object packet : packets) SEND_PACKET.invoke(connection, packet);
+                for (Object packet : packets) {
+                    SEND_PACKET.invoke(connection, packet);
+                }
             }
         } catch (Throwable throwable) {
             throwable.printStackTrace();
@@ -467,7 +481,8 @@ public final class ReflectionUtils {
     }
 
     public static final class VersionHandler<T> {
-        private int version, patch;
+        private int version;
+        private int patch;
         private T handle;
 
         private VersionHandler(int version, T handle) {
@@ -487,8 +502,9 @@ public final class ReflectionUtils {
         }
 
         public VersionHandler<T> v(int version, int patch, T handle) {
-            if (version == this.version && patch == this.patch)
+            if (version == this.version && patch == this.patch) {
                 throw new IllegalArgumentException("Cannot have duplicate version handles for version: " + version + '.' + patch);
+            }
             if (version > this.version && supports(version) && patch >= this.patch && supportsPatch(patch)) {
                 this.version = version;
                 this.patch = patch;
@@ -517,8 +533,9 @@ public final class ReflectionUtils {
         }
 
         public CallableVersionHandler<T> v(int version, Callable<T> handle) {
-            if (version == this.version)
+            if (version == this.version) {
                 throw new IllegalArgumentException("Cannot have duplicate version handles for version: " + version);
+            }
             if (version > this.version && supports(version)) {
                 this.version = version;
                 this.handle = handle;

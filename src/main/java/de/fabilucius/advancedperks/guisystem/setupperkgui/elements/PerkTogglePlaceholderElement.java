@@ -25,7 +25,7 @@ public class PerkTogglePlaceholderElement extends AbstractGuiElement {
 
     @Override
     public BiConsumer<GuiElement, InventoryClickEvent> handleInventoryClick() {
-        return (guiElement, event) -> {};
+        return (guiElement, event) -> { };
     }
 
     public int getIndex() {

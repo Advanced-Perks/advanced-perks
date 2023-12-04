@@ -28,7 +28,7 @@ public class FileDatabase extends AbstractDatabase {
                 LOGGER.log(Level.SEVERE, "There was an error while creating the file for a database:", ioException);
             }
         }
-        return new FileDatabase("jdbc:sqlite:"+file.getPath());
+        return new FileDatabase("jdbc:sqlite:" + file.getPath());
     }
 
 }

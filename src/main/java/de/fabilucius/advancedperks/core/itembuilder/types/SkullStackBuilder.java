@@ -1,5 +1,6 @@
 package de.fabilucius.advancedperks.core.itembuilder.types;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.google.common.base.Preconditions;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -10,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Field;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,8 +55,7 @@ public class SkullStackBuilder extends ItemStackBuilder {
      * @param approximateMaterial the material to hopefully find :)
      * @return the itemStack if an appropriate material was found
      */
-    //TODO currently unneeded add Material approximation
-    /**public static SkullStackBuilder fromApproximateMaterial(String approximateMaterial) {
+    public static SkullStackBuilder fromApproximateMaterial(String approximateMaterial) {
         Preconditions.checkNotNull(approximateMaterial, "approximateMaterial cannot be null");
         Optional<XMaterial> xMaterial = XMaterial.matchXMaterial(approximateMaterial);
         Preconditions.checkState(xMaterial.isPresent(), approximateMaterial + " cannot be mapped to a potential material");
@@ -64,7 +65,7 @@ public class SkullStackBuilder extends ItemStackBuilder {
         Preconditions.checkState(material.name().contains("SKULL") ||
                 material.name().contains("HEAD"), "material needs to be a skull");
         return new SkullStackBuilder(itemStack);
-    }*/
+    }
 
     public SkullStackBuilder setBase64Value(String base64Value) {
         try {

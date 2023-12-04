@@ -12,7 +12,11 @@ import de.fabilucius.advancedperks.core.command.annotation.Permission;
 import de.fabilucius.advancedperks.core.command.annotation.SubCommands;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import org.bukkit.Bukkit;
-import org.bukkit.command.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -108,8 +112,8 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
             List<String> aliases = Lists.newArrayList();
             Arrays.stream(this.getClass().getAnnotation(SubCommands.class).value()).forEach(subCommandClass -> {
                 try {
-                    AbstractSubCommand abstractSubCommand = this.injector.getInstance(subCommandClass);//subCommandClass.getConstructor().newInstance();
-                    if (aliases.contains(abstractSubCommand.getIdentifier()) || (abstractSubCommand.getAliases().isPresent() && !Collections.disjoint(aliases, abstractSubCommand.getAliases().get()))) {
+                    AbstractSubCommand abstractSubCommand = this.injector.getInstance(subCommandClass); //subCommandClass.getConstructor().newInstance();
+                    if (aliases.contains(abstractSubCommand.getIdentifier()) || abstractSubCommand.getAliases().isPresent() && !Collections.disjoint(aliases, abstractSubCommand.getAliases().get())) {
                         throw new IllegalStateException(String.format("Cannot load sub command %s in command %s, the sub command contains an " +
                                 "identifier or alias that another sub command already contains.", subCommandClass.getName(), this.getClass().getName()));
                     }
@@ -125,7 +129,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     public Optional<AbstractSubCommand> getSubCommand(String alias) {
         return this.subCommands.stream().filter(abstractSubCommand -> abstractSubCommand.getIdentifier().equalsIgnoreCase(alias) ||
-                        (abstractSubCommand.getAliases().isPresent() && abstractSubCommand.getAliases().get().stream().anyMatch(s -> s.equalsIgnoreCase(alias))))
+                        abstractSubCommand.getAliases().isPresent() && abstractSubCommand.getAliases().get().stream().anyMatch(s -> s.equalsIgnoreCase(alias)))
                 .findFirst();
     }
 

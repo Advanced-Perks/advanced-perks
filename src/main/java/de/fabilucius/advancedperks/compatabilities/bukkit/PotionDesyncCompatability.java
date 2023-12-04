@@ -26,13 +26,6 @@ public class PotionDesyncCompatability extends AbstractPerkCompatability {
 
     private final ArrayDeque<Player> desyncedPlayer = Queues.newArrayDeque();
 
-    @Inject
-    public PotionDesyncCompatability(AdvancedPerks advancedPerks) {
-        super(advancedPerks);
-        Bukkit.getScheduler().runTaskTimer(advancedPerks, resyncPotionEffectTask, 10L, 10L);
-        Bukkit.getScheduler().runTaskTimer(advancedPerks, watchdogTask, 10L, 10L);
-    }
-
     private final Runnable resyncPotionEffectTask = () -> {
         while (!this.desyncedPlayer.isEmpty()) {
             Player player = this.desyncedPlayer.poll();
@@ -53,6 +46,13 @@ public class PotionDesyncCompatability extends AbstractPerkCompatability {
             });
         });
     };
+
+    @Inject
+    public PotionDesyncCompatability(AdvancedPerks advancedPerks) {
+        super(advancedPerks);
+        Bukkit.getScheduler().runTaskTimer(advancedPerks, resyncPotionEffectTask, 10L, 10L);
+        Bukkit.getScheduler().runTaskTimer(advancedPerks, watchdogTask, 10L, 10L);
+    }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerItemConsume(PlayerItemConsumeEvent event) {

@@ -46,6 +46,12 @@ public class PerkDataRepository implements Listener {
 
     private final Cache<UUID, PerkData> perkDataCache = CacheBuilder.newBuilder().build();
 
+    @Inject
+    public PerkDataRepository(AdvancedPerks advancedPerks) {
+        this.advancedPerks = advancedPerks;
+        Bukkit.getPluginManager().registerEvents(this, this.advancedPerks);
+    }
+
     public void setupDatabase() {
         this.database.connectToDatabase();
         this.database.runSqlScript("sql/2023.sql");
@@ -78,12 +84,6 @@ public class PerkDataRepository implements Listener {
             return createdPerkData;
         }
         return perkData;
-    }
-
-    @Inject
-    public PerkDataRepository(AdvancedPerks advancedPerks) {
-        this.advancedPerks = advancedPerks;
-        Bukkit.getPluginManager().registerEvents(this, this.advancedPerks);
     }
 
     @EventHandler

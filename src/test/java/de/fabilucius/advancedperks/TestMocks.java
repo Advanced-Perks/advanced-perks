@@ -5,7 +5,10 @@ import org.mockito.Mockito;
 
 import java.util.logging.Logger;
 
-public class TestMocks {
+public final class TestMocks {
+
+    private TestMocks() {
+    }
 
     public static AdvancedPerks getAdvancedPerksMock() {
         AdvancedPerks advancedPerksMock = Mockito.mock(AdvancedPerks.class);

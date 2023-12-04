@@ -43,7 +43,7 @@ public class PerkToggleElement extends AbstractGuiElement {
 
     @Override
     public BiConsumer<GuiElement, InventoryClickEvent> handleInventoryClick() {
-        return ((guiElement, event) -> {
+        return (guiElement, event) -> {
             event.setCancelled(true);
             PerkToggleResult result = this.perkStateController.togglePerk(this.getGuiWindow().getPlayer(), this.perk);
             switch (result) {
@@ -65,6 +65,6 @@ public class PerkToggleElement extends AbstractGuiElement {
                     this.playSound(GuiSound.OFF_CLICK);
                 }
             }
-        });
+        };
     }
 }

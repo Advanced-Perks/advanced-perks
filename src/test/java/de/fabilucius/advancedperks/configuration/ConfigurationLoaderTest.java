@@ -5,7 +5,7 @@ import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitiali
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ConfigurationLoaderTest extends AbstractConfigurationTest {
+class ConfigurationLoaderTest extends AbstractConfigurationTest {
 
     @Inject
     ConfigurationLoader configurationLoader;
@@ -13,7 +13,7 @@ public class ConfigurationLoaderTest extends AbstractConfigurationTest {
     @Test
     void testConfigurationExtractionAndLoading() throws Exception {
         TestConfiguration testConfiguration = this.configurationLoader.getConfigurationAndLoad(TestConfiguration.class);
-        Assertions.assertEquals(testConfiguration.getTestString(), "test");
+        Assertions.assertEquals("test", testConfiguration.getTestString());
     }
 
     @Test

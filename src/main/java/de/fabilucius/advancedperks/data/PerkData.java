@@ -1,6 +1,7 @@
 package de.fabilucius.advancedperks.data;
 
 import com.google.common.collect.Sets;
+import de.fabilucius.advancedperks.exception.AdvancedPerksRuntimeException;
 import de.fabilucius.advancedperks.perk.Perk;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -46,7 +47,7 @@ public class PerkData {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             return messageDigest.digest(input.toString().getBytes());
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+            throw new AdvancedPerksRuntimeException(e);
         }
 
     }

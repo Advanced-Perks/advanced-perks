@@ -47,10 +47,8 @@ public class DisableSubCommand extends AbstractSubCommand {
                 }
                 player.sendMessage(this.messagesConfiguration.getComputedString("command.perks.disable.perk_doesnt_exist",
                         new ReplaceOptions("<perk>", arguments[0])));
-                return;
             } else {
                 commandSender.sendMessage("Cannot disable a perk for the console please specify a player /perk disable <perk> <player>.");
-                return;
             }
         } else if (arguments.length == 2) {
             Perk perk = this.perkRegistryImpl.getPerkByIdentifier(arguments[0]);
@@ -69,10 +67,8 @@ public class DisableSubCommand extends AbstractSubCommand {
             commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.disable.success",
                     new ReplaceOptions("<perk>", perk.getIdentifier()),
                     new ReplaceOptions("<player>", target.getName())));
-            return;
         } else {
             commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.disable.syntax"));
-            return;
         }
     }
 

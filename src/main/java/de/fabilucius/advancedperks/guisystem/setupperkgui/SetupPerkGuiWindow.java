@@ -73,7 +73,7 @@ public class SetupPerkGuiWindow extends AbstractGuiWindow {
             }
         } else {
             List<GuiElement> toRemove = this.getGuiElements().values().stream()
-                    .filter(guiElement -> guiElement instanceof GuiBackgroundElement)
+                    .filter(GuiBackgroundElement.class::isInstance)
                     .toList();
             toRemove.forEach(this::removeGuiElement);
         }

@@ -58,9 +58,7 @@ public class PerkDataRepository implements Listener {
     }
 
     public void loadOnlinePlayer() {
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            this.getPerkDataByUuid(player.getUniqueId());
-        });
+        Bukkit.getOnlinePlayers().forEach(player -> this.getPerkDataByUuid(player.getUniqueId()));
     }
 
     @NotNull
@@ -141,9 +139,7 @@ public class PerkDataRepository implements Listener {
     }
 
     public void savePerkDataAsync(PerkData perkData) {
-        Bukkit.getScheduler().runTaskAsynchronously(this.advancedPerks, () -> {
-            this.savePerkDataSync(perkData);
-        });
+        Bukkit.getScheduler().runTaskAsynchronously(this.advancedPerks, () -> this.savePerkDataSync(perkData));
     }
 
     private void savePerkDataSync(PerkData perkData) {

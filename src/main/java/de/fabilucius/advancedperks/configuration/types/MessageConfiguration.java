@@ -5,7 +5,6 @@ import de.fabilucius.advancedperks.configuration.replace.ReplaceOptions;
 import org.bukkit.ChatColor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MessageConfiguration extends Configuration {
 
@@ -14,7 +13,7 @@ public class MessageConfiguration extends Configuration {
         for (ReplaceOptions replaceOption : replaceOptions) {
             message = message.replaceAll(replaceOption.replaceKey(), replaceOption.replaceData());
         }
-        message = message.replaceAll("<prefix>", this.getPrefix());
+        message = message.replace("<prefix>", this.getPrefix());
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
@@ -26,11 +25,11 @@ public class MessageConfiguration extends Configuration {
         }
         return messages.stream().map(message -> {
             for (ReplaceOptions replaceOption : replaceOptions) {
-                message = message.replaceAll(replaceOption.replaceKey(), replaceOption.replaceData());
+                message = message.replace(replaceOption.replaceKey(), replaceOption.replaceData());
             }
-            message = message.replaceAll("<prefix>", this.getPrefix());
+            message = message.replace("<prefix>", this.getPrefix());
             return ChatColor.translateAlternateColorCodes('&', message);
-        }).collect(Collectors.toList());
+        }).toList();
     }
 
     private String getPrefix() {

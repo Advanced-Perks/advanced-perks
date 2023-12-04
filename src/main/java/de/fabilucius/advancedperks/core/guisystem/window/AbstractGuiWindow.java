@@ -36,7 +36,7 @@ public abstract class AbstractGuiWindow implements GuiWindow {
     private final Player player;
     private final boolean sounds;
 
-    public AbstractGuiWindow(Inventory inventory, Player player, boolean sounds) {
+    protected AbstractGuiWindow(Inventory inventory, Player player, boolean sounds) {
         this.inventory = inventory;
         this.player = player;
         this.sounds = sounds;
@@ -45,8 +45,7 @@ public abstract class AbstractGuiWindow implements GuiWindow {
     @Override
     public void addGuiElement(GuiElement guiElement, int slot) {
         this.injector.injectMembers(guiElement);
-        this.guiElements.entrySet().removeIf(uuidGuiElementEntry ->
-                slot == this.getSlot(uuidGuiElementEntry.getValue()));
+        this.guiElements.entrySet().removeIf(uuidGuiElementEntry -> slot == this.getSlot(uuidGuiElementEntry.getValue()));
         this.guiElements.put(guiElement.getUniqueId(), guiElement);
         this.inventory.setItem(slot, guiElement.getIcon());
     }
@@ -87,21 +86,19 @@ public abstract class AbstractGuiWindow implements GuiWindow {
 
     @Override
     public int getSlot(GuiElement guiElement) {
-        OptionalInt index = IntStream.range(0, this.getInventory().getSize())
-                .filter(i -> {
-                    ItemStack itemStack = this.getInventory().getItem(i);
-                    if (itemStack == null) {
-                        return false;
-                    } else {
-                        ItemMeta itemMeta = itemStack.getItemMeta();
-                        if (itemMeta == null) {
-                            return false;
-                        }
-                        UUID uuid = itemMeta.getPersistentDataContainer().get(uuidKey, new UuidPersistentDataType());
-                        return uuid != null && uuid.equals(guiElement.getUniqueId());
-                    }
-                })
-                .findFirst();
+        OptionalInt index = IntStream.range(0, this.getInventory().getSize()).filter(i -> {
+            ItemStack itemStack = this.getInventory().getItem(i);
+            if (itemStack == null) {
+                return false;
+            } else {
+                ItemMeta itemMeta = itemStack.getItemMeta();
+                if (itemMeta == null) {
+                    return false;
+                }
+                UUID uuid = itemMeta.getPersistentDataContainer().get(uuidKey, new UuidPersistentDataType());
+                return uuid != null && uuid.equals(guiElement.getUniqueId());
+            }
+        }).findFirst();
         return index.orElse(-1);
     }
 
@@ -113,8 +110,8 @@ public abstract class AbstractGuiWindow implements GuiWindow {
     @Override
     public void setTitle(String title) {
         this.getInventory().getViewers().forEach(humanEntity -> {
-            if (humanEntity instanceof Player player) {
-                InventoryUpdate.updateInventory(player, title);
+            if (humanEntity instanceof Player viewer) {
+                InventoryUpdate.updateInventory(viewer, title);
             }
         });
     }
@@ -127,8 +124,7 @@ public abstract class AbstractGuiWindow implements GuiWindow {
     @Override
     public void playSound(GuiSound guiSound) {
         if (this.sounds) {
-            Player player = this.getPlayer();
-            player.playSound(player.getLocation(), guiSound.getSound(), guiSound.getVolume(), guiSound.getPitch());
+            this.getPlayer().playSound(this.getPlayer().getLocation(), guiSound.getSound(), guiSound.getVolume(), guiSound.getPitch());
         }
     }
 }

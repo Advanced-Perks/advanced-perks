@@ -30,22 +30,19 @@ public class PotionDesyncCompatability extends AbstractPerkCompatability {
         while (!this.desyncedPlayer.isEmpty()) {
             Player player = this.desyncedPlayer.poll();
             PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
-            perkData.getEnabledPerks().stream().filter(perk -> perk instanceof EffectPerk).map(perk -> (EffectPerk) perk).forEach(effectPerk -> player.addPotionEffects(effectPerk.getPotionEffects()));
+            perkData.getEnabledPerks().stream().filter(EffectPerk.class::isInstance).map(EffectPerk.class::cast).forEach(effectPerk -> player.addPotionEffects(effectPerk.getPotionEffects()));
         }
     };
 
-    private final Runnable watchdogTask = () -> {
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
-            perkData.getEnabledPerks().stream().filter(perk -> perk instanceof EffectPerk).map(perk -> (EffectPerk) perk).forEach(effectPerk -> {
-                if (effectPerk.getPotionEffects().stream().anyMatch(potionEffect -> !player.hasPotionEffect(potionEffect.getType()))) {
-                    if (!this.desyncedPlayer.contains(player)) {
-                        this.desyncedPlayer.add(player);
-                    }
-                }
-            });
+    private final Runnable watchdogTask = () -> Bukkit.getOnlinePlayers().forEach(player -> {
+        PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
+        perkData.getEnabledPerks().stream().filter(EffectPerk.class::isInstance).map(EffectPerk.class::cast).forEach(effectPerk -> {
+            if (effectPerk.getPotionEffects().stream().anyMatch(potionEffect -> !player.hasPotionEffect(potionEffect.getType()) &&
+                    !this.desyncedPlayer.contains(player))) {
+                this.desyncedPlayer.add(player);
+            }
         });
-    };
+    });
 
     @Inject
     public PotionDesyncCompatability(AdvancedPerks advancedPerks) {
@@ -57,10 +54,8 @@ public class PotionDesyncCompatability extends AbstractPerkCompatability {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerItemConsume(PlayerItemConsumeEvent event) {
         Player player = event.getPlayer();
-        if (event.getItem().getType().equals(Material.MILK_BUCKET)) {
-            if (!this.desyncedPlayer.contains(player)) {
-                this.desyncedPlayer.add(player);
-            }
+        if (event.getItem().getType().equals(Material.MILK_BUCKET) && !this.desyncedPlayer.contains(player)) {
+            this.desyncedPlayer.add(player);
         }
     }
 

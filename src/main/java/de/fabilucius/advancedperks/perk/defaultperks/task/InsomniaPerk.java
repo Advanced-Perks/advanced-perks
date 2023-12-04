@@ -26,13 +26,11 @@ public class InsomniaPerk extends AbstractDefaultPerk implements TaskPerk {
 
     @Override
     public void registerTasks(AdvancedPerks advancedPerks) {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(advancedPerks, () -> {
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
-                if (perkData.getEnabledPerks().contains(this)) {
-                    player.setStatistic(Statistic.TIME_SINCE_REST, 0);
-                }
-            });
-        }, 0L, 5 * 20L);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(advancedPerks, () -> Bukkit.getOnlinePlayers().forEach(player -> {
+            PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
+            if (perkData.getEnabledPerks().contains(this)) {
+                player.setStatistic(Statistic.TIME_SINCE_REST, 0);
+            }
+        }), 0L, 5 * 20L);
     }
 }

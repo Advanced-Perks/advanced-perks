@@ -44,7 +44,6 @@ public class InfoSubCommand extends AbstractSubCommand {
                 this.printPerkInfo(player, player.getUniqueId(), player.getName());
             } else {
                 commandSender.sendMessage("You cannot have perk data to check another player do /perk info <player>.");
-                return;
             }
         } else {
             Player target = Bukkit.getPlayer(arguments[0]);

@@ -8,7 +8,7 @@ public abstract class AbstractPageGuiWindow extends AbstractGuiWindow {
 
     private int page;
 
-    public AbstractPageGuiWindow(Inventory inventory, Player player, boolean sounds) {
+    protected AbstractPageGuiWindow(Inventory inventory, Player player, boolean sounds) {
         super(inventory, player, sounds);
     }
 

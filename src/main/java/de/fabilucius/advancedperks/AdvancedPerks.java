@@ -20,8 +20,8 @@ public class AdvancedPerks extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Injector injector = Guice.createInjector(new PrimaryModule(this));
-        injector.injectMembers(this);
+        Injector injectorInstance = Guice.createInjector(new PrimaryModule(this));
+        injectorInstance.injectMembers(this);
         try {
             this.logger.info("Beginning the bootstrap process of the plugin.");
             this.injector.getInstance(AdvancedPerksBootstrap.class).initializePlugin();

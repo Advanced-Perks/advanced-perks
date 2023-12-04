@@ -11,7 +11,7 @@ public abstract class AbstractAdvancedPerksExpansion extends PlaceholderExpansio
     private final AdvancedPerks advancedPerks;
 
     @Inject
-    public AbstractAdvancedPerksExpansion(APLogger logger, AdvancedPerks advancedPerks) {
+    protected AbstractAdvancedPerksExpansion(APLogger logger, AdvancedPerks advancedPerks) {
         this.advancedPerks = advancedPerks;
         this.register();
     }

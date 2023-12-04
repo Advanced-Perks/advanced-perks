@@ -121,9 +121,7 @@ public class PerkStateController {
     }
 
     public void disablePerks(Player player, List<Perk> perks) {
-        perks.forEach(perk -> {
-            this.disablePerk(player, perk);
-        });
+        perks.forEach(perk -> this.disablePerk(player, perk));
     }
 
 }

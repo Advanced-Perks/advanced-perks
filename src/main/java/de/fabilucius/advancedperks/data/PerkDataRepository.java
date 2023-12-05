@@ -57,7 +57,7 @@ public class PerkDataRepository implements Listener {
         this.database.runSqlScript("sql/2023.sql");
     }
 
-    public boolean migratePerkData(){
+    public boolean migratePerkData() {
         return this.database.runSqlScript("sql/perk_data_migration.sql");
     }
 

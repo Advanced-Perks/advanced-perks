@@ -26,6 +26,11 @@ command:
       no_price_set: '<prefix> &cUnable to buy the perk "<perk>" no price was set for it in the configuration.'
       perk_not_found: '<prefix> &cUnable to buy the perk "<perk>" no perk with that identifier exist.'
       not_set_up: '<prefix> &cUnable to buy the perk no compatible economy plugin was found running on the server, for a list of supported economy plugins please refer to the plugins download page.'
+    toggle:
+      syntax: '<prefix> &cIncorrect usage the syntax of the command is /perks toggle <perk> [player].'
+      perk_doesnt_exist: '<prefix> &cThe perk <perk> doesnt exist.'
+      player_not_online: '<prefix> &cThe player <player> doesnt seem to be online.'
+      success: '<prefix> &7You toggled the perk &6<perk> &7for the player &6<player>&7.'
     enable:
       syntax: '<prefix> &cIncorrect usage the syntax of the command is /perks enable <perk> [player].'
       perk_doesnt_exist: '<prefix> &cThe perk <perk> doesnt exist.'

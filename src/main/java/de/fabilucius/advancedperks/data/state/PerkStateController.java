@@ -53,6 +53,15 @@ public class PerkStateController {
         Lists.newArrayList(perkData.getEnabledPerks()).forEach(perk -> this.disablePerk(player, perk));
     }
 
+    public PerkToggleResult forceTogglePerk(Player player, Perk perk) {
+        PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
+        if (perkData.getEnabledPerks().contains(perk)) {
+            return this.forceDisablePerk(player, perk);
+        } else {
+            return this.forceEnablePerk(player, perk);
+        }
+    }
+
     public PerkToggleResult togglePerk(Player player, Perk perk) {
         PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
         if (perkData.getEnabledPerks().contains(perk)) {

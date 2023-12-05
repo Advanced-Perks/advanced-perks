@@ -6,7 +6,7 @@ import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitiali
 import de.fabilucius.advancedperks.core.command.AbstractSubCommand;
 import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.Permission;
-import de.fabilucius.advancedperks.core.database.Database;
+import de.fabilucius.advancedperks.data.PerkDataRepository;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -17,8 +17,8 @@ import java.util.List;
 public class MigrateSubCommand extends AbstractSubCommand {
 
     @Inject
-    private Database database;
-
+    private PerkDataRepository perkDataRepository;
+  
     protected MigrateSubCommand(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
         super(configurationLoader);
     }
@@ -26,7 +26,7 @@ public class MigrateSubCommand extends AbstractSubCommand {
     @Override
     public void executeCommand(CommandSender commandSender, String... arguments) {
         if (arguments.length > 0 && arguments[0].equals("CONFIRM")) {
-            if (this.database.runSqlScript("sql/perk_data_migration.sql")) {
+            if (this.perkDataRepository.migratePerkData()) {
                 commandSender.sendMessage(ChatColor.GREEN + "Perk data migration was successful.");
             } else {
                 commandSender.sendMessage(ChatColor.RED + "Perk data migration failed check the console and/or contact the plugins author.");

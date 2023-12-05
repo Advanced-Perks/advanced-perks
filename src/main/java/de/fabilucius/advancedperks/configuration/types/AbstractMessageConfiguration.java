@@ -6,7 +6,7 @@ import org.bukkit.ChatColor;
 
 import java.util.List;
 
-public class MessageConfiguration extends Configuration {
+public abstract class AbstractMessageConfiguration extends Configuration {
 
     public String getComputedString(String key, ReplaceOptions... replaceOptions) {
         String message = this.getString(key, "message for key %s wasn't found".formatted(key));
@@ -32,8 +32,6 @@ public class MessageConfiguration extends Configuration {
         }).toList();
     }
 
-    private String getPrefix() {
-        return ChatColor.translateAlternateColorCodes('&', this.getString("prefix", "no message for key 'prefix' found"));
-    }
+    public abstract String getPrefix();
 }
 

@@ -1,8 +1,10 @@
 package de.fabilucius.advancedperks.perk;
 
 import com.google.common.collect.Maps;
+import com.google.inject.Inject;
 import de.fabilucius.advancedperks.configuration.annotation.FilePathInJar;
-import de.fabilucius.advancedperks.configuration.types.MessageConfiguration;
+import de.fabilucius.advancedperks.configuration.types.AbstractMessageConfiguration;
+import de.fabilucius.advancedperks.core.MessagesConfiguration;
 import de.fabilucius.advancedperks.perk.properties.PerkDescription;
 import de.fabilucius.advancedperks.perk.properties.PerkGuiIcon;
 import org.bukkit.configuration.ConfigurationSection;
@@ -11,7 +13,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @FilePathInJar("perks.yml")
-public class PerksConfiguration extends MessageConfiguration {
+public class PerksConfiguration extends AbstractMessageConfiguration {
+
+    private final MessagesConfiguration messagesConfiguration;
+
+    @Inject
+    public PerksConfiguration(MessagesConfiguration messagesConfiguration) {
+        this.messagesConfiguration = messagesConfiguration;
+    }
 
     public String getDisplayName(String identifier) {
         return this.getComputedString(identifier + ".display_name");
@@ -34,5 +43,10 @@ public class PerksConfiguration extends MessageConfiguration {
         return configurationSection == null ? Maps.newHashMap() : configurationSection.getKeys(false).stream()
                 .filter(line -> this.get(identifier + ".flags." + line) != null)
                 .collect(Collectors.toMap(line -> line, line -> this.get(identifier + ".flags." + line)));
+    }
+
+    @Override
+    public String getPrefix() {
+        return this.messagesConfiguration.getPrefix();
     }
 }

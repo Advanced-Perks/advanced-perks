@@ -18,8 +18,7 @@ public class MigrateSubCommand extends AbstractSubCommand {
 
     @Inject
     private PerkDataRepository perkDataRepository;
-
-    @Inject
+  
     protected MigrateSubCommand(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
         super(configurationLoader);
     }

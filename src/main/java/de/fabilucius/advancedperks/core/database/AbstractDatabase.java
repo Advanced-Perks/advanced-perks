@@ -48,7 +48,7 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     @SuppressWarnings("UnstableApi")
-    public void runSqlScript(String scriptPath) {
+    public boolean runSqlScript(String scriptPath) {
         try {
             String scriptContent = IOUtils.toString(Objects.requireNonNull(AbstractDatabase.class.getClassLoader().getResourceAsStream(scriptPath)), StandardCharsets.UTF_8);
             List<String> sqlQueries = Arrays.stream(scriptContent.split(";"))
@@ -61,9 +61,11 @@ public abstract class AbstractDatabase implements Database {
                     this.logger.log(Level.SEVERE, "An unexpected SQLException was thrown while executing the sql script %s.".formatted(scriptPath), e);
                 }
             }
+            return true;
         } catch (IOException e) {
             this.logger.log(Level.SEVERE, "An unexpected IOException was thrown while executing the sql script %s.".formatted(scriptPath), e);
         }
+        return false;
     }
 
     @Override

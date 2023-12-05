@@ -10,6 +10,6 @@ public interface Database {
 
     PreparedStatement createPreparedStatement(String query);
 
-    void runSqlScript(String scriptPath);
+    boolean runSqlScript(String scriptPath);
 
 }

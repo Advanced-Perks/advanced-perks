@@ -19,14 +19,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 public class PerkDataRepository implements Listener {
 
@@ -151,22 +149,7 @@ public class PerkDataRepository implements Listener {
         if (!perkData.isLoaded() || Arrays.equals(perkData.getDataHash(), perkData.calculateDataHash())) {
             return;
         }
-        String saveQuery = "INSERT INTO ap_data(unique_id, enabled_perks, bought_perks, data_hash) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE enabled_perks = ?, bought_perks = ?, data_hash = ?";
-        try (PreparedStatement saveStatement = this.database.createPreparedStatement(saveQuery)) {
-            String enabledPerks = perkData.getEnabledPerks().stream().map(Perk::getIdentifier).collect(Collectors.joining(","));
-            String boughtPerks = String.join(",", perkData.getBoughtPerks());
-            saveStatement.setString(1, perkData.getUuid().toString());
-            saveStatement.setString(2, enabledPerks);
-            saveStatement.setString(3, boughtPerks);
-            saveStatement.setBytes(4, perkData.calculateDataHash());
-            saveStatement.setString(5, enabledPerks);
-            saveStatement.setString(6, boughtPerks);
-            saveStatement.setBytes(7, perkData.calculateDataHash());
-            saveStatement.execute();
-        } catch (SQLException exception) {
-            this.logger.log(Level.WARNING, "An error occurred while saving the PerkData for uniqueId %s.".formatted(perkData.getUuid().toString()), exception);
-        }
-
+        this.database.savePerkData(perkData);
     }
 
     public void handleShutdown() {

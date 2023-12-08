@@ -2,9 +2,9 @@ package de.fabilucius.advancedperks.command.subcommands;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
-import de.fabilucius.advancedperks.configuration.replace.ReplaceOptions;
+import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
+import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
+import de.fabilucius.advancedperks.core.configuration.replace.ReplaceOptions;
 import de.fabilucius.advancedperks.core.command.AbstractSubCommand;
 import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.Permission;

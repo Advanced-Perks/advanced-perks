@@ -2,8 +2,8 @@ package de.fabilucius.advancedperks.data.state;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
+import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
+import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.SettingsConfiguration;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.data.PerkDataRepository;

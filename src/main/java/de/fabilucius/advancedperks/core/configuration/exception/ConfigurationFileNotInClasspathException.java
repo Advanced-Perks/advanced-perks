@@ -1,4 +1,4 @@
-package de.fabilucius.advancedperks.configuration.exception;
+package de.fabilucius.advancedperks.core.configuration.exception;
 
 public class ConfigurationFileNotInClasspathException extends ConfigurationException {
 

@@ -3,7 +3,7 @@ package de.fabilucius.advancedperks.core.database;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
-import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
+import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.core.database.exception.DataFileCreationException;
 import de.fabilucius.advancedperks.core.database.types.FileDatabase;
 import de.fabilucius.advancedperks.core.database.types.RemoteDatabase;

@@ -1,7 +1,8 @@
 package de.fabilucius.advancedperks.configuration;
 
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
+import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
+import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

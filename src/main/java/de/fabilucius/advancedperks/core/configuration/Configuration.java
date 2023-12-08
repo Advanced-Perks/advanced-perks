@@ -1,10 +1,10 @@
-package de.fabilucius.advancedperks.configuration;
+package de.fabilucius.advancedperks.core.configuration;
 
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.configuration.annotation.FilePathInJar;
-import de.fabilucius.advancedperks.configuration.exception.ConfigurationFileNotInClasspathException;
-import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
-import de.fabilucius.advancedperks.configuration.exception.ConfigurationOperationException;
+import de.fabilucius.advancedperks.core.configuration.annotation.FilePathInJar;
+import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationFileNotInClasspathException;
+import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
+import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationOperationException;
 
 import java.io.File;
 import java.io.IOException;

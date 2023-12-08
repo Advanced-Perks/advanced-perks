@@ -1,4 +1,4 @@
-package de.fabilucius.advancedperks.configuration.replace;
+package de.fabilucius.advancedperks.core.configuration.replace;
 
 public record ReplaceOptions(String replaceKey, String replaceData) {
 }

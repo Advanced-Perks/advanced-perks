@@ -1,11 +1,11 @@
-package de.fabilucius.advancedperks.configuration;
+package de.fabilucius.advancedperks.core.configuration;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
-import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
+import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
 
 @Singleton
 public class ConfigurationLoader {

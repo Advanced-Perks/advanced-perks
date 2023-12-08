@@ -2,7 +2,7 @@ package de.fabilucius.advancedperks;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
-import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
+import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 
 import java.io.File;

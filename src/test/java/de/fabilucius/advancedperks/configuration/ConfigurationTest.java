@@ -2,9 +2,10 @@ package de.fabilucius.advancedperks.configuration;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import de.fabilucius.advancedperks.configuration.exception.ConfigurationFileNotInClasspathException;
-import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
-import de.fabilucius.advancedperks.configuration.exception.ConfigurationOperationException;
+import de.fabilucius.advancedperks.core.configuration.Configuration;
+import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationFileNotInClasspathException;
+import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
+import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationOperationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

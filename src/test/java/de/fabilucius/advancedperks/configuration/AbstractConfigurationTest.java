@@ -2,7 +2,8 @@ package de.fabilucius.advancedperks.configuration;
 
 import com.google.inject.Inject;
 import de.fabilucius.advancedperks.AbstractTest;
-import de.fabilucius.advancedperks.configuration.annotation.FilePathInJar;
+import de.fabilucius.advancedperks.core.configuration.Configuration;
+import de.fabilucius.advancedperks.core.configuration.annotation.FilePathInJar;
 import jakarta.inject.Named;
 import org.junit.jupiter.api.AfterEach;
 

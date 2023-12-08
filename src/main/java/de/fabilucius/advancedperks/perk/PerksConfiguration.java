@@ -2,8 +2,8 @@ package de.fabilucius.advancedperks.perk;
 
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.configuration.annotation.FilePathInJar;
-import de.fabilucius.advancedperks.configuration.types.AbstractMessageConfiguration;
+import de.fabilucius.advancedperks.core.configuration.annotation.FilePathInJar;
+import de.fabilucius.advancedperks.core.configuration.types.AbstractMessageConfiguration;
 import de.fabilucius.advancedperks.core.MessagesConfiguration;
 import de.fabilucius.advancedperks.perk.properties.PerkDescription;
 import de.fabilucius.advancedperks.perk.properties.PerkGuiIcon;

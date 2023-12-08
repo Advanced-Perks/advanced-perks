@@ -1,8 +1,8 @@
 package de.fabilucius.advancedperks.guisystem.configuration;
 
 import com.google.common.collect.Lists;
-import de.fabilucius.advancedperks.configuration.Configuration;
-import de.fabilucius.advancedperks.configuration.annotation.FilePathInJar;
+import de.fabilucius.advancedperks.core.configuration.Configuration;
+import de.fabilucius.advancedperks.core.configuration.annotation.FilePathInJar;
 import de.fabilucius.advancedperks.guisystem.setupperkgui.SetupPerkGuiWindow;
 import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.CloseGuiPlaceholderElement;
 import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.DisableAllPerksPlaceholderElement;

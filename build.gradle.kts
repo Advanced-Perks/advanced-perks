@@ -21,6 +21,7 @@ object Version {
     const val VAULT = "1.7.1"
     const val LUCK_PERMS = "5.4"
     const val X_SERIES = "9.3.0"
+    const val ARCHUNIT = "1.2.1"
 }
 
 group = "de.fabilucius"
@@ -38,6 +39,7 @@ dependencies {
     testImplementation("org.mockito", "mockito-inline", Version.MOCKITO)
     testImplementation("org.mockito", "mockito-junit-jupiter", Version.MOCKITO)
     testImplementation("org.junit.jupiter", "junit-jupiter", Version.JUNIT)
+    testImplementation("com.tngtech.archunit", "archunit", Version.ARCHUNIT)
 
     implementation("org.spigotmc", "spigot-api", Version.SPIGOT)
     implementation("com.google.inject", "guice", Version.GUICE)
@@ -103,11 +105,7 @@ tasks {
                     "java:S1133"
             )
         }
-        val ignoreFiles = listOf(
-                "**Metrics.java",
-                "**InventoryUpdate.java",
-                "**ReflectionUtils.java"
-        )
+        val ignoreFiles = listOf("**Metrics.java", "**InventoryUpdate.java", "**ReflectionUtils.java")
         ignoredPaths.addAll(ignoreFiles)
     }
 

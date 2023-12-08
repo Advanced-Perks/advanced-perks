@@ -52,4 +52,10 @@ public class RemoteDatabase extends AbstractDatabase {
             this.logger.log(Level.WARNING, "An error occurred while saving the PerkData for uniqueId %s.".formatted(perkData.getUuid().toString()), exception);
         }
     }
+
+    @Override
+    public boolean runPerkDataMigrateScript() {
+        return this.runSqlScript("sql/perk_data_migration_mariadb.sql");
+    }
+
 }

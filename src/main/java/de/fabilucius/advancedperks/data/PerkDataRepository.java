@@ -56,7 +56,7 @@ public class PerkDataRepository implements Listener {
     }
 
     public boolean migratePerkData() {
-        return this.database.runSqlScript("sql/perk_data_migration.sql");
+        return this.database.runPerkDataMigrateScript();
     }
 
     public void loadOnlinePlayer() {

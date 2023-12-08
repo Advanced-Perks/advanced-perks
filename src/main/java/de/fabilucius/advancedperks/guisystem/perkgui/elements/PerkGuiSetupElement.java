@@ -1,8 +1,8 @@
 package de.fabilucius.advancedperks.guisystem.perkgui.elements;
 
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
+import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
+import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.SettingsConfiguration;
 import de.fabilucius.advancedperks.core.guisystem.GuiSound;
 import de.fabilucius.advancedperks.core.guisystem.GuiSystemManager;

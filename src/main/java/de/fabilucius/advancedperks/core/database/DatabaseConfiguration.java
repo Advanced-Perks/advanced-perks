@@ -1,7 +1,7 @@
 package de.fabilucius.advancedperks.core.database;
 
-import de.fabilucius.advancedperks.configuration.Configuration;
-import de.fabilucius.advancedperks.configuration.annotation.FilePathInJar;
+import de.fabilucius.advancedperks.core.configuration.Configuration;
+import de.fabilucius.advancedperks.core.configuration.annotation.FilePathInJar;
 
 import java.util.Arrays;
 

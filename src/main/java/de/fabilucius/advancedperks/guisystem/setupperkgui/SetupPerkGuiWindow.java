@@ -1,8 +1,8 @@
 package de.fabilucius.advancedperks.guisystem.setupperkgui;
 
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
+import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
+import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
 import de.fabilucius.advancedperks.core.guisystem.element.defaultelements.GuiBackgroundElement;
 import de.fabilucius.advancedperks.core.guisystem.window.AbstractGuiWindow;

@@ -9,7 +9,7 @@ import de.fabilucius.advancedperks.api.AdvancedPerksApiImpl;
 import de.fabilucius.advancedperks.api.placeholderapi.AdvancedPerksEnabledExpansion;
 import de.fabilucius.advancedperks.api.placeholderapi.AdvancedPerksUseExpansion;
 import de.fabilucius.advancedperks.compatabilities.CompatibilityController;
-import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
+import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.core.database.Database;
 import de.fabilucius.advancedperks.core.database.DatabaseProvider;
 import de.fabilucius.advancedperks.core.economy.EconomyController;

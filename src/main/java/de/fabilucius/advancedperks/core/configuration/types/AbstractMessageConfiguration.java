@@ -1,7 +1,7 @@
-package de.fabilucius.advancedperks.configuration.types;
+package de.fabilucius.advancedperks.core.configuration.types;
 
-import de.fabilucius.advancedperks.configuration.Configuration;
-import de.fabilucius.advancedperks.configuration.replace.ReplaceOptions;
+import de.fabilucius.advancedperks.core.configuration.Configuration;
+import de.fabilucius.advancedperks.core.configuration.replace.ReplaceOptions;
 import org.bukkit.ChatColor;
 
 import java.util.List;

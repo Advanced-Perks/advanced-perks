@@ -1,9 +1,9 @@
 package de.fabilucius.advancedperks.structural.annotation;
 
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
-import de.fabilucius.advancedperks.configuration.Configuration;
-import de.fabilucius.advancedperks.configuration.annotation.FilePathInJar;
-import de.fabilucius.advancedperks.configuration.types.AbstractMessageConfiguration;
+import de.fabilucius.advancedperks.core.configuration.Configuration;
+import de.fabilucius.advancedperks.core.configuration.annotation.FilePathInJar;
+import de.fabilucius.advancedperks.core.configuration.types.AbstractMessageConfiguration;
 import de.fabilucius.advancedperks.structural.AbstractStructureTest;
 import org.junit.jupiter.api.Test;
 

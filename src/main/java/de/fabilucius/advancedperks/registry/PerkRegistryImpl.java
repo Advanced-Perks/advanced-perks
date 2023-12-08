@@ -7,7 +7,7 @@ import com.google.common.reflect.ClassPath;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
+import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import de.fabilucius.advancedperks.exception.AdvancedPerksException;
 import de.fabilucius.advancedperks.perk.AbstractDefaultPerk;

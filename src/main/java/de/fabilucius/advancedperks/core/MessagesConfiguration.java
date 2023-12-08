@@ -1,7 +1,7 @@
 package de.fabilucius.advancedperks.core;
 
-import de.fabilucius.advancedperks.configuration.annotation.FilePathInJar;
-import de.fabilucius.advancedperks.configuration.types.AbstractMessageConfiguration;
+import de.fabilucius.advancedperks.core.configuration.annotation.FilePathInJar;
+import de.fabilucius.advancedperks.core.configuration.types.AbstractMessageConfiguration;
 
 @FilePathInJar("messages.yml")
 public class MessagesConfiguration extends AbstractMessageConfiguration {

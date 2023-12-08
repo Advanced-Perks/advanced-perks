@@ -1,4 +1,4 @@
-package de.fabilucius.advancedperks.configuration.exception;
+package de.fabilucius.advancedperks.core.configuration.exception;
 
 import de.fabilucius.advancedperks.exception.AdvancedPerksException;
 

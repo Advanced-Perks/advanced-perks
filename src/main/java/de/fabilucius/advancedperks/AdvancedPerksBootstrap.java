@@ -5,7 +5,7 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import de.fabilucius.advancedperks.command.PerksCommand;
 import de.fabilucius.advancedperks.compatabilities.CompatibilityController;
-import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
+import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.core.Metrics;
 import de.fabilucius.advancedperks.core.SettingsConfiguration;
 import de.fabilucius.advancedperks.core.logging.APLogger;

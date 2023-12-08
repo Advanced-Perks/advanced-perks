@@ -1,4 +1,4 @@
-package de.fabilucius.advancedperks.configuration.annotation;
+package de.fabilucius.advancedperks.core.configuration.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

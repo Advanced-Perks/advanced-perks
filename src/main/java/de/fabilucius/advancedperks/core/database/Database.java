@@ -16,4 +16,5 @@ public interface Database {
 
     void savePerkData(PerkData perkData);
 
+    boolean runPerkDataMigrateScript();
 }

@@ -1,6 +1,5 @@
-package de.fabilucius.advancedperks.core.guisystem.element.types;
+package de.fabilucius.advancedperks.core.guisystem.element.defaultelements;
 
-import de.fabilucius.advancedperks.core.guisystem.element.AbstractGuiElement;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
 import de.fabilucius.advancedperks.core.guisystem.window.GuiWindow;
 import de.fabilucius.advancedperks.core.itembuilder.types.ItemStackBuilder;
@@ -10,7 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.function.BiConsumer;
 
-public class GuiBackgroundElement extends AbstractGuiElement {
+public class GuiBackgroundElement extends AbstractDefaultGuiElement {
 
     public GuiBackgroundElement(GuiWindow guiWindow) {
         super(guiWindow, ItemStackBuilder.fromMaterial(Material.BLACK_STAINED_GLASS_PANE)

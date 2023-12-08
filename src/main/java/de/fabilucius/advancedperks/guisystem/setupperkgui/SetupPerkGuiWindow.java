@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import de.fabilucius.advancedperks.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
-import de.fabilucius.advancedperks.core.guisystem.element.types.GuiBackgroundElement;
+import de.fabilucius.advancedperks.core.guisystem.element.defaultelements.GuiBackgroundElement;
 import de.fabilucius.advancedperks.core.guisystem.window.AbstractGuiWindow;
 import de.fabilucius.advancedperks.guisystem.configuration.PerkGuiConfiguration;
 import de.fabilucius.advancedperks.guisystem.configuration.PerkGuiSaveResult;

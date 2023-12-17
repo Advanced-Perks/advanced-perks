@@ -22,6 +22,7 @@ object Version {
     const val LUCK_PERMS = "5.4"
     const val X_SERIES = "9.3.0"
     const val ARCHUNIT = "1.2.1"
+    const val DATAFAKER = "2.0.2"
 }
 
 group = "de.fabilucius"
@@ -40,6 +41,10 @@ dependencies {
     testImplementation("org.mockito", "mockito-junit-jupiter", Version.MOCKITO)
     testImplementation("org.junit.jupiter", "junit-jupiter", Version.JUNIT)
     testImplementation("com.tngtech.archunit", "archunit", Version.ARCHUNIT)
+    testImplementation("net.datafaker", "datafaker", Version.DATAFAKER) {
+        //To resolve classpath dependency problems because spigot uses an older version which gets overwritten by datafaker
+        exclude(group = "org.yaml", module = "snakeyaml")
+    }
 
     implementation("org.spigotmc", "spigot-api", Version.SPIGOT)
     implementation("com.google.inject", "guice", Version.GUICE)
@@ -102,7 +107,8 @@ tasks {
                     "java:S3358",
                     "java:S899",
                     "java:S1135",
-                    "java:S1133"
+                    "java:S1133",
+                    "java:S5778"
             )
         }
         val ignoreFiles = listOf("**Metrics.java", "**InventoryUpdate.java", "**ReflectionUtils.java")

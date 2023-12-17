@@ -33,6 +33,10 @@ public class PerkGuiIcon {
         }
     }
 
+    public PerkGuiIcon(Material material) {
+        this.itemStack = new ItemStack(material);
+    }
+
     public ItemStack getIcon() {
         return this.itemStack;
     }

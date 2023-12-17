@@ -36,4 +36,6 @@ public interface Perk {
 
     Optional<List<String>> getDisallowedWorlds();
 
+    void refreshPerkFlags(Map<String, Object> flags);
+
 }

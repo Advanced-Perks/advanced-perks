@@ -45,6 +45,13 @@ public class PerksConfiguration extends AbstractMessageConfiguration {
                 .collect(Collectors.toMap(line -> line, line -> this.get(identifier + ".flags." + line)));
     }
 
+    public Map<String, Object> setPrice(String identifier, Double price) {
+        Map<String, Object> flags = this.getFlags(identifier);
+        flags.put("price", price);
+        this.set(identifier + ".flags", flags);
+        return flags;
+    }
+
     @Override
     public String getPrefix() {
         return this.messagesConfiguration.getPrefix();

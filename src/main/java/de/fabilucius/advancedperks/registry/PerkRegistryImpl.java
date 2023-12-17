@@ -18,6 +18,7 @@ import de.fabilucius.advancedperks.perk.types.TaskPerk;
 import de.fabilucius.advancedperks.registry.exception.PerkNotFoundException;
 import de.fabilucius.advancedperks.registry.exception.PerkRegistryInitializationException;
 import de.fabilucius.advancedperks.registry.loader.PerkYmlLoader;
+import de.fabilucius.advancedperks.registry.model.SetPriceResult;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -60,9 +61,7 @@ public class PerkRegistryImpl implements PerkRegistry {
             if (this.perkIdentifierIndexCache.containsKey(identifier)) {
                 return this.perkIdentifierIndexCache.get(identifier);
             } else {
-                Perk perk = this.perkCache.values().stream().filter(perk1 -> perk1.getIdentifier().equalsIgnoreCase(identifier))
-                        .findFirst()
-                        .orElse(null);
+                Perk perk = this.perkCache.values().stream().filter(perk1 -> perk1.getIdentifier().equalsIgnoreCase(identifier)).findFirst().orElse(null);
                 if (perk == null) {
                     throw new PerkNotFoundException("No perk with the identifier '%s' could be found.".formatted(identifier));
                 }
@@ -72,6 +71,20 @@ public class PerkRegistryImpl implements PerkRegistry {
         } catch (Exception exception) {
             this.logger.warning(exception.getMessage());
             return null;
+        }
+    }
+
+    @Override
+    public @NotNull SetPriceResult setPrice(Perk perk, Double price) {
+        try {
+            PerksConfiguration perksConfiguration = this.configurationLoader.getConfigurationAndLoad(PerksConfiguration.class);
+            Map<String, Object> flags = perksConfiguration.setPrice(perk.getIdentifier(), price);
+            perksConfiguration.saveConfiguration();
+            perk.refreshPerkFlags(flags);
+            return SetPriceResult.PRICE_SET;
+        } catch (AdvancedPerksException exception) {
+            exception.printStackTrace();
+            return SetPriceResult.ERROR;
         }
     }
 
@@ -102,19 +115,14 @@ public class PerkRegistryImpl implements PerkRegistry {
     @SuppressWarnings({"UnstableApiUsage", "unchecked"})
     private List<Class<? extends AbstractDefaultPerk>> findDefaultPerkClasses() throws PerkRegistryInitializationException {
         try {
-            return Lists.newArrayList(ClassPath.from(this.getClass().getClassLoader())
-                    .getTopLevelClassesRecursive("de.fabilucius.advancedperks").stream()
-                    .filter(classInfo -> {
-                        try {
-                            return AbstractDefaultPerk.class.isAssignableFrom(classInfo.load())
-                                    && !classInfo.load().equals(AbstractDefaultPerk.class);
-                        } catch (NoClassDefFoundError error) {
-                            /* This will get triggered by stuff like PlaceholderAPI not running but still getting referenced in classes around the plugin */
-                            return false;
-                        }
-                    })
-                    .map(classInfo -> (Class<? extends AbstractDefaultPerk>) classInfo.load())
-                    .iterator());
+            return Lists.newArrayList(ClassPath.from(this.getClass().getClassLoader()).getTopLevelClassesRecursive("de.fabilucius.advancedperks").stream().filter(classInfo -> {
+                try {
+                    return AbstractDefaultPerk.class.isAssignableFrom(classInfo.load()) && !classInfo.load().equals(AbstractDefaultPerk.class);
+                } catch (NoClassDefFoundError error) {
+                    /* This will get triggered by stuff like PlaceholderAPI not running but still getting referenced in classes around the plugin */
+                    return false;
+                }
+            }).map(classInfo -> (Class<? extends AbstractDefaultPerk>) classInfo.load()).iterator());
         } catch (IOException exception) {
             throw new PerkRegistryInitializationException("An unexpected io exception was thrown while looping over the plugins classes to find default perks.", exception);
         }

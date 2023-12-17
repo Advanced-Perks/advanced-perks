@@ -16,7 +16,7 @@ public abstract class AbstractPerk implements Perk {
     private final PerkDescription perkDescription;
     private final PerkGuiIcon perkGuiIcon;
     private final boolean enabled;
-    private final Map<String, Object> flags;
+    private Map<String, Object> flags;
 
     protected AbstractPerk(String identifier, String displayName, PerkDescription perkDescription, PerkGuiIcon perkGuiIcon, boolean enabled, Map<String, Object> flags) {
         this.identifier = identifier;
@@ -111,6 +111,11 @@ public abstract class AbstractPerk implements Perk {
         } catch (Exception exception) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public void refreshPerkFlags(Map<String, Object> flags) {
+        this.flags = flags;
     }
 
     @Override

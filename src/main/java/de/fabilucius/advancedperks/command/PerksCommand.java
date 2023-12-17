@@ -8,6 +8,7 @@ import de.fabilucius.advancedperks.command.subcommands.DisableSubCommand;
 import de.fabilucius.advancedperks.command.subcommands.EnableSubCommand;
 import de.fabilucius.advancedperks.command.subcommands.InfoSubCommand;
 import de.fabilucius.advancedperks.command.subcommands.MigrateSubCommand;
+import de.fabilucius.advancedperks.command.subcommands.SetPriceSubCommand;
 import de.fabilucius.advancedperks.command.subcommands.ToggleSubCommand;
 import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
@@ -29,7 +30,7 @@ import java.util.logging.Level;
 
 @CommandIdentifier("perks")
 @Aliases({"perk", "advancedperks"})
-@SubCommands({InfoSubCommand.class, ToggleSubCommand.class, EnableSubCommand.class, DisableSubCommand.class, BuySubCommand.class, MigrateSubCommand.class})
+@SubCommands({InfoSubCommand.class, ToggleSubCommand.class, EnableSubCommand.class, DisableSubCommand.class, BuySubCommand.class, MigrateSubCommand.class, SetPriceSubCommand.class})
 public class PerksCommand extends AbstractCommand {
 
     @Inject

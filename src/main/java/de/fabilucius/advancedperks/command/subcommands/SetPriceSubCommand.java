@@ -11,7 +11,6 @@ import de.fabilucius.advancedperks.core.configuration.replace.ReplaceOptions;
 import de.fabilucius.advancedperks.perk.Perk;
 import de.fabilucius.advancedperks.registry.PerkRegistryImpl;
 import de.fabilucius.advancedperks.registry.model.SetPriceResult;
-import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
@@ -32,14 +31,14 @@ public class SetPriceSubCommand extends AbstractSubCommand {
     public void executeCommand(CommandSender commandSender, String... arguments) {
         if (arguments.length == 2) {
             try {
-                Double price = NumberUtils.createDouble(arguments[1]);
+                double price = Double.parseDouble(arguments[1]);
                 Perk perk = this.perkRegistryImpl.getPerkByIdentifier(arguments[0]);
                 if (perk != null) {
                     SetPriceResult setPriceResult = this.perkRegistryImpl.setPrice(perk, Double.valueOf(arguments[1]));
                     if (setPriceResult.equals(SetPriceResult.PRICE_SET)) {
                         commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.setprice.success",
                                 new ReplaceOptions("<perk>", perk.getIdentifier()),
-                                new ReplaceOptions("<price>", price.toString())));
+                                new ReplaceOptions("<price>", Double.toString(price))));
                     } else {
                         commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.setprice.error"));
                     }

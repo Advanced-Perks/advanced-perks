@@ -1,6 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow").version("7.1.2")
@@ -9,7 +6,7 @@ plugins {
 }
 
 object Version {
-    const val SPIGOT = "1.16.5-R0.1-SNAPSHOT"
+    const val SPIGOT = "1.20.4-R0.1-SNAPSHOT"
     const val GUICE = "7.0.0"
     const val MOCKITO = "4.0.0"
     const val JUNIT = "5.8.1"
@@ -26,7 +23,7 @@ object Version {
 }
 
 group = "de.fabilucius"
-version = "3.2.1"
+version = "3.2.2"
 
 repositories {
     mavenCentral()

@@ -13,7 +13,6 @@ public final class MojangProfileFetcher {
 
     private static final String MOJANG_API_URL = "https://api.mojang.com/users/profiles/minecraft/";
     private static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
-    private static final JsonParser JSON_PARSER = new JsonParser();
 
     private MojangProfileFetcher() {
     }
@@ -27,7 +26,7 @@ public final class MojangProfileFetcher {
                     .build();
             HttpResponse<String> response = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
-                JsonObject jsonObject = JSON_PARSER.parse(response.body()).getAsJsonObject();
+                JsonObject jsonObject = JsonParser.parseString(response.body()).getAsJsonObject();
                 return new MojangProfileData(
                         jsonObject.get("name").getAsString(),
                         UUID.fromString(jsonObject.get("id").getAsString()));

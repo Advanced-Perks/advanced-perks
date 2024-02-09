@@ -26,7 +26,7 @@ object Version {
 }
 
 group = "de.fabilucius"
-version = "3.2.0"
+version = "3.2.1"
 
 repositories {
     mavenCentral()

@@ -2,12 +2,13 @@ package de.fabilucius.advancedperks.registry;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.reflect.ClassPath;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import de.fabilucius.advancedperks.AdvancedPerks;
 import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
+import de.fabilucius.advancedperks.core.datastructure.DualKeyMap;
+import de.fabilucius.advancedperks.core.datastructure.DualKeyMaps;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import de.fabilucius.advancedperks.exception.AdvancedPerksException;
 import de.fabilucius.advancedperks.perk.AbstractDefaultPerk;
@@ -15,7 +16,6 @@ import de.fabilucius.advancedperks.perk.Perk;
 import de.fabilucius.advancedperks.perk.PerksConfiguration;
 import de.fabilucius.advancedperks.perk.types.ListenerPerk;
 import de.fabilucius.advancedperks.perk.types.TaskPerk;
-import de.fabilucius.advancedperks.registry.exception.PerkNotFoundException;
 import de.fabilucius.advancedperks.registry.exception.PerkRegistryInitializationException;
 import de.fabilucius.advancedperks.registry.loader.PerkYmlLoader;
 import de.fabilucius.advancedperks.registry.model.SetPriceResult;
@@ -42,14 +42,11 @@ public class PerkRegistryImpl implements PerkRegistry {
     @Inject
     private AdvancedPerks advancedPerks;
 
-    //TODO currently unneeded create custom cache implementation to make dual keys possible
-    private final Map<Class<? extends Perk>, Perk> perkCache = Maps.newLinkedHashMap();
-
-    private final Map<String, Perk> perkIdentifierIndexCache = Maps.newLinkedHashMap();
+    private final DualKeyMap<String, Class<? extends Perk>, Perk> perkCache = DualKeyMaps.newDualKeyMap();
 
     @Nullable
     public <T extends Perk> T getPerk(Class<T> perkClass) {
-        return perkClass.cast(this.perkCache.get(perkClass));
+        return perkClass.cast(this.perkCache.getBySecondKey(perkClass));
     }
 
     @Nullable
@@ -57,21 +54,7 @@ public class PerkRegistryImpl implements PerkRegistry {
         if (Strings.isNullOrEmpty(identifier)) {
             return null;
         }
-        try {
-            if (this.perkIdentifierIndexCache.containsKey(identifier)) {
-                return this.perkIdentifierIndexCache.get(identifier);
-            } else {
-                Perk perk = this.perkCache.values().stream().filter(perk1 -> perk1.getIdentifier().equalsIgnoreCase(identifier)).findFirst().orElse(null);
-                if (perk == null) {
-                    throw new PerkNotFoundException("No perk with the identifier '%s' could be found.".formatted(identifier));
-                }
-                this.perkIdentifierIndexCache.put(identifier, perk);
-                return perk;
-            }
-        } catch (Exception exception) {
-            this.logger.warning(exception.getMessage());
-            return null;
-        }
+        return this.perkCache.getByFirstKey(identifier);
     }
 
     @Override
@@ -95,8 +78,7 @@ public class PerkRegistryImpl implements PerkRegistry {
                 Perk perk = this.perkYmlLoader.loadPerk(perkClass, perksConfiguration);
                 this.logger.info("Successfully loaded the perk %s from %s.".formatted(perk.getIdentifier(), perk.getClass().getName()));
                 if (perk.isEnabled()) {
-                    this.perkCache.put(perkClass, perk);
-                    this.perkIdentifierIndexCache.put(perk.getIdentifier(), perk);
+                    this.perkCache.putValue(perk.getIdentifier(), perkClass, perk);
                     if (perk instanceof ListenerPerk listenerPerk) {
                         Bukkit.getPluginManager().registerEvents(listenerPerk, this.advancedPerks);
                     }

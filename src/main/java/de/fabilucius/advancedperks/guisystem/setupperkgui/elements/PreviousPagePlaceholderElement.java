@@ -4,7 +4,7 @@ import de.fabilucius.advancedperks.core.guisystem.HeadTexture;
 import de.fabilucius.advancedperks.core.guisystem.element.AbstractGuiElement;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
 import de.fabilucius.advancedperks.core.guisystem.window.GuiWindow;
-import de.fabilucius.advancedperks.core.itembuilder.types.SkullStackBuilder;
+import de.fabilucius.advancedperks.core.itembuilder.types.skull.SkullStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;

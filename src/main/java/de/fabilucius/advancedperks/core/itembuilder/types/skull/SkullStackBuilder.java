@@ -1,9 +1,10 @@
-package de.fabilucius.advancedperks.core.itembuilder.types;
+package de.fabilucius.advancedperks.core.itembuilder.types.skull;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.google.common.base.Preconditions;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import de.fabilucius.advancedperks.core.itembuilder.types.ItemStackBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -11,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Field;
+import java.net.MalformedURLException;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -69,11 +71,18 @@ public class SkullStackBuilder extends ItemStackBuilder {
 
     public SkullStackBuilder setBase64Value(String base64Value) {
         try {
-            Field field = this.getItemMeta().getClass().getDeclaredField("profile");
-            field.setAccessible(true);
-            GameProfile gameProfile = new GameProfile(UUID.randomUUID(), "base64head");
-            gameProfile.getProperties().put("textures", new Property("textures", base64Value));
-            field.set(this.getItemMeta(), gameProfile);
+            try {
+                Class.forName("org.bukkit.profile.PlayerProfile");
+                return LatestSkullStackBuilder.setBase64Value(this, base64Value);
+            } catch (ClassNotFoundException e) {
+                Field field = this.getItemMeta().getClass().getDeclaredField("profile");
+                field.setAccessible(true);
+                GameProfile gameProfile = new GameProfile(UUID.randomUUID(), "base64head");
+                gameProfile.getProperties().put("textures", new Property("textures", base64Value));
+                field.set(this.getItemMeta(), gameProfile);
+            } catch (MalformedURLException e) {
+                LOGGER.log(Level.WARNING, "The ItemStackBuilder was unable to set the base64 value:", e);
+            }
         } catch (NoSuchFieldException event) {
             LOGGER.log(Level.WARNING, "The ItemStackBuilder was unable to find the profile field this should " +
                     "under normal circumstances never happen, maybe you use a heavily customized spigot version.");

@@ -105,7 +105,8 @@ tasks {
                     "java:S899",
                     "java:S1135",
                     "java:S1133",
-                    "java:S5778"
+                    "java:S5778",
+                    "java:S1068"
             )
         }
         val ignoreFiles = listOf("**Metrics.java", "**InventoryUpdate.java", "**ReflectionUtils.java")

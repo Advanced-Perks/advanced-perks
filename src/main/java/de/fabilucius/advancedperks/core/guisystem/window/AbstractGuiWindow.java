@@ -8,6 +8,7 @@ import de.fabilucius.advancedperks.core.guisystem.GuiSound;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
 import de.fabilucius.advancedperks.core.guisystem.persistantdata.UuidPersistentDataType;
 import de.fabilucius.advancedperks.core.itembuilder.types.ItemStackBuilder;
+import de.fabilucius.advancedperks.core.logging.APLogger;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -24,21 +25,22 @@ import java.util.stream.IntStream;
 
 public abstract class AbstractGuiWindow implements GuiWindow {
 
-    private static final boolean SET_TITLE_SUPPORT;
+    private static boolean setTitleSupport;
 
     static {
-        boolean support = false;
+        setTitleSupport = true;
         try {
             InventoryView.class.getMethod("setTitle", String.class);
-            support = true;
-        } catch (NoSuchMethodException ignored) {
-        } finally {
-            SET_TITLE_SUPPORT = support;
+        } catch (NoSuchMethodException e) {
+            setTitleSupport = false;
         }
     }
 
     @Inject
     private Injector injector;
+
+    @Inject
+    private APLogger logger;
 
     @Inject
     @Named("uuidKey")
@@ -122,7 +124,7 @@ public abstract class AbstractGuiWindow implements GuiWindow {
 
     @Override
     public void setTitle(String title) {
-        if (!SET_TITLE_SUPPORT) {
+        if (!setTitleSupport) {
             return;
         }
         this.getInventory().getViewers().forEach(humanEntity -> {

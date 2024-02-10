@@ -44,7 +44,7 @@ public class UpdateChecker implements Listener {
             HttpResponse<String> response = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
                 this.updateData = GSON.fromJson(response.body(), UpdateData.class);
-                this.updateAvailable = !advancedPerks.getDescription().getVersion().equals(this.updateData.name());
+                this.updateAvailable = !advancedPerks.getDescription().getVersion().equals(this.updateData.getName());
             }
         } catch (Exception exception) {
             logger.warning("Unable to retrieve update data from spigot to check for new updates: %s".formatted(exception.getMessage()));
@@ -56,8 +56,8 @@ public class UpdateChecker implements Listener {
         Player player = event.getPlayer();
         if ((player.isOp() || player.hasPermission("advancedperks.admin")) && this.updateAvailable) {
             player.sendMessage(" ");
-            player.sendMessage(ChatColor.GRAY + "There is an update available for " + ChatColor.GOLD + "Advanced Perks " + ChatColor.GRAY + " the latest version is " + ChatColor.GOLD + this.updateData.name());
-            player.sendMessage(ChatColor.GRAY + "The update was released " + ChatColor.GOLD + this.updateData.releaseDate().toString());
+            player.sendMessage(ChatColor.GRAY + "There is an update available for " + ChatColor.GOLD + "Advanced Perks " + ChatColor.GRAY + " the latest version is " + ChatColor.GOLD + this.updateData.getName());
+            player.sendMessage(ChatColor.GRAY + "The update was released " + ChatColor.GOLD + this.updateData.getReleaseDate().toString());
             player.sendMessage(" ");
         }
     }

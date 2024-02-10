@@ -8,11 +8,11 @@ import de.fabilucius.advancedperks.core.guisystem.GuiSound;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
 import de.fabilucius.advancedperks.core.guisystem.persistantdata.UuidPersistentDataType;
 import de.fabilucius.advancedperks.core.itembuilder.types.ItemStackBuilder;
-import de.fabilucius.advancedperks.external.InventoryUpdate;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -23,6 +23,19 @@ import java.util.UUID;
 import java.util.stream.IntStream;
 
 public abstract class AbstractGuiWindow implements GuiWindow {
+
+    private static final boolean SET_TITLE_SUPPORT;
+
+    static {
+        boolean support = false;
+        try {
+            InventoryView.class.getMethod("setTitle", String.class);
+            support = true;
+        } catch (NoSuchMethodException ignored) {
+        } finally {
+            SET_TITLE_SUPPORT = support;
+        }
+    }
 
     @Inject
     private Injector injector;
@@ -109,9 +122,12 @@ public abstract class AbstractGuiWindow implements GuiWindow {
 
     @Override
     public void setTitle(String title) {
+        if (!SET_TITLE_SUPPORT) {
+            return;
+        }
         this.getInventory().getViewers().forEach(humanEntity -> {
             if (humanEntity instanceof Player viewer) {
-                InventoryUpdate.updateInventory(viewer, title);
+                viewer.getOpenInventory().setTitle(title);
             }
         });
     }

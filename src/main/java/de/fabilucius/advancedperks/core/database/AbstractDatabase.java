@@ -83,6 +83,9 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public PreparedStatement createPreparedStatement(String query) {
         try {
+            if (!this.isConnected()) {
+                this.connectToDatabase();
+            }
             return this.connection.prepareStatement(query);
         } catch (SQLException e) {
             this.logger.log(Level.INFO, "Error while creating a prepared statement with query %s.".formatted(query), e);

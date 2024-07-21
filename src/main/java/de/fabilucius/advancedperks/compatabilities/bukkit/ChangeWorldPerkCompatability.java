@@ -11,6 +11,7 @@ import de.fabilucius.advancedperks.perk.Perk;
 import de.fabilucius.advancedperks.perk.defaultperks.listener.BirdPerk;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class ChangeWorldPerkCompatability extends AbstractPerkCompatability {
         super(advancedPerks);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
         PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);

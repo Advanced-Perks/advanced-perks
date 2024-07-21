@@ -1,5 +1,6 @@
 package de.fabilucius.advancedperks.perk.defaultperks.listener;
 
+import com.google.inject.Inject;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.data.PerkDataRepository;
 import de.fabilucius.advancedperks.perk.AbstractDefaultPerk;
@@ -7,7 +8,6 @@ import de.fabilucius.advancedperks.perk.annotation.PerkIdentifier;
 import de.fabilucius.advancedperks.perk.properties.PerkDescription;
 import de.fabilucius.advancedperks.perk.properties.PerkGuiIcon;
 import de.fabilucius.advancedperks.perk.types.ListenerPerk;
-import jakarta.inject.Inject;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

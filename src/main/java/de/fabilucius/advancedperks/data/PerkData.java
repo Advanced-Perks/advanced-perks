@@ -52,6 +52,10 @@ public class PerkData {
 
     }
 
+    public boolean isPerkEnabled(Perk perk) {
+        return this.enabledPerks.contains(perk);
+    }
+
     public int getMaxPerks() {
         return maxPerks;
     }

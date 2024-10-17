@@ -3,6 +3,7 @@ plugins {
     id("com.github.johnrengelman.shadow").version("7.1.2")
     id("checkstyle")
     id("name.remal.sonarlint").version("3.3.17")
+    kotlin("jvm")
 }
 
 object Version {
@@ -59,6 +60,7 @@ dependencies {
     implementation("com.github.MilkBowl", "VaultAPI", Version.VAULT)
     implementation("net.luckperms", "api", Version.LUCK_PERMS)
     implementation("com.github.cryptomorin", "XSeries", Version.X_SERIES)
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 tasks {

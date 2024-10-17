@@ -23,7 +23,7 @@ object Version {
 }
 
 group = "de.fabilucius"
-version = "3.4.0"
+version = "3.4.1"
 
 repositories {
     mavenCentral()
@@ -31,6 +31,12 @@ repositories {
     maven("https://libraries.minecraft.net/")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://jitpack.io")
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 dependencies {

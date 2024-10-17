@@ -94,7 +94,8 @@ public class PerkData {
         return Optional.ofNullable(Bukkit.getPlayer(this.getUuid()));
     }
 
-    private int queryMaxPerks() {
+    //TODO make this private again (refactoring of the whole refreshing needed)
+    public int queryMaxPerks() {
         if (this.getPlayer().isPresent()) {
             Player player = this.getPlayer().get();
             OptionalInt possibleMaxPerks = player.getEffectivePermissions().stream().filter(permissionAttachmentInfo -> PERMISSION_PATTERN.matcher(permissionAttachmentInfo.getPermission()).matches()).mapToInt(value -> {

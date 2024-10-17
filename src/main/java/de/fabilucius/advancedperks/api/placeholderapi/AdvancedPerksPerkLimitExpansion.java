@@ -28,7 +28,7 @@ public class AdvancedPerksPerkLimitExpansion extends AbstractAdvancedPerksExpans
     @Override
     public @Nullable String onPlaceholderRequest(Player player, @NotNull String params) {
         PerkData perkData = this.perkDataRepository.getPerkDataByPlayer(player);
-        int maxPerksAmount = Math.max(perkData.getMaxPerks(), this.settingsConfiguration.getGlobalMaxActivePerks());
+        int maxPerksAmount = Math.max(perkData.queryMaxPerks(), this.settingsConfiguration.getGlobalMaxActivePerks());
         return String.valueOf(perkData.getEnabledPerks().size() >= maxPerksAmount);
     }
 

@@ -84,6 +84,7 @@ tasks {
             include(dependency("jakarta.inject:jakarta.inject-api"))
             include(dependency("aopalliance:aopalliance"))
             include(dependency("com.github.cryptomorin:XSeries"))
+            include(dependency("org.jetbrains.kotlin:kotlin-stdlib"))
         }
         val externalPackage = "de.fabilucius.external"
         relocate("com.cryptomorin.xseries", "$externalPackage.com.cryptomorin.xseries")

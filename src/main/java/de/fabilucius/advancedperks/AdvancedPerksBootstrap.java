@@ -5,9 +5,8 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import de.fabilucius.advancedperks.command.PerksCommand;
 import de.fabilucius.advancedperks.compatabilities.CompatibilityController;
-import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
 import de.fabilucius.advancedperks.core.Metrics;
-import de.fabilucius.advancedperks.core.SettingsConfiguration;
+import de.fabilucius.advancedperks.core.configuration.type.SettingsConfiguration;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import de.fabilucius.advancedperks.data.PerkDataRepository;
 import de.fabilucius.advancedperks.exception.AdvancedPerksException;
@@ -35,15 +34,18 @@ public class AdvancedPerksBootstrap {
     private APLogger logger;
 
     @Inject
-    private ConfigurationLoader configurationLoader;
+    private SettingsConfiguration settingsConfiguration;
 
     public void initializePlugin() throws AdvancedPerksException {
+        if (settingsConfiguration.isPluginInDebugMode()) {
+            logger.debug("The plugin was started in debug mode.");
+        }
         this.perkRegistryImpl.loadAndRegisterDefaultPerks();
         this.perkDataRepository.setupDatabase();
         this.perkDataRepository.loadOnlinePlayer();
         this.injector.getInstance(PerksCommand.class);
         this.compatibilityController.registerCompatibilityClasses();
-        Metrics.load(this.logger, this.configurationLoader.getConfigurationAndLoad(SettingsConfiguration.class), this.advancedPerks);
+        Metrics.load(this.logger, settingsConfiguration, this.advancedPerks);
     }
 
     public void shutdownPlugin() {

@@ -1,6 +1,7 @@
 package de.fabilucius.advancedperks.core;
 
 import de.fabilucius.advancedperks.AdvancedPerks;
+import de.fabilucius.advancedperks.core.configuration.type.SettingsConfiguration;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -100,7 +101,7 @@ public class Metrics {
     }
 
     public static void load(APLogger logger, SettingsConfiguration settingsConfiguration, AdvancedPerks advancedPerks) {
-        if (settingsConfiguration.isMetricsCollectionEnabled()) {
+        if (settingsConfiguration.shouldMetricsBeCollected()) {
             logger.info("Metrics collection has started, thanks for providing useful and anonymous metrics " +
                     "data to improve my software.");
             new Metrics(advancedPerks, 12771);

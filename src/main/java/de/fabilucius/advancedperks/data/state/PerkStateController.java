@@ -2,9 +2,7 @@ package de.fabilucius.advancedperks.data.state;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
-import de.fabilucius.advancedperks.core.SettingsConfiguration;
+import de.fabilucius.advancedperks.core.configuration.type.SettingsConfiguration;
 import de.fabilucius.advancedperks.data.PerkData;
 import de.fabilucius.advancedperks.data.PerkDataRepository;
 import de.fabilucius.advancedperks.event.perk.PerkDisableEvent;
@@ -23,9 +21,8 @@ public class PerkStateController {
     private PerkDataRepository perkDataRepository;
 
     @Inject
-    public PerkStateController(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
-        SettingsConfiguration settingsConfiguration = configurationLoader.getConfigurationAndLoad(SettingsConfiguration.class);
-        this.globalMaxActivePerks = settingsConfiguration.getGlobalMaxActivePerks();
+    public PerkStateController(SettingsConfiguration settingsConfiguration) {
+        this.globalMaxActivePerks = settingsConfiguration.getGlobalPerkLimit();
     }
 
     public PerkUseStatus canUsePerk(Player player, Perk perk) {

@@ -3,13 +3,11 @@ package de.fabilucius.advancedperks.core.command;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
-import de.fabilucius.advancedperks.core.MessagesConfiguration;
 import de.fabilucius.advancedperks.core.command.annotation.Aliases;
 import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.Permission;
 import de.fabilucius.advancedperks.core.command.annotation.SubCommands;
+import de.fabilucius.advancedperks.core.configuration.type.MessageConfiguration;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -34,14 +32,14 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     private final APLogger logger;
 
     private final String identifier;
-    private final MessagesConfiguration messagesConfiguration;
+    private final MessageConfiguration messagesConfiguration;
 
     private final List<AbstractSubCommand> subCommands = Lists.newArrayList();
 
     //TODO currently unneeded figure out a stable way for auto register without adding command to plugin.yml
     @Inject
-    protected AbstractCommand(ConfigurationLoader configurationLoader, APLogger logger, Injector injector) throws ConfigurationInitializationException {
-        this.messagesConfiguration = configurationLoader.getConfigurationAndLoad(MessagesConfiguration.class);
+    protected AbstractCommand(MessageConfiguration messageConfiguration, APLogger logger, Injector injector) {
+        this.messagesConfiguration = messageConfiguration;
         this.logger = logger;
         this.injector = injector;
         CommandIdentifier commandIdentifierAnnotation = this.getClass().getAnnotation(CommandIdentifier.class);
@@ -133,7 +131,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     }
 
     public String getPermissionMessage() {
-        return this.messagesConfiguration.getComputedString("command." + this.identifier + ".no_permission");
+        return this.messagesConfiguration.getMessage("command." + this.identifier + ".no_permission");
     }
 
     public Optional<String> getPermission() {

@@ -6,14 +6,13 @@ import com.google.common.reflect.ClassPath;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
+import de.fabilucius.advancedperks.core.configuration.type.PerksConfiguration;
 import de.fabilucius.advancedperks.core.datastructure.DualKeyMap;
 import de.fabilucius.advancedperks.core.datastructure.DualKeyMaps;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import de.fabilucius.advancedperks.exception.AdvancedPerksException;
 import de.fabilucius.advancedperks.perk.AbstractDefaultPerk;
 import de.fabilucius.advancedperks.perk.Perk;
-import de.fabilucius.advancedperks.perk.PerksConfiguration;
 import de.fabilucius.advancedperks.perk.types.ListenerPerk;
 import de.fabilucius.advancedperks.perk.types.TaskPerk;
 import de.fabilucius.advancedperks.registry.exception.PerkRegistryInitializationException;
@@ -34,13 +33,13 @@ public class PerkRegistryImpl implements PerkRegistry {
     private PerkYmlLoader perkYmlLoader;
 
     @Inject
-    private ConfigurationLoader configurationLoader;
-
-    @Inject
     private APLogger logger;
 
     @Inject
     private AdvancedPerks advancedPerks;
+
+    @Inject
+    private PerksConfiguration perksConfiguration;
 
     private final DualKeyMap<String, Class<? extends Perk>, Perk> perkCache = DualKeyMaps.newDualKeyMap();
 
@@ -59,21 +58,14 @@ public class PerkRegistryImpl implements PerkRegistry {
 
     @Override
     public @NotNull SetPriceResult setPrice(Perk perk, Double price) {
-        try {
-            PerksConfiguration perksConfiguration = this.configurationLoader.getConfigurationAndLoad(PerksConfiguration.class);
-            Map<String, Object> flags = perksConfiguration.setPrice(perk.getIdentifier(), price);
-            perksConfiguration.saveConfiguration();
-            perk.refreshPerkFlags(flags);
-            return SetPriceResult.PRICE_SET;
-        } catch (AdvancedPerksException exception) {
-            exception.printStackTrace();
-            return SetPriceResult.ERROR;
-        }
+        Map<String, Object> flags = perksConfiguration.setPrice(perk.getIdentifier(), price);
+        perksConfiguration.saveConfiguration();
+        perk.refreshPerkFlags(flags);
+        return SetPriceResult.PRICE_SET;
     }
 
     public void loadAndRegisterDefaultPerks() throws PerkRegistryInitializationException {
         try {
-            PerksConfiguration perksConfiguration = this.configurationLoader.getConfigurationAndLoad(PerksConfiguration.class);
             for (Class<? extends AbstractDefaultPerk> perkClass : this.findDefaultPerkClasses()) {
                 Perk perk = this.perkYmlLoader.loadPerk(perkClass, perksConfiguration);
                 this.logger.info("Successfully loaded the perk %s from %s.".formatted(perk.getIdentifier(), perk.getClass().getName()));

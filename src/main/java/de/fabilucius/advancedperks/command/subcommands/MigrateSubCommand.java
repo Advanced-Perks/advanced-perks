@@ -1,8 +1,6 @@
 package de.fabilucius.advancedperks.command.subcommands;
 
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.command.AbstractSubCommand;
 import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.Permission;
@@ -20,8 +18,8 @@ public class MigrateSubCommand extends AbstractSubCommand {
     private PerkDataRepository perkDataRepository;
 
     @Inject
-    protected MigrateSubCommand(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
-        super(configurationLoader);
+    protected MigrateSubCommand() {
+        super();
     }
 
     @Override

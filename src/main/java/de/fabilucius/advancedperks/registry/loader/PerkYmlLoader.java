@@ -2,8 +2,8 @@ package de.fabilucius.advancedperks.registry.loader;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import de.fabilucius.advancedperks.core.configuration.type.PerksConfiguration;
 import de.fabilucius.advancedperks.perk.Perk;
-import de.fabilucius.advancedperks.perk.PerksConfiguration;
 import de.fabilucius.advancedperks.perk.annotation.PerkIdentifier;
 import de.fabilucius.advancedperks.perk.properties.PerkDescription;
 import de.fabilucius.advancedperks.perk.properties.PerkGuiIcon;

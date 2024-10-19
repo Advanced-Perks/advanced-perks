@@ -2,12 +2,11 @@ package de.fabilucius.advancedperks.command.subcommands;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.configuration.replace.ReplaceOptions;
 import de.fabilucius.advancedperks.core.command.AbstractSubCommand;
 import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.Permission;
+import de.fabilucius.advancedperks.core.configuration.type.MessageConfiguration;
 import de.fabilucius.advancedperks.data.state.PerkStateController;
 import de.fabilucius.advancedperks.perk.Perk;
 import de.fabilucius.advancedperks.registry.PerkRegistryImpl;
@@ -27,9 +26,12 @@ public class DisableSubCommand extends AbstractSubCommand {
     @Inject
     private PerkStateController perkStateController;
 
+    private final MessageConfiguration messageConfiguration;
+
     @Inject
-    public DisableSubCommand(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
-        super(configurationLoader);
+    public DisableSubCommand(MessageConfiguration messageConfiguration) {
+        super();
+        this.messageConfiguration = messageConfiguration;
     }
 
     /* /perks disable <perk> [player] */
@@ -40,12 +42,12 @@ public class DisableSubCommand extends AbstractSubCommand {
                 Perk perk = this.perkRegistryImpl.getPerkByIdentifier(arguments[0]);
                 if (perk != null) {
                     this.disablePerk(player, perk);
-                    player.sendMessage(this.messagesConfiguration.getComputedString("command.perks.disable.success",
+                    player.sendMessage(this.messageConfiguration.getMessage("command.perks.disable.success",
                             new ReplaceOptions("<perk>", perk.getIdentifier()),
                             new ReplaceOptions("<player>", player.getName())));
                     return;
                 }
-                player.sendMessage(this.messagesConfiguration.getComputedString("command.perks.disable.perk_doesnt_exist",
+                player.sendMessage(this.messageConfiguration.getMessage("command.perks.disable.perk_doesnt_exist",
                         new ReplaceOptions("<perk>", arguments[0])));
             } else {
                 commandSender.sendMessage("Cannot disable a perk for the console please specify a player /perk disable <perk> <player>.");
@@ -53,22 +55,22 @@ public class DisableSubCommand extends AbstractSubCommand {
         } else if (arguments.length == 2) {
             Perk perk = this.perkRegistryImpl.getPerkByIdentifier(arguments[0]);
             if (perk == null) {
-                commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.disable.perk_doesnt_exist",
+                commandSender.sendMessage(this.messageConfiguration.getMessage("command.perks.disable.perk_doesnt_exist",
                         new ReplaceOptions("<perk>", arguments[0])));
                 return;
             }
             Player target = Bukkit.getPlayer(arguments[1]);
             if (target == null) {
-                commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.disable.player_not_online",
+                commandSender.sendMessage(this.messageConfiguration.getMessage("command.perks.disable.player_not_online",
                         new ReplaceOptions("<player>", arguments[1])));
                 return;
             }
             this.disablePerk(target, perk);
-            commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.disable.success",
+            commandSender.sendMessage(this.messageConfiguration.getMessage("command.perks.disable.success",
                     new ReplaceOptions("<perk>", perk.getIdentifier()),
                     new ReplaceOptions("<player>", target.getName())));
         } else {
-            commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.disable.syntax"));
+            commandSender.sendMessage(this.messageConfiguration.getMessage("command.perks.disable.syntax"));
         }
     }
 

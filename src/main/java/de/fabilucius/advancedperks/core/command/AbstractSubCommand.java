@@ -2,9 +2,6 @@ package de.fabilucius.advancedperks.core.command;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
-import de.fabilucius.advancedperks.core.MessagesConfiguration;
 import de.fabilucius.advancedperks.core.command.annotation.Aliases;
 import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.Permission;
@@ -17,14 +14,12 @@ import java.util.Optional;
 
 public abstract class AbstractSubCommand {
 
-    protected final MessagesConfiguration messagesConfiguration;
     private final String identifier;
     @Nullable
     private String permission;
 
     @Inject
-    protected AbstractSubCommand(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
-        this.messagesConfiguration = configurationLoader.getConfigurationAndLoad(MessagesConfiguration.class);
+    protected AbstractSubCommand() {
         CommandIdentifier commandIdentifierAnnotation = this.getClass().getAnnotation(CommandIdentifier.class);
         if (commandIdentifierAnnotation == null) {
             throw new IllegalStateException("The sub command class %s is missing a @Identifier annotation.");

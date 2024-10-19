@@ -10,20 +10,23 @@ const val DEBUG_LOG_PREFIX = "[debug]"
 
 @Singleton
 class APLogger @Inject constructor(
-    plugin: AdvancedPerks
+    plugin: AdvancedPerks,
 ) : Logger("ap", null) {
 
     init {
         parent = plugin.server.logger
     }
 
-    //TODO make debug messages toggleable
+    @JvmOverloads
     fun debug(message: Any, throwable: Throwable? = null) {
-        if (throwable != null) {
+        if (debugMode) {
             log(Level.INFO, "$DEBUG_LOG_PREFIX $message", throwable)
-        } else {
-            log(Level.INFO, "$DEBUG_LOG_PREFIX $message")
         }
     }
 
+    companion object {
+
+        var debugMode: Boolean = false
+
+    }
 }

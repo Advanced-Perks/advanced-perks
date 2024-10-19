@@ -1,9 +1,8 @@
 package de.fabilucius.advancedperks.guisystem.perkgui.elements;
 
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
-import de.fabilucius.advancedperks.core.SettingsConfiguration;
+import de.fabilucius.advancedperks.core.configuration.type.PerkGuiConfiguration;
+import de.fabilucius.advancedperks.core.configuration.type.SettingsConfiguration;
 import de.fabilucius.advancedperks.core.guisystem.GuiSound;
 import de.fabilucius.advancedperks.core.guisystem.GuiSystemManager;
 import de.fabilucius.advancedperks.core.guisystem.element.AbstractGuiElement;
@@ -18,7 +17,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.function.BiConsumer;
-import java.util.logging.Level;
 
 public class PerkGuiSetupElement extends AbstractGuiElement {
 
@@ -26,7 +24,10 @@ public class PerkGuiSetupElement extends AbstractGuiElement {
     private GuiSystemManager guiSystemManager;
 
     @Inject
-    private ConfigurationLoader configurationLoader;
+    private SettingsConfiguration settingsConfiguration;
+
+    @Inject
+    private PerkGuiConfiguration perkGuiConfiguration;
 
     @Inject
     private APLogger logger;
@@ -43,14 +44,8 @@ public class PerkGuiSetupElement extends AbstractGuiElement {
         return (guiElement, event) -> {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
-            try {
-                SettingsConfiguration settingsConfiguration = this.configurationLoader.getConfigurationAndLoad(SettingsConfiguration.class);
-                this.guiSystemManager.registerGuiWindowAnOpen(new SetupPerkGuiWindow(this.configurationLoader, player, settingsConfiguration.isGuiClickSoundsEnabled()), player);
-                this.playSound(GuiSound.SETUP_CLICK);
-            } catch (ConfigurationInitializationException e) {
-                player.sendMessage("&cAn error occurred while loading a configuration needed for the setup gui check the console for additional information.");
-                this.logger.log(Level.SEVERE, "A configuration related error occurred during initialization of the SetupPerkGuiWindow.", e);
-            }
+            this.guiSystemManager.registerGuiWindowAnOpen(new SetupPerkGuiWindow(perkGuiConfiguration, player, settingsConfiguration.areGuiClickSoundsEnabled()), player);
+            this.playSound(GuiSound.SETUP_CLICK);
         };
     }
 }

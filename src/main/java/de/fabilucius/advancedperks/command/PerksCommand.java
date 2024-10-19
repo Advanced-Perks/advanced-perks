@@ -10,23 +10,19 @@ import de.fabilucius.advancedperks.command.subcommands.InfoSubCommand;
 import de.fabilucius.advancedperks.command.subcommands.MigrateSubCommand;
 import de.fabilucius.advancedperks.command.subcommands.SetPriceSubCommand;
 import de.fabilucius.advancedperks.command.subcommands.ToggleSubCommand;
-import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
-import de.fabilucius.advancedperks.core.MessagesConfiguration;
-import de.fabilucius.advancedperks.core.SettingsConfiguration;
 import de.fabilucius.advancedperks.core.command.AbstractCommand;
 import de.fabilucius.advancedperks.core.command.annotation.Aliases;
 import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.SubCommands;
+import de.fabilucius.advancedperks.core.configuration.type.MessageConfiguration;
+import de.fabilucius.advancedperks.core.configuration.type.SettingsConfiguration;
 import de.fabilucius.advancedperks.core.guisystem.GuiSystemManager;
 import de.fabilucius.advancedperks.core.logging.APLogger;
 import de.fabilucius.advancedperks.guisystem.perkgui.PerkGuiWindow;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-import java.util.logging.Level;
 
 @CommandIdentifier("perks")
 @Aliases({"perk", "advancedperks"})
@@ -39,22 +35,20 @@ public class PerksCommand extends AbstractCommand {
     @Inject
     private APLogger logger;
 
-    private final ConfigurationLoader configurationLoader;
+    @Inject
+    private SettingsConfiguration settingsConfiguration;
+
+    private final MessageConfiguration messageConfiguration;
 
     @Inject
-    public PerksCommand(ConfigurationLoader configurationLoader, APLogger logger, Injector injector) throws ConfigurationInitializationException {
-        super(configurationLoader, logger, injector);
-        this.configurationLoader = configurationLoader;
+    public PerksCommand(MessageConfiguration messageConfiguration, APLogger logger, Injector injector) {
+        super(messageConfiguration, logger, injector);
+        this.messageConfiguration = messageConfiguration;
     }
 
     @Override
     public void executeCommand(CommandSender commandSender, String... arguments) {
-        try {
-            this.guiSystemManager.registerGuiWindowAnOpen(new PerkGuiWindow(this.configurationLoader, this.configurationLoader.getConfigurationAndLoad(SettingsConfiguration.class), this.configurationLoader.getConfigurationAndLoad(MessagesConfiguration.class), (Player) commandSender), (Player) commandSender);
-        } catch (ConfigurationInitializationException e) {
-            commandSender.sendMessage(ChatColor.RED + "An error occurred while using this command contact the server administrator.");
-            this.logger.log(Level.SEVERE, "An error occurred while opening the perks gui for %s.".formatted(commandSender.getName()), e);
-        }
+        this.guiSystemManager.registerGuiWindowAnOpen(new PerkGuiWindow(settingsConfiguration, messageConfiguration, (Player) commandSender), (Player) commandSender);
     }
 
     @Override

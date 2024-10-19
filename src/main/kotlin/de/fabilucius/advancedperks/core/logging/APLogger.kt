@@ -3,7 +3,6 @@ package de.fabilucius.advancedperks.core.logging
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import de.fabilucius.advancedperks.AdvancedPerks
-import de.fabilucius.advancedperks.core.configuration.type.SettingsConfiguration
 import java.util.logging.Level
 import java.util.logging.Logger
 

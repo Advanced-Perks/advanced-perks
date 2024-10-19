@@ -1,12 +1,11 @@
 package de.fabilucius.advancedperks.command.subcommands;
 
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.configuration.replace.ReplaceOptions;
 import de.fabilucius.advancedperks.core.command.AbstractSubCommand;
 import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.Permission;
+import de.fabilucius.advancedperks.core.configuration.type.MessageConfiguration;
 import de.fabilucius.advancedperks.core.mojang.MojangProfileData;
 import de.fabilucius.advancedperks.core.mojang.MojangProfileFetcher;
 import de.fabilucius.advancedperks.data.PerkDataRepository;
@@ -30,8 +29,11 @@ public class InfoSubCommand extends AbstractSubCommand {
     private PerkDataRepository perkDataRepository;
 
     @Inject
-    public InfoSubCommand(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
-        super(configurationLoader);
+    private MessageConfiguration messageConfiguration;
+
+    @Inject
+    public InfoSubCommand() {
+        super();
     }
 
     /* /perks info <player> */
@@ -61,7 +63,7 @@ public class InfoSubCommand extends AbstractSubCommand {
                 this.printPerkInfo(commandSender, mojangProfileData.uniqueId(), mojangProfileData.name());
                 return;
             }
-            commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.info.player_not_found",
+            commandSender.sendMessage(this.messageConfiguration.getMessage("command.perks.info.player_not_found",
                     new ReplaceOptions("<player>", arguments[0])));
         }
     }
@@ -69,12 +71,12 @@ public class InfoSubCommand extends AbstractSubCommand {
     private void printPerkInfo(CommandSender messageReceiver, UUID infoAbout, String name) {
         this.perkDataRepository.getPerkDataByUuid(infoAbout).thenAcceptAsync(perkData -> {
             if (perkData instanceof UnloadedPerkData) {
-                messageReceiver.sendMessage(this.messagesConfiguration.getComputedString("command.perks.info.still_loading",
+                messageReceiver.sendMessage(this.messageConfiguration.getMessage("command.perks.info.still_loading",
                         new ReplaceOptions("<player>", name)));
             } else {
                 String enabledPerks = perkData.getEnabledPerks().stream().map(Perk::getIdentifier).collect(Collectors.joining(" "));
                 String boughtPerks = String.join(" ", perkData.getBoughtPerks());
-                this.messagesConfiguration.getComputedStringList("command.perks.info.text",
+                this.messageConfiguration.getMessageList("command.perks.info.text",
                                 new ReplaceOptions("<player>", name),
                                 new ReplaceOptions("<enabled_perks>", enabledPerks.isEmpty() ? "-" : enabledPerks),
                                 new ReplaceOptions("<bought_perks>", boughtPerks.isEmpty() ? "-" : boughtPerks),

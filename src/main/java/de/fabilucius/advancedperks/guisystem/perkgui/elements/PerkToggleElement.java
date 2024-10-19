@@ -2,7 +2,7 @@ package de.fabilucius.advancedperks.guisystem.perkgui.elements;
 
 import com.google.inject.Inject;
 import de.fabilucius.advancedperks.AdvancedPerks;
-import de.fabilucius.advancedperks.core.MessagesConfiguration;
+import de.fabilucius.advancedperks.core.configuration.type.MessageConfiguration;
 import de.fabilucius.advancedperks.core.guisystem.GuiSound;
 import de.fabilucius.advancedperks.core.guisystem.element.AbstractGuiElement;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
@@ -25,17 +25,17 @@ public class PerkToggleElement extends AbstractGuiElement {
     @Inject
     private AdvancedPerks advancedPerks;
 
-    private final MessagesConfiguration messagesConfiguration;
+    private final MessageConfiguration messageConfiguration;
     private final Perk perk;
     private final String enabledText;
     private final String disabledText;
 
     //TODO currently unneeded tidy this mess up a bit
-    public PerkToggleElement(GuiWindow guiWindow, MessagesConfiguration messagesConfiguration, Perk perk, boolean enabled, boolean unlocked, String notUnlockedText, String enabledText, String disabledText) {
+    public PerkToggleElement(GuiWindow guiWindow, MessageConfiguration messageConfiguration, Perk perk, boolean enabled, boolean unlocked, String notUnlockedText, String enabledText, String disabledText) {
         super(guiWindow, ItemStackBuilder.fromMaterial(!unlocked ? Material.IRON_BARS : enabled ? Material.LIME_DYE : Material.GRAY_DYE)
                 .setDisplayName(!unlocked ? notUnlockedText : enabled ? enabledText : disabledText)
                 .build());
-        this.messagesConfiguration = messagesConfiguration;
+        this.messageConfiguration = messageConfiguration;
         this.perk = perk;
         this.enabledText = enabledText;
         this.disabledText = disabledText;
@@ -48,8 +48,8 @@ public class PerkToggleElement extends AbstractGuiElement {
             PerkToggleResult result = this.perkStateController.togglePerk(this.getGuiWindow().getPlayer(), this.perk);
             switch (result) {
                 case EVENT_CANCELLED, DISALLOWED_WORLD, NO_PERMISSION, TOO_MANY_ACTIVE -> {
-                    this.getGuiWindow().setTitle(this.messagesConfiguration.getComputedString("gui.perk_gui.toggle." + result.name().toLowerCase()));
-                    Bukkit.getScheduler().runTaskLater(this.advancedPerks, () -> this.getGuiWindow().setTitle(this.messagesConfiguration.getComputedString("gui.perk_gui.title")), 20L);
+                    this.getGuiWindow().setTitle(this.messageConfiguration.getMessage("gui.perk_gui.toggle." + result.name().toLowerCase()));
+                    Bukkit.getScheduler().runTaskLater(this.advancedPerks, () -> this.getGuiWindow().setTitle(this.messageConfiguration.getMessage("gui.perk_gui.title")), 20L);
                     this.playSound(GuiSound.ERROR_CLICK);
                 }
                 case ENABLED -> {

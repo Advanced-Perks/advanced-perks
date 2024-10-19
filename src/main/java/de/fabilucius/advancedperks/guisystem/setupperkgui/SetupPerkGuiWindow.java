@@ -1,12 +1,10 @@
 package de.fabilucius.advancedperks.guisystem.setupperkgui;
 
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
+import de.fabilucius.advancedperks.core.configuration.type.PerkGuiConfiguration;
 import de.fabilucius.advancedperks.core.guisystem.element.GuiElement;
 import de.fabilucius.advancedperks.core.guisystem.element.defaultelements.GuiBackgroundElement;
 import de.fabilucius.advancedperks.core.guisystem.window.AbstractGuiWindow;
-import de.fabilucius.advancedperks.guisystem.configuration.PerkGuiConfiguration;
 import de.fabilucius.advancedperks.guisystem.configuration.PerkGuiSaveResult;
 import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.CloseGuiPlaceholderElement;
 import de.fabilucius.advancedperks.guisystem.setupperkgui.elements.DisableAllPerksPlaceholderElement;
@@ -28,9 +26,9 @@ public class SetupPerkGuiWindow extends AbstractGuiWindow {
     private boolean background;
 
     @Inject
-    public SetupPerkGuiWindow(ConfigurationLoader configurationLoader, Player player, boolean sounds) throws ConfigurationInitializationException {
+    public SetupPerkGuiWindow(PerkGuiConfiguration perkGuiConfiguration, Player player, boolean sounds) {
         super(Bukkit.createInventory(null, 54, ChatColor.DARK_GRAY + "Click on Setup Icon to save."), player, sounds);
-        this.perkGuiConfiguration = configurationLoader.getConfigurationAndLoad(PerkGuiConfiguration.class);
+        this.perkGuiConfiguration = perkGuiConfiguration;
         this.background = perkGuiConfiguration.hasBackground();
     }
 
@@ -55,7 +53,8 @@ public class SetupPerkGuiWindow extends AbstractGuiWindow {
     }
 
     public PerkGuiSaveResult save() {
-        return this.perkGuiConfiguration.savePerkGuiLayout(this);
+        //TODO save gui
+        return PerkGuiSaveResult.ERROR;
     }
 
     public boolean hasBackground() {

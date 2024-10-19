@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import de.fabilucius.advancedperks.core.logging.APLogger;
+import de.fabilucius.advancedperks.core.module.ConfigurationModule;
 import de.fabilucius.advancedperks.core.module.PrimaryModule;
 import de.fabilucius.advancedperks.exception.AdvancedPerksException;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,7 +21,10 @@ public class AdvancedPerks extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Injector injectorInstance = Guice.createInjector(new PrimaryModule(this));
+        Injector injectorInstance = Guice.createInjector(
+                new PrimaryModule(this),
+                new ConfigurationModule()
+        );
         injectorInstance.injectMembers(this);
         try {
             this.logger.info("Beginning the bootstrap process of the plugin.");

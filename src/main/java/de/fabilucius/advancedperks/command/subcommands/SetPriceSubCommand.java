@@ -5,9 +5,8 @@ import com.google.inject.Inject;
 import de.fabilucius.advancedperks.core.command.AbstractSubCommand;
 import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.Permission;
-import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.configuration.replace.ReplaceOptions;
+import de.fabilucius.advancedperks.core.configuration.type.MessageConfiguration;
 import de.fabilucius.advancedperks.perk.Perk;
 import de.fabilucius.advancedperks.registry.PerkRegistryImpl;
 import de.fabilucius.advancedperks.registry.model.SetPriceResult;
@@ -23,8 +22,11 @@ public class SetPriceSubCommand extends AbstractSubCommand {
     private PerkRegistryImpl perkRegistryImpl;
 
     @Inject
-    protected SetPriceSubCommand(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
-        super(configurationLoader);
+    private MessageConfiguration messageConfiguration;
+
+    @Inject
+    protected SetPriceSubCommand() {
+        super();
     }
 
     @Override
@@ -36,22 +38,22 @@ public class SetPriceSubCommand extends AbstractSubCommand {
                 if (perk != null) {
                     SetPriceResult setPriceResult = this.perkRegistryImpl.setPrice(perk, Double.valueOf(arguments[1]));
                     if (setPriceResult.equals(SetPriceResult.PRICE_SET)) {
-                        commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.setprice.success",
+                        commandSender.sendMessage(this.messageConfiguration.getMessage("command.perks.setprice.success",
                                 new ReplaceOptions("<perk>", perk.getIdentifier()),
                                 new ReplaceOptions("<price>", Double.toString(price))));
                     } else {
-                        commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.setprice.error"));
+                        commandSender.sendMessage(this.messageConfiguration.getMessage("command.perks.setprice.error"));
                     }
                     return;
                 }
-                commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.setprice.perk_doesnt_exist",
+                commandSender.sendMessage(this.messageConfiguration.getMessage("command.perks.setprice.perk_doesnt_exist",
                         new ReplaceOptions("<perk>", arguments[0])));
             } catch (NumberFormatException exception) {
-                commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.setprice.no_valid_price",
+                commandSender.sendMessage(this.messageConfiguration.getMessage("command.perks.setprice.no_valid_price",
                         new ReplaceOptions("<price>", arguments[1])));
             }
         } else {
-            commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.setprice.syntax"));
+            commandSender.sendMessage(this.messageConfiguration.getMessage("command.perks.setprice.syntax"));
         }
     }
 

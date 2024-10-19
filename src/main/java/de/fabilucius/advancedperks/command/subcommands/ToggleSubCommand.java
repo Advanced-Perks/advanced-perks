@@ -2,12 +2,11 @@ package de.fabilucius.advancedperks.command.subcommands;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
-import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
-import de.fabilucius.advancedperks.core.configuration.exception.ConfigurationInitializationException;
 import de.fabilucius.advancedperks.core.configuration.replace.ReplaceOptions;
 import de.fabilucius.advancedperks.core.command.AbstractSubCommand;
 import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.Permission;
+import de.fabilucius.advancedperks.core.configuration.type.MessageConfiguration;
 import de.fabilucius.advancedperks.data.state.PerkStateController;
 import de.fabilucius.advancedperks.perk.Perk;
 import de.fabilucius.advancedperks.registry.PerkRegistryImpl;
@@ -28,8 +27,11 @@ public class ToggleSubCommand extends AbstractSubCommand {
     private PerkStateController perkStateController;
 
     @Inject
-    public ToggleSubCommand(ConfigurationLoader configurationLoader) throws ConfigurationInitializationException {
-        super(configurationLoader);
+    private MessageConfiguration messageConfiguration;
+
+    @Inject
+    public ToggleSubCommand() {
+        super();
     }
 
     /* /perks toggle <perk> [player] */
@@ -40,12 +42,12 @@ public class ToggleSubCommand extends AbstractSubCommand {
                 Perk perk = this.perkRegistryImpl.getPerkByIdentifier(arguments[0]);
                 if (perk != null) {
                     this.forceTogglePerk(player, perk);
-                    player.sendMessage(this.messagesConfiguration.getComputedString("command.perks.toggle.success",
+                    player.sendMessage(this.messageConfiguration.getMessage("command.perks.toggle.success",
                             new ReplaceOptions("<perk>", perk.getIdentifier()),
                             new ReplaceOptions("<player>", player.getName())));
                     return;
                 }
-                player.sendMessage(this.messagesConfiguration.getComputedString("command.perks.toggle.perk_doesnt_exist",
+                player.sendMessage(this.messageConfiguration.getMessage("command.perks.toggle.perk_doesnt_exist",
                         new ReplaceOptions("<perk>", arguments[0])));
             } else {
                 commandSender.sendMessage("Cannot enable a perk for the console please specify a player /perk toggle <perk> <player>.");
@@ -53,22 +55,22 @@ public class ToggleSubCommand extends AbstractSubCommand {
         } else if (arguments.length == 2) {
             Perk perk = this.perkRegistryImpl.getPerkByIdentifier(arguments[0]);
             if (perk == null) {
-                commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.toggle.perk_doesnt_exist",
+                commandSender.sendMessage(this.messageConfiguration.getMessage("command.perks.toggle.perk_doesnt_exist",
                         new ReplaceOptions("<perk>", arguments[0])));
                 return;
             }
             Player target = Bukkit.getPlayer(arguments[1]);
             if (target == null) {
-                commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.toggle.player_not_online",
+                commandSender.sendMessage(this.messageConfiguration.getMessage("command.perks.toggle.player_not_online",
                         new ReplaceOptions("<player>", arguments[1])));
                 return;
             }
             this.forceTogglePerk(target, perk);
-            commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.toggle.success",
+            commandSender.sendMessage(this.messageConfiguration.getMessage("command.perks.toggle.success",
                     new ReplaceOptions("<perk>", perk.getIdentifier()),
                     new ReplaceOptions("<player>", target.getName())));
         } else {
-            commandSender.sendMessage(this.messagesConfiguration.getComputedString("command.perks.toggle.syntax"));
+            commandSender.sendMessage(this.messageConfiguration.getMessage("command.perks.toggle.syntax"));
         }
     }
 

@@ -3,7 +3,7 @@ package de.fabilucius.advancedperks.core.database;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
-import de.fabilucius.advancedperks.core.configuration.ConfigurationLoader;
+import de.fabilucius.advancedperks.core.configuration.type.DatabaseConfiguration;
 import de.fabilucius.advancedperks.core.database.exception.DataFileCreationException;
 import de.fabilucius.advancedperks.core.database.types.FileDatabase;
 import de.fabilucius.advancedperks.core.database.types.RemoteDatabase;
@@ -25,7 +25,7 @@ public class DatabaseProvider implements Provider<Database> {
     private File configurationDirectory;
 
     @Inject
-    private ConfigurationLoader configurationLoader;
+    private DatabaseConfiguration databaseConfiguration;
 
     @Inject
     private Injector injector;
@@ -33,7 +33,6 @@ public class DatabaseProvider implements Provider<Database> {
     @Override
     public Database get() {
         try {
-            DatabaseConfiguration databaseConfiguration = this.configurationLoader.getConfigurationAndLoad(DatabaseConfiguration.class);
             switch (databaseConfiguration.getSaveType()) {
                 case FILE -> {
                     return this.createFileDatabaseConnection(databaseConfiguration.getFileLocation());

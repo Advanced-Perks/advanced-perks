@@ -50,7 +50,6 @@ abstract class AbstractConfiguration @Inject constructor(
         check(jarResourceUrl != null) {
             "The configuration file $configurationPath could not be found in the jar."
         }
-        load(file)
         jarResourceUrl.openStream().use { stream ->
             if (!file.exists()) {
                 file.parentFile.mkdirs()
@@ -58,6 +57,7 @@ abstract class AbstractConfiguration @Inject constructor(
             }
             fallbackConfiguration.load(InputStreamReader(stream))
         }
+        load(file)
     }
 
 }

@@ -1,24 +1,23 @@
 package de.fabilucius.advancedperks.core.gui.interpreter
 
+import com.google.inject.Inject
 import com.google.inject.Singleton
-import de.fabilucius.advancedperks.core.gui.blueprint.GuiWindowBlueprint
+import de.fabilucius.advancedperks.core.gui.PerkGuiFactory
+import de.fabilucius.advancedperks.core.gui.blueprint.PerkGuiBlueprint
 import org.bukkit.Bukkit
 import org.bukkit.inventory.Inventory
 
 @Singleton
-class GuiInterpreter {
+class GuiInterpreter @Inject constructor(
+    private val perkGuiFactory: PerkGuiFactory
+) {
 
-    fun interpretBlueprint(guiWindowBlueprint: GuiWindowBlueprint): Inventory{
-        val inventory = Bukkit.createInventory(null, guiWindowBlueprint.size, guiWindowBlueprint.title)
+    fun interpretBlueprint(perkGuiBlueprint: PerkGuiBlueprint): Inventory{
+        val inventory = Bukkit.createInventory(null, perkGuiBlueprint.size, perkGuiBlueprint.title)
 
-        guiWindowBlueprint.pages.forEach { guiPageBlueprint ->
-            guiPageBlueprint.elements.forEach { guiElementBlueprint ->
-                val itemStack = guiElementBlueprint.representations.values.first().toItemStack()
-                inventory.setItem(guiElementBlueprint.slot, itemStack)
-            }
-        }
+        val perkGui = perkGuiFactory.create(inventory)
 
-        return inventory
+        return perkGui.inventory
     }
 
 }

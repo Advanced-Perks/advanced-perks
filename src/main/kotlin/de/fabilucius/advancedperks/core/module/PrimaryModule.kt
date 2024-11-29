@@ -1,6 +1,7 @@
 package de.fabilucius.advancedperks.core.module
 
 import com.google.inject.AbstractModule
+import com.google.inject.assistedinject.FactoryModuleBuilder
 import com.google.inject.name.Names
 import com.google.inject.util.Providers
 import de.fabilucius.advancedperks.AdvancedPerks
@@ -15,6 +16,7 @@ import de.fabilucius.advancedperks.core.database.DatabaseProvider
 import de.fabilucius.advancedperks.core.economy.EconomyController
 import de.fabilucius.advancedperks.core.economy.interfaces.EconomyInterface
 import de.fabilucius.advancedperks.core.economy.interfaces.types.VaultEconomyInterface
+import de.fabilucius.advancedperks.core.gui.PerkGuiFactory
 import de.fabilucius.advancedperks.core.guisystem.GuiSystemManager
 import de.fabilucius.advancedperks.core.guisystem.persistantdata.NamespacedKeyProvider
 import de.fabilucius.advancedperks.core.logging.APLogger
@@ -61,6 +63,7 @@ class PrimaryModule(private val advancedPerks: AdvancedPerks) : AbstractModule()
         }
         bind(CompatibilityController::class.java).asEagerSingleton()
         bind(UpdateChecker::class.java).asEagerSingleton()
+        install(FactoryModuleBuilder().build(PerkGuiFactory::class.java))
     }
 
 }

@@ -5,6 +5,7 @@ import de.fabilucius.advancedperks.core.gui.blueprint.representation.GuiElementR
 
 data class GuiElementBlueprint(
     val function: String,
+    val state: GuiElementState,
     val representations: Map<GuiElementState, GuiElementRepresentationBlueprint>,
     val slot: Int,
 )

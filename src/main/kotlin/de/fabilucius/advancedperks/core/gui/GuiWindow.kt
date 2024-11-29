@@ -1,7 +1,9 @@
 package de.fabilucius.advancedperks.core.gui
 
-class GuiWindow {
+import org.bukkit.inventory.ItemStack
 
-    val
+interface GuiWindow {
+    val elements: MutableList<GuiElement>
 
+    fun getElementByItemStack(itemStack: ItemStack): GuiElement = TODO("Get with the uuid key from persistentcontainer")
 }

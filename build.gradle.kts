@@ -52,6 +52,7 @@ dependencies {
 
     implementation("org.spigotmc", "spigot-api", Version.SPIGOT)
     implementation("com.google.inject", "guice", Version.GUICE)
+    implementation("com.google.inject.extensions", "guice-assistedinject", Version.GUICE)
     implementation("commons-io", "commons-io", Version.COMMONS_IO)
     implementation("commons-codec", "commons-codec", Version.COMMONS_CODEC)
     implementation("org.jetbrains", "annotations", Version.JETBRAINS_ANNOTATIONS)
@@ -97,25 +98,25 @@ tasks {
     sonarLint {
         rules {
             disable(
-                    "java:S3010",
-                    "java:S1192", //TODO enable that rule again
-                    "java:S1168",
-                    "java:S110",
-                    "java:S3655",
-                    "java:S1141",
-                    "java:S3011",
-                    "java:S6355",
-                    "java:S1123",
-                    "java:S2629",
-                    "java:S2142",
-                    "java:S4144",
-                    "java:S107", //activate in the future (too many parameter in constructor)
-                    "java:S3358",
-                    "java:S899",
-                    "java:S1135",
-                    "java:S1133",
-                    "java:S5778",
-                    "java:S1068"
+                "java:S3010",
+                "java:S1192", //TODO enable that rule again
+                "java:S1168",
+                "java:S110",
+                "java:S3655",
+                "java:S1141",
+                "java:S3011",
+                "java:S6355",
+                "java:S1123",
+                "java:S2629",
+                "java:S2142",
+                "java:S4144",
+                "java:S107", //activate in the future (too many parameter in constructor)
+                "java:S3358",
+                "java:S899",
+                "java:S1135",
+                "java:S1133",
+                "java:S5778",
+                "java:S1068"
             )
         }
         val ignoreFiles = listOf("**Metrics.java", "**InventoryUpdate.java", "**ReflectionUtils.java")

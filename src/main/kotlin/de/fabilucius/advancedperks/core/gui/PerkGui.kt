@@ -4,12 +4,15 @@ import com.google.inject.Inject
 import com.google.inject.assistedinject.Assisted
 import de.fabilucius.advancedperks.core.gui.manager.GuiSystemManager
 import org.bukkit.inventory.Inventory
+import org.bukkit.inventory.ItemStack
 
 class PerkGui @Inject constructor(
     @Assisted val inventory: Inventory
-) : GuiWindow {
+) {
 
-    override val elements = mutableListOf<GuiElement>()
+    val elements = mutableListOf<GuiElement>()
+
+    fun getElementByItemStack(itemStack: ItemStack): GuiElement = TODO("Get with the uuid key from persistentcontainer")
 
 }
 

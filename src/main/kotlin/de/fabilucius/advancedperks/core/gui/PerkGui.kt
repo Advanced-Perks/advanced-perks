@@ -12,6 +12,12 @@ class PerkGui @Inject constructor(
 
     val elements = mutableListOf<GuiElement>()
 
+    fun addElement(guiElement: GuiElement) {
+        elements.add(guiElement)
+        //TODO check for previous elements in that slot
+        inventory.setItem(guiElement.slot, guiElement.getRepresentation())
+    }
+
     fun getElementByItemStack(itemStack: ItemStack): GuiElement = TODO("Get with the uuid key from persistentcontainer")
 
 }

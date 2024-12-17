@@ -17,7 +17,10 @@ class GuiInterpreter @Inject constructor(
 
         val perkGui = perkGuiFactory.create(inventory)
 
+        perkGuiBlueprint.elements.forEach {
+                elementBlueprint -> perkGui.addElement()
+        }
+
         return perkGui.inventory
     }
-
 }

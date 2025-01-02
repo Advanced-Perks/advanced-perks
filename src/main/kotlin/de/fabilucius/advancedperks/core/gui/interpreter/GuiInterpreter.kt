@@ -8,7 +8,8 @@ import org.bukkit.Bukkit
 import org.bukkit.inventory.Inventory
 
 @Singleton
-class GuiInterpreter @Inject constructor(
+class
+GuiInterpreter @Inject constructor(
     private val perkGuiFactory: PerkGuiFactory
 ) {
 

@@ -49,6 +49,7 @@ dependencies {
         //To resolve classpath dependency problems because spigot uses an older version which gets overwritten by datafaker
         exclude(group = "org.yaml", module = "snakeyaml")
     }
+    testImplementation("io.kotest", "kotest-assertions-core-jvm", "5.9.1")
 
     implementation("org.spigotmc", "spigot-api", Version.SPIGOT)
     implementation("com.google.inject", "guice", Version.GUICE)

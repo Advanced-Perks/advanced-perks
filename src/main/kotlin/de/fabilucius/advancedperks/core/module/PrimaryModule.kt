@@ -1,5 +1,7 @@
 package de.fabilucius.advancedperks.core.module
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.inject.AbstractModule
 import com.google.inject.assistedinject.FactoryModuleBuilder
 import com.google.inject.name.Names
@@ -16,12 +18,13 @@ import de.fabilucius.advancedperks.core.database.DatabaseProvider
 import de.fabilucius.advancedperks.core.economy.EconomyController
 import de.fabilucius.advancedperks.core.economy.interfaces.EconomyInterface
 import de.fabilucius.advancedperks.core.economy.interfaces.types.VaultEconomyInterface
-import de.fabilucius.advancedperks.core.gui.PerkGuiFactory
 import de.fabilucius.advancedperks.core.guisystem.GuiSystemManager
 import de.fabilucius.advancedperks.core.guisystem.persistantdata.NamespacedKeyProvider
 import de.fabilucius.advancedperks.core.logging.APLogger
 import de.fabilucius.advancedperks.data.PerkDataRepository
 import de.fabilucius.advancedperks.data.state.PerkStateController
+import de.fabilucius.advancedperks.guisystem.GuiSystemEventHandler
+import de.fabilucius.advancedperks.guisystem.PerkGuiFactory
 import de.fabilucius.advancedperks.registry.PerkRegistry
 import de.fabilucius.advancedperks.registry.PerkRegistryImpl
 import de.fabilucius.advancedperks.registry.loader.PerkYmlLoader
@@ -29,6 +32,7 @@ import de.fabilucius.advancedperks.updatechecker.UpdateChecker
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import java.io.File
+import java.net.http.HttpClient
 
 class PrimaryModule(private val advancedPerks: AdvancedPerks) : AbstractModule() {
 
@@ -63,7 +67,12 @@ class PrimaryModule(private val advancedPerks: AdvancedPerks) : AbstractModule()
         }
         bind(CompatibilityController::class.java).asEagerSingleton()
         bind(UpdateChecker::class.java).asEagerSingleton()
+        //install(FactoryModuleBuilder().build(PerkGuiFactory::class.java))
         install(FactoryModuleBuilder().build(PerkGuiFactory::class.java))
+        bind(Gson::class.java).toInstance(GsonBuilder().create())
+        bind(HttpClient::class.java).toInstance(HttpClient.newBuilder().build())
+        bind(de.fabilucius.advancedperks.guisystem.GuiSystemManager::class.java).asEagerSingleton()
+        bind(GuiSystemEventHandler::class.java).asEagerSingleton()
     }
 
 }

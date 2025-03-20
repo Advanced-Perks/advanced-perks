@@ -29,8 +29,8 @@ class GuiSystemEventHandler @Inject constructor(
     fun onInventoryClick(event: InventoryClickEvent) =
         event.currentItem?.let { itemStack ->
             guiSystemManager.guis.filter { it.key == event.inventory }
-                .map { it.value.getElementByItemStack(itemStack) }
-                .forEach { it.function.onInventoryClick(event) }
+                //.map { it.value.getElementByItemStack(itemStack) }
+                //.forEach { it.function.onInventoryClick(event) }
         }
 
 }

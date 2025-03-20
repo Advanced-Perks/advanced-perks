@@ -11,8 +11,4 @@ data class GuiElementBlueprint(
     val slot: Int,
 ) {
 
-    fun GuiElementBlueprint.toGuiElement(): GuiElement {
-        return GuiElement(this.state, this.function, this.slot)
-    }
-
 }

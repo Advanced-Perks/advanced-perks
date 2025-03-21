@@ -16,26 +16,17 @@ class GuiSystemManager @Inject constructor(
     private val httpClient: HttpClient,
     private val gson: Gson,
     private val perkGuiFactory: PerkGuiFactory,
+    private val guiSelectionService: GuiSelectionService,
 ) {
 
     val managedGuis: MutableMap<UUID, PerkGui> = mutableMapOf()
 
     //TODO implement multiple ways to retrieve gui data
     fun openGui(player: Player) {
-        val guiBlueprint = fetchGuiBlueprint()
+        val guiBlueprint = guiSelectionService.activeGuiBlueprint
         val perkGui = perkGuiFactory.create(guiBlueprint, player)
         managedGuis[perkGui.player.uniqueId] = perkGui
         player.openInventory(perkGui.perkInventory)
-    }
-
-    private fun fetchGuiBlueprint(): GuiBlueprint {
-        // fetch via url with gson
-        val url ="https://raw.githubusercontent.com/Advanced-Perks/infrastructure/refs/heads/main/gui_blueprint.json"
-        val response = httpClient.send(
-            HttpRequest.newBuilder().uri(URI.create(url)).build(),
-            HttpResponse.BodyHandlers.ofString()
-        )
-        return gson.fromJson(response.body(), GuiBlueprint::class.java)
     }
 
 }

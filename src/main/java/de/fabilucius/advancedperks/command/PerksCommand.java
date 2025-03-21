@@ -19,7 +19,7 @@ import java.util.List;
 
 @CommandIdentifier("perks")
 @Aliases({"perk", "advancedperks"})
-@SubCommands({GuiSubCommand.class, InfoSubCommand.class, ToggleSubCommand.class, EnableSubCommand.class, DisableSubCommand.class, BuySubCommand.class, MigrateSubCommand.class, SetPriceSubCommand.class})
+@SubCommands({SetGuiSubCommand.class, InfoSubCommand.class, ToggleSubCommand.class, EnableSubCommand.class, DisableSubCommand.class, BuySubCommand.class, MigrateSubCommand.class, SetPriceSubCommand.class})
 public class PerksCommand extends AbstractCommand {
 
     @Inject

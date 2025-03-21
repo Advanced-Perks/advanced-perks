@@ -123,14 +123,14 @@ class PerkGui @Inject constructor(
         val previousPageAvailable = page > 0
         val nextPageAvailable = perkRegistry.perks.size > perksPerkPage.times(page).plus(perksPerkPage)
 
-        if (previousPageAvailable) {
+        if (blueprint.previousPageButton.showAlways || previousPageAvailable) {
             addPerkGuiElement(
                 blueprint.previousPageButton.slot,
                 PreviousPageButtonGuiElement(this, blueprint.previousPageButton.representation.toItemStack())
             )
         }
 
-        if (nextPageAvailable) {
+        if (blueprint.nextPageButton.showAlways || nextPageAvailable) {
             addPerkGuiElement(
                 blueprint.nextPageButton.slot,
                 NextPageButtonGuiElement(this, blueprint.nextPageButton.representation.toItemStack())

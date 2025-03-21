@@ -9,12 +9,12 @@ data class GuiPaginationButtonBlueprint(
 
 data class GuiNextPageButtonBlueprint(
     val slot: Int,
-    val hideWhenUnnecessary: Boolean,
+    val showAlways: Boolean,
     val representation: GuiRepresentationBlueprint,
 )
 
 data class GuiPreviousPageButtonBlueprint(
     val slot: Int,
-    val hideWhenUnnecessary: Boolean,
+    val showAlways: Boolean,
     val representation: GuiRepresentationBlueprint,
 )

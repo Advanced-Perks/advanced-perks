@@ -1,6 +1,6 @@
 {
-  "title": "Gui Test Title",
-  "size": 27,
+  "title": "&8&lChoose a perk...",
+  "size": 54,
   "background": {
     "enabled": true,
     "representation": {
@@ -14,23 +14,35 @@
     "activation_indicator": "ENCHANTED_PERK_BUTTON",
     "inventory_slots": [
       1,
-      4
+      3,
+      5,
+      7,
+      19,
+      21,
+      23,
+      25
     ],
     "toggle_button": {
       "enabled": true,
       "inventory_slots": [
-        2,
-        5
+        10,
+        12,
+        14,
+        16,
+        28,
+        30,
+        32,
+        34
       ],
       "active_representation": {
-        "title": "{identifier} is activated.",
+        "title": "&a{identifier} is activated.",
         "material": "LIME_DYE",
         "amount": 1,
         "glowing": false
       },
       "inactive_representation": {
-        "title": "{identifier} is inactive.",
-        "material": "RED_DYE",
+        "title": "&d{identifier} is inactive.",
+        "material": "GRAY_DYE",
         "amount": 1,
         "glowing": false
       }
@@ -38,30 +50,28 @@
   },
   "pagination_button": {
     "previous_page_button": {
-      "slot": 10,
+      "show_always": true,
+      "slot": 50,
       "representation": {
-        "title": "Previous Page",
-        "material": "DIRT",
-        "amount": 1,
-        "glowing": false
+        "title": "&7Previous Page",
+        "textureValue": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODY0Zjc3OWE4ZTNmZmEyMzExNDNmYTY5Yjk2YjE0ZWUzNWMxNmQ2NjllMTljNzVmZDFhN2RhNGJmMzA2YyJ9fX0="
       }
     },
     "next_page_button": {
-      "slot": 11,
+      "show_always": true,
+      "slot": 52,
       "representation": {
-        "title": "Next Page",
-        "material": "STONE",
-        "amount": 1,
-        "glowing": false
+        "title": "&7Next Page",
+        "textureValue": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDllY2NjNWMxYzc5YWE3ODI2YTE1YTdmNWYxMmZiNDAzMjgxNTdjNTI0MjE2NGJhMmFlZjQ3ZTVkZTlhNWNmYyJ9fX0="
       }
     }
   },
   "utility_button": {
     "close_gui_button": {
       "enabled": true,
-      "slot": 14,
+      "slot": 46,
       "representation": {
-        "title": "Close Gui",
+        "title": "&dClose Gui",
         "material": "BARRIER",
         "amount": 1,
         "glowing": false
@@ -69,9 +79,9 @@
     },
     "disable_all_perks_button": {
       "enabled": true,
-      "slot": 15,
+      "slot": 48,
       "representation": {
-        "title": "Disable all perks",
+        "title": "&dDisable all perks",
         "material": "REDSTONE_BLOCK",
         "amount": 1,
         "glowing": false

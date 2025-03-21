@@ -22,6 +22,7 @@ import de.fabilucius.advancedperks.core.economy.interfaces.types.VaultEconomyInt
 import de.fabilucius.advancedperks.core.logging.APLogger
 import de.fabilucius.advancedperks.data.PerkDataRepository
 import de.fabilucius.advancedperks.data.state.PerkStateController
+import de.fabilucius.advancedperks.guisystem.GuiSelectionService
 import de.fabilucius.advancedperks.guisystem.GuiSystemEventHandler
 import de.fabilucius.advancedperks.guisystem.GuiSystemManager
 import de.fabilucius.advancedperks.guisystem.PerkGuiFactory
@@ -74,6 +75,7 @@ class PrimaryModule(private val advancedPerks: AdvancedPerks) : AbstractModule()
         bind(HttpClient::class.java).toInstance(HttpClient.newBuilder().build())
         bind(GuiSystemManager::class.java).asEagerSingleton()
         bind(GuiSystemEventHandler::class.java).asEagerSingleton()
+        bind(GuiSelectionService::class.java).asEagerSingleton()
     }
 
 }

@@ -17,6 +17,15 @@ gui:
 command:
   perks:
     no_permission: '<prefix> &cYou don`t have permission to execute that command.'
+    setgui:
+      syntax: '<prefix> &cIncorrect usage the syntax of the command is /perks setgui <file> <file_name>.'
+      file:
+        success: '<prefix> &7Successfully set the gui to the file &6"<file>"&7.'
+        file_not_found: '<prefix> &cThe file "<file>" was not found.'
+        invalid_file: '<prefix> &cThe file "<file>" does not follow the correct format for a gui file.'
+      base64:
+        success: '<prefix> &7Successfully set the gui from the base64 string.'
+        invalid: '<prefix> &cAn error occurred during the base64 process check the server log for more information.'
     buy:
       syntax: '<prefix> &cIncorrect usage the syntax of the command is /perks buy <perk>.'
       not_enough_money: '<prefix> &cUnable to buy the perk "<perk>" you do not have the required amount of money.'

@@ -16,14 +16,12 @@ class ToggleButtonGuiElement(
     private val perk: Perk,
     private val perkData: PerkData,
     private val perkStateController: PerkStateController,
-    private val perkGui: PerkGui,
 ) : PerkGuiElement {
 
     override fun getGuiIcon(): ItemStack = if (perkData.isPerkEnabled(perk)) activeIcon else inactiveIcon
 
     override fun onInventoryClick(event: InventoryClickEvent) {
         perkStateController.togglePerk(event.whoClicked as Player, perk)
-        perkGui.perkInventory.setItem(event.slot, getGuiIcon())
     }
 
 }

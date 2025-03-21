@@ -24,7 +24,7 @@ class GuiSystemManager @Inject constructor(
     fun openGui(player: Player) {
         val guiBlueprint = fetchGuiBlueprint()
         val perkGui = perkGuiFactory.create(guiBlueprint, player)
-        managedGuis[perkGui.id] = perkGui
+        managedGuis[perkGui.player.uniqueId] = perkGui
         player.openInventory(perkGui.perkInventory)
     }
 

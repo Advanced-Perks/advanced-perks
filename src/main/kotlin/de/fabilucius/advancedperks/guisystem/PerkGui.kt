@@ -8,7 +8,6 @@ import de.fabilucius.advancedperks.data.PerkDataRepository
 import de.fabilucius.advancedperks.data.state.PerkStateController
 import de.fabilucius.advancedperks.guisystem.blueprint.GuiBlueprint
 import de.fabilucius.advancedperks.guisystem.elements.*
-import de.fabilucius.advancedperks.perk.Perk
 import de.fabilucius.advancedperks.registry.PerkRegistry
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -16,20 +15,18 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
-import java.util.*
 
 class PerkGui @Inject constructor(
     private val perkStateController: PerkStateController,
     private val perkRegistry: PerkRegistry,
     private val perkDataRepository: PerkDataRepository,
     @Assisted private val blueprint: GuiBlueprint,
-    @Assisted private val player: Player,
+    @Assisted val player: Player,
 ) : InventoryHolder {
 
     var perkInventory: Inventory = Bukkit.createInventory(this, blueprint.size, blueprint.title.translateColorCodes())
     private var page: Int = 0
     val perkGuiElements: MutableMap<Int, PerkGuiElement> = mutableMapOf()
-    val id: UUID = UUID.randomUUID()
 
     init {
         constructPerkGui()
@@ -51,17 +48,17 @@ class PerkGui @Inject constructor(
         }
     }
 
-    private fun addPerkGuiElement(slot: Int, element: PerkGuiElement) = perkGuiElements.put(slot, element).also {
-        perkInventory.setItem(slot, element.getGuiIcon())
-    }
-
-    private fun constructPerkGui() {
+    fun constructPerkGui() {
         perkInventory.clear()
         perkGuiElements.clear()
         constructBackground()
         constructPerkAndToggleButtons()
         constructPaginationButtons()
         constructUtilityButtons()
+    }
+
+    private fun addPerkGuiElement(slot: Int, element: PerkGuiElement) = perkGuiElements.put(slot, element).also {
+        perkInventory.setItem(slot, element.getGuiIcon())
     }
 
     private fun constructBackground() {
@@ -93,7 +90,7 @@ class PerkGui @Inject constructor(
         blueprint.inventorySlots.forEachIndexed { index, slot ->
             if (index < perksForPage.size) {
                 val perk = perksForPage[index]
-                addPerkGuiElement(slot, PerkButtonGuiElement(perk))
+                addPerkGuiElement(slot, PerkButtonGuiElement(perk, perkStateController, this))
             }
         }
 
@@ -113,7 +110,7 @@ class PerkGui @Inject constructor(
                     )
                     addPerkGuiElement(
                         slot,
-                        ToggleButtonGuiElement(activeIcon!!, inactiveIcon!!, perk, perkData, perkStateController, this)
+                        ToggleButtonGuiElement(activeIcon!!, inactiveIcon!!, perk, perkData, perkStateController)
                     )
                 }
             }

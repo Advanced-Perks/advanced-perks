@@ -3,13 +3,16 @@ package de.fabilucius.advancedperks.guisystem
 import com.google.inject.Inject
 import com.google.inject.assistedinject.Assisted
 import de.fabilucius.advancedperks.core.functionextensions.translateColorCodes
+import de.fabilucius.advancedperks.core.itembuilder.types.ItemStackBuilder
 import de.fabilucius.advancedperks.data.PerkDataRepository
 import de.fabilucius.advancedperks.data.state.PerkStateController
 import de.fabilucius.advancedperks.guisystem.blueprint.GuiBlueprint
 import de.fabilucius.advancedperks.guisystem.elements.*
+import de.fabilucius.advancedperks.perk.Perk
 import de.fabilucius.advancedperks.registry.PerkRegistry
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
@@ -78,7 +81,11 @@ class PerkGui @Inject constructor(
         val maxIndex = minIndex.plus(perksPerkPage).coerceAtMost(perks.size)
         val perksForPage = perks.subList(minIndex, maxIndex)
         if (perksForPage.isEmpty()) {
-            //TODO some sort of error as this shouldnt happen
+            val errorItem = ItemStackBuilder.fromMaterial(Material.BARRIER)
+                .setDisplayName("&cError".translateColorCodes())
+                .setDescription("&cThere are no perks available for this page.".translateColorCodes())
+                .build()
+            perkInventory.setItem(4, errorItem)
             return
         }
         val perkData = perkDataRepository.getPerkDataByPlayer(player)

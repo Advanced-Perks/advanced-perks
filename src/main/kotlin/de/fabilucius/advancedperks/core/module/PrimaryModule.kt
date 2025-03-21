@@ -1,5 +1,6 @@
 package de.fabilucius.advancedperks.core.module
 
+import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.inject.AbstractModule
@@ -25,6 +26,8 @@ import de.fabilucius.advancedperks.data.PerkDataRepository
 import de.fabilucius.advancedperks.data.state.PerkStateController
 import de.fabilucius.advancedperks.guisystem.GuiSystemEventHandler
 import de.fabilucius.advancedperks.guisystem.PerkGuiFactory
+import de.fabilucius.advancedperks.guisystem.blueprint.representation.GuiElementRepresentationTypeAdapter
+import de.fabilucius.advancedperks.guisystem.blueprint.representation.GuiRepresentationBlueprint
 import de.fabilucius.advancedperks.registry.PerkRegistry
 import de.fabilucius.advancedperks.registry.PerkRegistryImpl
 import de.fabilucius.advancedperks.registry.loader.PerkYmlLoader
@@ -69,7 +72,10 @@ class PrimaryModule(private val advancedPerks: AdvancedPerks) : AbstractModule()
         bind(UpdateChecker::class.java).asEagerSingleton()
         //install(FactoryModuleBuilder().build(PerkGuiFactory::class.java))
         install(FactoryModuleBuilder().build(PerkGuiFactory::class.java))
-        bind(Gson::class.java).toInstance(GsonBuilder().create())
+        bind(Gson::class.java).toInstance(GsonBuilder()
+            .registerTypeAdapter(GuiRepresentationBlueprint::class.java, GuiElementRepresentationTypeAdapter())
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .create())
         bind(HttpClient::class.java).toInstance(HttpClient.newBuilder().build())
         bind(de.fabilucius.advancedperks.guisystem.GuiSystemManager::class.java).asEagerSingleton()
         bind(GuiSystemEventHandler::class.java).asEagerSingleton()

@@ -83,6 +83,7 @@ tasks {
     shadowJar {
         dependencies {
             include(dependency("com.google.inject:guice"))
+            include(dependency("com.google.inject.extensions:guice-assistedinject"))
             include(dependency("jakarta.inject:jakarta.inject-api"))
             include(dependency("aopalliance:aopalliance"))
             include(dependency("com.github.cryptomorin:XSeries"))

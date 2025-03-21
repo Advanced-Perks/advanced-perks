@@ -23,6 +23,7 @@ class GuiSystemEventHandler @Inject constructor(
     fun onInventoryClick(event: InventoryClickEvent) {
         val guiId = (event.inventory.holder as? PerkGui)?.id
         val gui = guiManager.managedGuis[guiId] ?: return
+        event.isCancelled = true
         val element = gui.perkGuiElements[event.slot] ?: return
         element.onInventoryClick(event)
     }
@@ -30,10 +31,9 @@ class GuiSystemEventHandler @Inject constructor(
     @EventHandler
     fun onInventoryClose(event: InventoryCloseEvent) {
         val guiId = (event.inventory.holder as? PerkGui)?.id
-        val gui = guiManager.managedGuis[guiId] ?: return
-        Bukkit.broadcastMessage(gui.inventory.viewers.size.toString())
-        //TODO add check when you know if its pre or post close
-        guiManager.managedGuis.remove(guiId)
+        if(event.inventory.viewers.size >= 1){
+            guiManager.managedGuis.remove(guiId)
+        }
     }
 
 }

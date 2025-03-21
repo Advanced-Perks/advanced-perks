@@ -1,5 +1,7 @@
 package de.fabilucius.advancedperks.guisystem.blueprint
 
+import de.fabilucius.advancedperks.guisystem.blueprint.representation.GuiRepresentationBlueprint
+
 data class GuiUtilityButtonBlueprint(
     val closeGuiButton: GuiCloseGuiButtonBlueprint,
     val disableAllPerksButton: GuiDisableAllPerksButtonBlueprint,

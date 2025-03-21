@@ -1,5 +1,7 @@
 package de.fabilucius.advancedperks.guisystem.blueprint
 
+import de.fabilucius.advancedperks.guisystem.blueprint.representation.GuiRepresentationBlueprint
+
 data class GuiPaginationButtonBlueprint(
     val previousPageButton: GuiPreviousPageButtonBlueprint,
     val nextPageButton: GuiNextPageButtonBlueprint,

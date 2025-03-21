@@ -2,12 +2,14 @@ package de.fabilucius.advancedperks.guisystem
 
 import com.google.inject.Inject
 import com.google.inject.assistedinject.Assisted
+import de.fabilucius.advancedperks.core.functionextensions.translateColorCodes
 import de.fabilucius.advancedperks.data.PerkDataRepository
 import de.fabilucius.advancedperks.data.state.PerkStateController
 import de.fabilucius.advancedperks.guisystem.blueprint.GuiBlueprint
 import de.fabilucius.advancedperks.guisystem.elements.*
 import de.fabilucius.advancedperks.registry.PerkRegistry
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
@@ -19,14 +21,14 @@ class PerkGui @Inject constructor(
     private val perkDataRepository: PerkDataRepository,
     @Assisted private val blueprint: GuiBlueprint,
     @Assisted private val player: Player,
-    private var page: Int = 0,
-    var inventory: Inventory,
-    val perkGuiElements: MutableMap<Int, PerkGuiElement> = mutableMapOf(),
-    val id: UUID = UUID.randomUUID(),
 ) : InventoryHolder {
 
+    var perkInventory: Inventory = Bukkit.createInventory(this, blueprint.size, blueprint.title.translateColorCodes())
+    private var page: Int = 0
+    val perkGuiElements: MutableMap<Int, PerkGuiElement> = mutableMapOf()
+    val id: UUID = UUID.randomUUID()
+
     init {
-        inventory = Bukkit.createInventory(this, blueprint.size, blueprint.title)
         constructPerkGui()
     }
 
@@ -47,11 +49,11 @@ class PerkGui @Inject constructor(
     }
 
     private fun addPerkGuiElement(slot: Int, element: PerkGuiElement) = perkGuiElements.put(slot, element).also {
-        inventory.setItem(slot, element.getGuiIcon())
+        perkInventory.setItem(slot, element.getGuiIcon())
     }
 
     private fun constructPerkGui() {
-        inventory.clear()
+        perkInventory.clear()
         perkGuiElements.clear()
         constructBackground()
         constructPerkAndToggleButtons()
@@ -62,8 +64,8 @@ class PerkGui @Inject constructor(
     private fun constructBackground() {
         val blueprint = blueprint.background
         if (blueprint.enabled) {
-            for (index in 0..inventory.size) {
-                inventory.setItem(index, blueprint.representation?.toItemStack())
+            for (index in 0..perkInventory.size.minus(1)) {
+                perkInventory.setItem(index, blueprint.representation?.toItemStack())
             }
         }
     }
@@ -82,19 +84,31 @@ class PerkGui @Inject constructor(
         val perkData = perkDataRepository.getPerkDataByPlayer(player)
 
         blueprint.inventorySlots.forEachIndexed { index, slot ->
-            val perk = perksForPage[index.coerceAtMost(perksForPage.size)]
-            addPerkGuiElement(slot, PerkButtonGuiElement(perk))
+            if (index < perksForPage.size) {
+                val perk = perksForPage[index]
+                addPerkGuiElement(slot, PerkButtonGuiElement(perk))
+            }
         }
 
         if (blueprint.toggleButton.enabled) {
-            val activeIcon = blueprint.toggleButton.activeRepresentation?.toItemStack()
-            val inactiveIcon = blueprint.toggleButton.inactiveRepresentation?.toItemStack()
             blueprint.toggleButton.inventorySlots?.forEachIndexed { index, slot ->
-                val perk = perksForPage[index.coerceAtMost(perksForPage.size)]
-                addPerkGuiElement(
-                    slot,
-                    ToggleButtonGuiElement(perkData.isPerkEnabled(perk), activeIcon!!, inactiveIcon!!)
-                )
+                if (index < perksForPage.size) {
+                    val perk = perksForPage[index]
+                    val activeIcon = blueprint.toggleButton.activeRepresentation?.toItemStack(
+                        mapOf(
+                            "identifier" to ChatColor.stripColor(perk.displayName)!!
+                        )
+                    )
+                    val inactiveIcon = blueprint.toggleButton.inactiveRepresentation?.toItemStack(
+                        mapOf(
+                            "identifier" to ChatColor.stripColor(perk.displayName)!!
+                        )
+                    )
+                    addPerkGuiElement(
+                        slot,
+                        ToggleButtonGuiElement(activeIcon!!, inactiveIcon!!, perk, perkData, perkStateController, this)
+                    )
+                }
             }
         }
     }
@@ -141,6 +155,6 @@ class PerkGui @Inject constructor(
         }
     }
 
-    override fun getInventory(): Inventory = inventory
+    override fun getInventory(): Inventory = perkInventory
 
 }

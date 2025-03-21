@@ -1,5 +1,6 @@
 package de.fabilucius.advancedperks.guisystem.blueprint
 
+import de.fabilucius.advancedperks.guisystem.blueprint.representation.GuiRepresentationBlueprint
 import de.fabilucius.advancedperks.guisystem.model.ActivationIndicator
 
 data class GuiPerkButtonBlueprint(

@@ -1,24 +1,30 @@
-package de.fabilucius.advancedperks.core.guisystem.blueprint.representation
+package de.fabilucius.advancedperks.guisystem.blueprint.representation
 
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
+import de.fabilucius.advancedperks.core.functionextensions.translateColorCodes
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 
-interface GuiElementRepresentationBlueprint {
+//TODO implement
+interface GuiRepresentationBlueprint {
 
-    fun toItemStack(): ItemStack
+    fun toItemStack(placeholder: Map<String, String> = emptyMap()): ItemStack
+
+    fun replacePlaceholders(title: String, placeholder: Map<String, String>): String {
+        return placeholder.entries.fold(title) { acc, (key, value) -> acc.replace("{$key}", value) }.translateColorCodes()
+    }
 
 }
 
-class GuiElementRepresentationTypeAdapter : TypeAdapter<GuiElementRepresentationBlueprint>() {
+class GuiElementRepresentationTypeAdapter : TypeAdapter<GuiRepresentationBlueprint>() {
 
-    override fun write(p0: JsonWriter?, p1: GuiElementRepresentationBlueprint?) {
+    override fun write(p0: JsonWriter?, p1: GuiRepresentationBlueprint?) {
         TODO("Not yet needed")
     }
 
-    override fun read(reader: JsonReader): GuiElementRepresentationBlueprint {
+    override fun read(reader: JsonReader): GuiRepresentationBlueprint {
         var title: String? = null
         var material: Material? = null
         var amount: Int? = null
@@ -60,4 +66,3 @@ class GuiElementRepresentationTypeAdapter : TypeAdapter<GuiElementRepresentation
     }
 
 }
-

@@ -2,7 +2,6 @@ package de.fabilucius.advancedperks.perk.properties;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.google.common.base.Strings;
-import de.fabilucius.advancedperks.core.guisystem.HeadTexture;
 import de.fabilucius.advancedperks.core.itembuilder.types.skull.SkullStackBuilder;
 import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Material;
@@ -12,12 +11,13 @@ import java.util.Optional;
 
 public class PerkGuiIcon {
 
+    private static final String MISSING_TEXTURE = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTdjOTE0MTE1ODczYzQxZTM2NjliNjllZDIwMmE2ZjAyNjU3Zjc2ZGUyZGY2MjRlYWU4NDVjNDUyZGU1NWVjMiJ9fX0=";
     private final ItemStack itemStack;
 
     public PerkGuiIcon(String data) {
         if (Strings.isNullOrEmpty(data)) {
             this.itemStack = SkullStackBuilder.fromMaterial(Material.PLAYER_HEAD)
-                    .setBase64Value(HeadTexture.MISSING_TEXTURE.getValue())
+                    .setBase64Value(MISSING_TEXTURE)
                     .build();
         } else {
             Optional<XMaterial> approximateMaterial = XMaterial.matchXMaterial(data);

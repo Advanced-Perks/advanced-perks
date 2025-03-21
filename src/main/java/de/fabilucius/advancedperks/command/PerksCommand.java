@@ -10,9 +10,8 @@ import de.fabilucius.advancedperks.core.command.annotation.CommandIdentifier;
 import de.fabilucius.advancedperks.core.command.annotation.SubCommands;
 import de.fabilucius.advancedperks.core.configuration.type.MessageConfiguration;
 import de.fabilucius.advancedperks.core.configuration.type.SettingsConfiguration;
-import de.fabilucius.advancedperks.core.guisystem.GuiSystemManager;
 import de.fabilucius.advancedperks.core.logging.APLogger;
-import de.fabilucius.advancedperks.guisystem.perkgui.PerkGuiWindow;
+import de.fabilucius.advancedperks.guisystem.GuiSystemManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -42,7 +41,8 @@ public class PerksCommand extends AbstractCommand {
 
     @Override
     public void executeCommand(CommandSender commandSender, String... arguments) {
-        this.guiSystemManager.registerGuiWindowAnOpen(new PerkGuiWindow(settingsConfiguration, messageConfiguration, (Player) commandSender), (Player) commandSender);
+        //TODO make it more rigid
+        this.guiSystemManager.openGui((Player) commandSender);
     }
 
     @Override

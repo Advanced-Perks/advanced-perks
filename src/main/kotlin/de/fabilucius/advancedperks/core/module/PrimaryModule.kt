@@ -19,12 +19,11 @@ import de.fabilucius.advancedperks.core.database.DatabaseProvider
 import de.fabilucius.advancedperks.core.economy.EconomyController
 import de.fabilucius.advancedperks.core.economy.interfaces.EconomyInterface
 import de.fabilucius.advancedperks.core.economy.interfaces.types.VaultEconomyInterface
-import de.fabilucius.advancedperks.core.guisystem.GuiSystemManager
-import de.fabilucius.advancedperks.core.guisystem.persistantdata.NamespacedKeyProvider
 import de.fabilucius.advancedperks.core.logging.APLogger
 import de.fabilucius.advancedperks.data.PerkDataRepository
 import de.fabilucius.advancedperks.data.state.PerkStateController
 import de.fabilucius.advancedperks.guisystem.GuiSystemEventHandler
+import de.fabilucius.advancedperks.guisystem.GuiSystemManager
 import de.fabilucius.advancedperks.guisystem.PerkGuiFactory
 import de.fabilucius.advancedperks.guisystem.blueprint.representation.GuiElementRepresentationTypeAdapter
 import de.fabilucius.advancedperks.guisystem.blueprint.representation.GuiRepresentationBlueprint
@@ -52,10 +51,6 @@ class PrimaryModule(private val advancedPerks: AdvancedPerks) : AbstractModule()
             DatabaseProvider::class.java
         )
         bind(PerkStateController::class.java).asEagerSingleton()
-        bind(GuiSystemManager::class.java).asEagerSingleton()
-        bind(NamespacedKey::class.java).annotatedWith(Names.named("uuidKey")).toProvider(
-            NamespacedKeyProvider::class.java
-        )
         bind(AdvancedPerksApi::class.java).to(AdvancedPerksApiImpl::class.java)
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             bind(AdvancedPerksUseExpansion::class.java).asEagerSingleton()
@@ -77,7 +72,7 @@ class PrimaryModule(private val advancedPerks: AdvancedPerks) : AbstractModule()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .create())
         bind(HttpClient::class.java).toInstance(HttpClient.newBuilder().build())
-        bind(de.fabilucius.advancedperks.guisystem.GuiSystemManager::class.java).asEagerSingleton()
+        bind(GuiSystemManager::class.java).asEagerSingleton()
         bind(GuiSystemEventHandler::class.java).asEagerSingleton()
     }
 

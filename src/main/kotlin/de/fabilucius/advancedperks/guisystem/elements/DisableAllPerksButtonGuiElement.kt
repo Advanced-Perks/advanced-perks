@@ -14,8 +14,9 @@ class DisableAllPerksButtonGuiElement(
     override fun getGuiIcon(): ItemStack = icon
 
     override fun onInventoryClick(event: InventoryClickEvent) {
-        if(event.isLeftClick && event.whoClicked is Player){
-            perkStateController.disableAllPerks(event.whoClicked as Player)
+        val player = event.whoClicked as? Player
+        if (player != null) {
+            perkStateController.disableAllPerks(player)
         }
     }
 

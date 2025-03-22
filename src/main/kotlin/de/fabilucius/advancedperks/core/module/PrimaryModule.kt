@@ -33,7 +33,6 @@ import de.fabilucius.advancedperks.registry.PerkRegistryImpl
 import de.fabilucius.advancedperks.registry.loader.PerkYmlLoader
 import de.fabilucius.advancedperks.updatechecker.UpdateChecker
 import org.bukkit.Bukkit
-import org.bukkit.NamespacedKey
 import java.io.File
 import java.net.http.HttpClient
 
@@ -41,6 +40,7 @@ class PrimaryModule(private val advancedPerks: AdvancedPerks) : AbstractModule()
 
     override fun configure() {
         bind(AdvancedPerks::class.java).toInstance(this.advancedPerks)
+
         bind(File::class.java).annotatedWith(Names.named("configurationDirectory")).toInstance(
             advancedPerks.dataFolder
         )
@@ -66,7 +66,6 @@ class PrimaryModule(private val advancedPerks: AdvancedPerks) : AbstractModule()
         }
         bind(CompatibilityController::class.java).asEagerSingleton()
         bind(UpdateChecker::class.java).asEagerSingleton()
-        //install(FactoryModuleBuilder().build(PerkGuiFactory::class.java))
         install(FactoryModuleBuilder().build(PerkGuiFactory::class.java))
         bind(Gson::class.java).toInstance(GsonBuilder()
             .registerTypeAdapter(GuiRepresentationBlueprint::class.java, GuiElementRepresentationTypeAdapter())

@@ -25,17 +25,17 @@ class PerkGui @Inject constructor(
 ) : InventoryHolder {
 
     var perkInventory: Inventory = Bukkit.createInventory(this, blueprint.size, blueprint.title.translateColorCodes())
-    private var page: Int = 0
     val perkGuiElements: MutableMap<Int, PerkGuiElement> = mutableMapOf()
+    private var page: Int = 0
 
     init {
-        constructPerkGui()
+        refreshPerkGui()
     }
 
     fun previousPage() {
         if (page > 0) {
             page--
-            constructPerkGui()
+            refreshPerkGui()
         }
     }
 
@@ -44,11 +44,11 @@ class PerkGui @Inject constructor(
         val nextPageAvailable = perkRegistry.perks.size > perksPerkPage.times(page).plus(perksPerkPage)
         if (nextPageAvailable) {
             page++
-            constructPerkGui()
+            refreshPerkGui()
         }
     }
 
-    fun constructPerkGui() {
+    fun refreshPerkGui() {
         perkInventory.clear()
         perkGuiElements.clear()
         constructBackground()

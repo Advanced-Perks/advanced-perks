@@ -10,7 +10,6 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 
 class ToggleButtonGuiElement(
-    //TODO REWORK WITH PROPER USE OF PERKSTATECONTROLLER OR SIMILAR FOR STATE STUFF
     private val activeIcon: ItemStack,
     private val inactiveIcon: ItemStack,
     private val perk: Perk,
@@ -20,8 +19,7 @@ class ToggleButtonGuiElement(
 
     override fun getGuiIcon(): ItemStack = if (perkData.isPerkEnabled(perk)) activeIcon else inactiveIcon
 
-    override fun onInventoryClick(event: InventoryClickEvent) {
-        perkStateController.togglePerk(event.whoClicked as Player, perk)
-    }
+    override fun onInventoryClick(event: InventoryClickEvent) =
+        perkStateController.togglePerk(event.whoClicked as Player, perk).let {}
 
 }

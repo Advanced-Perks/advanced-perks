@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemStack
 class PerkButtonGuiElement(
     private val perk: Perk,
     private val perkStateController: PerkStateController,
-    private val perkGui: PerkGui,
 ) : PerkGuiElement {
 
     //TODO redo that (rewrite and properly use perk icon)
@@ -22,8 +21,6 @@ class PerkButtonGuiElement(
         .setDescription(perk.description.lines)
         .build();
 
-    override fun onInventoryClick(event: InventoryClickEvent) {
-        perkStateController.togglePerk(event.whoClicked as Player, perk)
-    }
+    override fun onInventoryClick(event: InventoryClickEvent) = perkStateController.togglePerk(event.whoClicked as Player, perk).let {  }
 
 }

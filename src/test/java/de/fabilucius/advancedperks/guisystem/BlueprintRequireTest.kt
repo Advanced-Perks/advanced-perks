@@ -14,20 +14,4 @@ class BlueprintRequireTest {
         }
     }
 
-    @Test
-    fun lol() {
-        for(i in 0..10) {
-            test(3, i)
-        }
-    }
-
-    private fun test(perSize: Int, page: Int) {
-        val list = listOf("HI", "ELLO", "SHEESH", "ESEL", "MATCH", "FORK")
-
-        val minBound = perSize.times(page).coerceAtLeast(0)
-        val maxBound = minBound.plus(perSize).coerceAtMost(list.size)
-
-        val nextPageAvailable = list.size > perSize.times(page).plus(perSize)
-        println("$page $nextPageAvailable")
-    }
 }

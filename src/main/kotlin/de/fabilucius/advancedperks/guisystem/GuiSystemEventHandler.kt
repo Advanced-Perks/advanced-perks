@@ -33,17 +33,19 @@ class GuiSystemEventHandler @Inject constructor(
     @EventHandler
     fun onInventoryClose(event: InventoryCloseEvent) {
         val guiId = (event.inventory.holder as? PerkGui)?.player?.uniqueId
-        if(event.inventory.viewers.size >= 1){
+        if (event.inventory.viewers.size >= 1) {
             guiManager.managedGuis.remove(guiId)
         }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPerkToggle(event: PerkToggleEvent) {
-        if(event.isCancelled) return
+        if (event.isCancelled) {
+            return
+        }
         val gui = guiManager.managedGuis[event.player.uniqueId] ?: return
         Bukkit.getScheduler().runTaskLater(plugin, Runnable {
-            gui.constructPerkGui()
+            gui.refreshPerkGui()
         }, 1L)
     }
 

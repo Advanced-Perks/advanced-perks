@@ -41,7 +41,7 @@
         "glowing": false
       },
       "inactive_representation": {
-        "title": "&d{identifier} is inactive.",
+        "title": "&c{identifier} is inactive.",
         "material": "GRAY_DYE",
         "amount": 1,
         "glowing": false
@@ -71,7 +71,7 @@
       "enabled": true,
       "slot": 46,
       "representation": {
-        "title": "&dClose Gui",
+        "title": "&cClose Gui",
         "material": "BARRIER",
         "amount": 1,
         "glowing": false
@@ -81,7 +81,7 @@
       "enabled": true,
       "slot": 48,
       "representation": {
-        "title": "&dDisable all perks",
+        "title": "&cDisable all perks",
         "material": "REDSTONE_BLOCK",
         "amount": 1,
         "glowing": false

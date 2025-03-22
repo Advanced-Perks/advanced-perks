@@ -90,7 +90,7 @@ class PerkGui @Inject constructor(
         blueprint.inventorySlots.forEachIndexed { index, slot ->
             if (index < perksForPage.size) {
                 val perk = perksForPage[index]
-                addPerkGuiElement(slot, PerkButtonGuiElement(perk, perkStateController, this))
+                addPerkGuiElement(slot, PerkButtonGuiElement(perk, perkStateController))
             }
         }
 

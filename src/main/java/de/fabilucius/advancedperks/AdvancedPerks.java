@@ -22,8 +22,8 @@ public class AdvancedPerks extends JavaPlugin {
     @Override
     public void onEnable() {
         Injector injectorInstance = Guice.createInjector(
-                new PrimaryModule(this),
-                new ConfigurationModule()
+                new ConfigurationModule(),
+                new PrimaryModule(this)
         );
         injectorInstance.injectMembers(this);
         try {
